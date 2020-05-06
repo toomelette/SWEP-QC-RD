@@ -17,7 +17,7 @@
         <nav class="navbar navbar-static-top">
           <div class="container">
             <div class="navbar-header">
-              <a href="#" class="navbar-brand"><b>Laravel-AdminLTE Template</b></a>
+              <a href="#" class="navbar-brand"><b>SRA WEB PORTAL REGULATION DEPARTMENT</b></a>
             </div>
             <div class="navbar-custom-menu">
               <ul class="nav navbar-nav">
