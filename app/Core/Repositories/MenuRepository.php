@@ -11,9 +11,7 @@ use App\Models\Menu;
 class MenuRepository extends BaseRepository implements MenuInterface {
 	
 
-
     protected $menu;
-
 
 
 	public function __construct(Menu $menu){
@@ -22,7 +20,6 @@ class MenuRepository extends BaseRepository implements MenuInterface {
         parent::__construct();
 
     }
-
 
 
 
@@ -37,17 +34,19 @@ class MenuRepository extends BaseRepository implements MenuInterface {
             $menu = $this->menu->newQuery();
             
             if(isset($request->q)){
-                $this->search($menu, $request->q);
+                $menu->where('name', 'LIKE', '%'. $request->q .'%');
             }
 
-            return $this->populate($menu, $entries);
+            return $menu->select('name', 'route', 'icon', 'slug')
+                        ->sortable()
+                        ->orderBy('updated_at', 'desc')
+                        ->paginate($entries);
 
         });
 
         return $menus;
 
     }
-
 
 
 
@@ -77,7 +76,6 @@ class MenuRepository extends BaseRepository implements MenuInterface {
 
 
 
-
     public function update($request, $slug){
 
         $menu = $this->findBySlug($slug);
@@ -100,7 +98,6 @@ class MenuRepository extends BaseRepository implements MenuInterface {
 
 
 
-
     public function destroy($slug){
 
         $menu = $this->findBySlug($slug);
@@ -110,7 +107,6 @@ class MenuRepository extends BaseRepository implements MenuInterface {
         return $menu;
 
     }
-
 
 
 
@@ -132,8 +128,6 @@ class MenuRepository extends BaseRepository implements MenuInterface {
 
 
 
-
-
     public function findByMenuId($menu_id){
 
         $menu = $this->cache->remember('menus:findByMenuId:' . $menu_id, 240, function() use ($menu_id){
@@ -147,34 +141,6 @@ class MenuRepository extends BaseRepository implements MenuInterface {
         return $menu;
 
     }
-
-
-
-
-
-
-    public function search($model, $key){
-
-        return $model->where(function ($model) use ($key) {
-                $model->where('name', 'LIKE', '%'. $key .'%');
-        });
-
-    }
-
-
-
-
-
-    public function populate($model, $entries){
-
-        return $model->select('name', 'route', 'icon', 'slug')
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate($entries);
-
-    }
-
-
 
 
 
@@ -201,8 +167,6 @@ class MenuRepository extends BaseRepository implements MenuInterface {
 
 
 
-
-
     public function getAll(){
 
         $menus = $this->cache->remember('menus:getAll', 240, function(){
@@ -214,8 +178,6 @@ class MenuRepository extends BaseRepository implements MenuInterface {
         return $menus;
 
     }
-
-
 
 
 

@@ -4,19 +4,13 @@ namespace App\Core\Repositories;
  
 use App\Core\BaseClasses\BaseRepository;
 use App\Core\Interfaces\SubmenuInterface;
-
-
 use App\Models\Submenu;
 
 
 class SubmenuRepository extends BaseRepository implements SubmenuInterface {
 	
 
-
-
     protected $submenu;
-
-
 
 
 	public function __construct(Submenu $submenu){
@@ -25,8 +19,6 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
         parent::__construct();
 
     }
-
-
 
 
 
@@ -50,8 +42,6 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
 
 
 
-
-
     public function findBySubmenuId($submenu_id){
 
         $submenu = $this->cache->remember('submenus:findBySubmenuId:' . $submenu_id, 240, function() use ($submenu_id){
@@ -65,8 +55,6 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
         return $submenu;
 
     }
-
-
 
 
 
@@ -89,8 +77,6 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
 
 
 
-
-
     public function getAll(){
 
         $submenus = $this->cache->remember('submenus:getAll', 240, function(){
@@ -101,8 +87,6 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
         return $submenus;
 
     }
-
-
 
 
 
@@ -121,9 +105,6 @@ class SubmenuRepository extends BaseRepository implements SubmenuInterface {
         return $submenu;
 
     }
-
-
-
 
 
 

@@ -15,16 +15,12 @@ class UserRepository extends BaseRepository implements UserInterface {
 	protected $user;
 
 
-
 	public function __construct(User $user){
 
         $this->user = $user;
-
         parent::__construct();
 
     }
-
-
 
 
 
@@ -39,18 +35,26 @@ class UserRepository extends BaseRepository implements UserInterface {
             $user = $this->user->newQuery();
             
             if(isset($request->q)){
-                $this->search($user, $request->q);
+                
+                $user->where('firstname', 'LIKE', '%'. $request->q .'%')
+                     ->orwhere('middlename', 'LIKE', '%'. $request->q .'%')
+                     ->orwhere('lastname', 'LIKE', '%'. $request->q .'%')
+                     ->orwhere('username', 'LIKE', '%'. $request->q .'%');
+
             }
 
             if(isset($request->ol)){
-                $this->isOnline($user, $this->__dataType->string_to_boolean($request->ol));
+                $user->where('is_online', $this->__dataType->string_to_boolean($request->ol));
             }
 
             if(isset($request->a)){
-                 $this->isActive($user, $this->__dataType->string_to_boolean($request->a));
+                $user->where('is_active', $this->__dataType->string_to_boolean($request->a));
             }
 
-            return $this->populate($user, $entries);
+            return $user->select('user_id', 'username', 'firstname', 'middlename', 'lastname', 'is_online', 'is_active', 'slug')
+                        ->sortable()
+                        ->orderBy('updated_at', 'desc')
+                        ->paginate($entries);
 
         });
 
@@ -58,8 +62,6 @@ class UserRepository extends BaseRepository implements UserInterface {
 	
 	}
 	
-
-
 
 
 
@@ -90,8 +92,6 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-
-
     public function update($request, $slug){
 
         $user = $this->findBySlug($slug);
@@ -116,8 +116,6 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-
-
     public function destroy($slug){
 
         $user = $this->findBySlug($slug);  
@@ -132,8 +130,6 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-
-
     public function activate($slug){
 
         $user = $this->findBySlug($slug);
@@ -143,7 +139,6 @@ class UserRepository extends BaseRepository implements UserInterface {
         return $user;
 
     }
-
 
 
 
@@ -162,8 +157,6 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-
-
     public function resetPassword($model, $request){
 
         $model->password = Hash::make($request->password);
@@ -177,12 +170,9 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-
-
     public function login($slug){
 
         $user = $this->findBySlug($slug);
-
         $user->is_online = 1;
         $user->last_login_time = $this->carbon->now();
         $user->last_login_machine = gethostbyaddr($_SERVER['REMOTE_ADDR']);
@@ -196,8 +186,6 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-
-
     public function logout($slug){
 
         $user = $this->findBySlug($slug);
@@ -207,8 +195,6 @@ class UserRepository extends BaseRepository implements UserInterface {
         return $user;
 
     }
-
-
 
 
 
@@ -230,75 +216,21 @@ class UserRepository extends BaseRepository implements UserInterface {
 
 
 
-
-
-	public function search($model, $key){
-
-        return $model->where(function ($model) use ($key) {
-                $model->where('firstname', 'LIKE', '%'. $key .'%')
-                      ->orwhere('middlename', 'LIKE', '%'. $key .'%')
-                      ->orwhere('lastname', 'LIKE', '%'. $key .'%')
-                      ->orwhere('username', 'LIKE', '%'. $key .'%');
-        });
-
-    }
-
-
-
-
-
-    public function isOnline($model, $value){
-
-        return $model->where('is_online', $value);
-
-    }
-
-
-
-
-
-    public function isActive($model, $value){
-
-        return $model->where('is_active', $value);
-
-    }
-
-
-
-
-
-    public function populate($model, $entries){
-
-        return $model->select('user_id', 'username', 'firstname', 'middlename', 'lastname', 'is_online', 'is_active', 'slug')
-                     ->sortable()
-                     ->orderBy('updated_at', 'desc')
-                     ->paginate($entries);
-
-    }
-
-
-
-
-
     public function getUserIdInc(){
 
         $id = 'U10001';
-
         $user = $this->user->select('user_id')->orderBy('user_id', 'desc')->first();
 
         if($user != null){
-
             if($user->user_id != null){
                 $num = str_replace('U', '', $user->user_id) + 1;
                 $id = 'U' . $num;
             }
-        
         }
         
         return $id;
         
     }
-
 
 
 
@@ -313,9 +245,6 @@ class UserRepository extends BaseRepository implements UserInterface {
         
     }
     
-
-
-
 
 
 

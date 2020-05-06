@@ -28,8 +28,6 @@ class ProfileRepository extends BaseRepository implements ProfileInterface {
 
 
 
-
-
     public function updateUsername($request, $slug){
 
         $user = $this->user_repo->findBySlug($slug);
@@ -40,7 +38,6 @@ class ProfileRepository extends BaseRepository implements ProfileInterface {
         return $user;
 
     }
-
 
 
 
@@ -59,7 +56,6 @@ class ProfileRepository extends BaseRepository implements ProfileInterface {
 
 
 
-
     public function updateColor($request, $slug){
         
         $user = $this->user_repo->findBySlug($slug);
@@ -69,8 +65,6 @@ class ProfileRepository extends BaseRepository implements ProfileInterface {
         return $user;
 
     }
-
-
 
 
 
