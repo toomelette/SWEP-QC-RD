@@ -218,7 +218,6 @@
     {!! __js::show_password('password', 'show_password') !!}
     {!! __js::show_password('password_confirmation', 'show_password_confirmation') !!}
 
-    {{-- PROFILE ACCOUNT COLOR SUCCESS --}}
     @if(Session::has('PROFILE_UPDATE_COLOR_SUCCESS'))
       {!! __js::toast(Session::get('PROFILE_UPDATE_COLOR_SUCCESS')) !!}
     @endif

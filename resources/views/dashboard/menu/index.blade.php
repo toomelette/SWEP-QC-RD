@@ -11,9 +11,6 @@
 ?>
 
 
-
-
-
 @extends('layouts.admin-master')
 
 @section('content')
@@ -84,8 +81,6 @@
 
 
 
-
-
 @section('modals')
 
   {!! __html::modal_delete('menu_delete') !!}
@@ -94,21 +89,16 @@
 
 
 
-
-
 @section('scripts')
 
   <script type="text/javascript">
 
-    {{-- CALL CONFIRM DELETE MODAL --}}
     {!! __js::button_modal_confirm_delete_caller('menu_delete') !!}
 
-    {{-- UPDATE TOAST --}}
     @if(Session::has('MENU_UPDATE_SUCCESS'))
       {!! __js::toast(Session::get('MENU_UPDATE_SUCCESS')) !!}
     @endif
 
-    {{-- DELETE TOAST --}}
     @if(Session::has('MENU_DELETE_SUCCESS'))
       {!! __js::toast(Session::get('MENU_DELETE_SUCCESS')) !!}
     @endif

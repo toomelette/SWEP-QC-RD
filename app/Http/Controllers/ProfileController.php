@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-
-use Illuminate\Http\Request;
-use App\Core\Services\ProfileService;
+use Hash;
+use App\Core\Interfaces\ProfileInterface;
 use App\Http\Requests\Profile\ProfileUpdateAccountUsernameRequest;
 use App\Http\Requests\Profile\ProfileUpdateAccountPasswordRequest;
 use App\Http\Requests\Profile\ProfileUpdateAccountColorRequest;
@@ -13,14 +12,13 @@ use App\Http\Requests\Profile\ProfileUpdateAccountColorRequest;
 class ProfileController extends Controller{
 
 
-
-	protected $profile_service; 
-
+    protected $profile_repo;
 
 
-    public function __construct(ProfileService $profile_service){
+    public function __construct(ProfileInterface $profile_repo){
 
-        $this->profile_service = $profile_service;
+        $this->profile_repo = $profile_repo;
+        parent::__construct();
 
     }
 
@@ -28,9 +26,7 @@ class ProfileController extends Controller{
 
 
 	public function details(){
-
         return view('dashboard.profile.details');
-        
     }
 
 
@@ -38,7 +34,11 @@ class ProfileController extends Controller{
 
     public function updateAccountUsername(ProfileUpdateAccountUsernameRequest $request, $slug){
 
-        return $this->profile_service->updateAccountUsername($request, $slug);
+        $user = $this->profile_repo->updateUsername($request, $slug);
+        $this->session->flush();
+        $this->auth->logout();
+        $this->event->fire('profile.update_account_username', $user);
+        return redirect('/');
         
     }
 
@@ -47,7 +47,18 @@ class ProfileController extends Controller{
 
     public function updateAccountPassword(ProfileUpdateAccountPasswordRequest $request, $slug){
 
-        return $this->profile_service->updateAccountPassword($request, $slug);
+        if(Hash::check($request->old_password, $this->auth->user()->password)){
+
+            $user = $this->profile_repo->updatePassword($request, $slug);
+            $this->session->flush();
+            $this->auth->logout();
+            $this->event->fire('profile.update_account_password', $user);
+            return redirect('/');
+
+        }
+
+        $this->session->flash('PROFILE_OLD_PASSWORD_FAIL', 'The old password you provided does not match.');
+        return redirect()->back();
         
     }
 
@@ -56,19 +67,11 @@ class ProfileController extends Controller{
 
     public function updateAccountColor(ProfileUpdateAccountColorRequest $request, $slug){
 
-        return $this->profile_service->updateAccountColor($request, $slug);
+        $user = $this->profile_repo->updateColor($request, $slug);
+        $this->event->fire('profile.update_account_color', $user);
+        return redirect()->back();
         
     }
-
-
-    
-
-    public function printPds($slug, $page){
-
-        return $this->profile_service->printPds($slug, $page);
-        
-    }
-
 
 
 

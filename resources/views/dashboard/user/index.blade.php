@@ -13,17 +13,11 @@
                         'q'=> Request::get('q'), 
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
-
                         'ol' => Request::get('ol'), 
                         'a' => Request::get('a'),
                       ];
 
-  $span_check = '<span class="badge bg-green"><i class="fa fa-check "></i></span>';
-  $span_times = '<span class="badge bg-red"><i class="fa fa-times "></i></span>';
-
 ?>
-
-
 
 
 
@@ -75,11 +69,11 @@
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($users as $data) 
-            <tr {!! __html::table_highlighter( $data->slug, $table_sessions)!!}>
+            <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!}>
               <td id="mid-vert">{{ $data->username }}</td>
               <td id="mid-vert">{{ $data->fullname }}</td>
-              <td id="mid-vert">{!! $data->is_online == 1 ?  $span_check : $span_times !!}</td>
-              <td id="mid-vert">{!! $data->is_active == 1 ? $span_check : $span_times !!}</td>
+              <td id="mid-vert">{!! $data->displayOnlineStatusIcon() !!}</td>
+              <td id="mid-vert">{!! $data->displayActiveStatusIcon() !!}</td>
               <td id="mid-vert">
                 <select id="action" class="form-control">
                   <option value="">Select</option>
@@ -97,7 +91,8 @@
                     <option data-type="0" data-action="deactivate" data-url="{{ route('dashboard.user.deactivate', $data->slug) }}">Deactivate</option>
                   @endif
 
-                  <option data-type="1" data-action="reset_password" data-url="{{ route('dashboard.user.reset_password', $data->slug) }}">Reset Password</option>
+                  <option data-type="1" data-action="reset_password" data-url="{{ route('dashboard.user.reset_password', $data->slug) }}">Reset Password
+                  </option>
 
                 </select>
               </td>
@@ -138,15 +133,11 @@
 
 
 
-
-
 @section('modals')
 
   {!! __html::modal_delete('user_delete') !!}
 
 @endsection 
-
-
 
 
 
