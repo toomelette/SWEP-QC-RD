@@ -24,106 +24,112 @@ class TraderRepository extends BaseRepository implements TraderInterface {
 
 
 
-    // public function fetch($request){
+    public function fetch($request){
 
-    //     $key = str_slug($request->fullUrl(), '_');
-    //     $entries = isset($request->e) ? $request->e : 20;
+        $key = str_slug($request->fullUrl(), '_');
+        $entries = isset($request->e) ? $request->e : 20;
 
-    //     $traders = $this->cache->remember('traders:fetch:' . $key, 240, function() use ($request, $entries){
+        $traders = $this->cache->remember('traders:fetch:' . $key, 240, function() use ($request, $entries){
 
-    //         $trader = $this->trader->newQuery();
+            $trader = $this->trader->newQuery();
             
-    //         if(isset($request->q)){
-    //             $trader->where('name', 'LIKE', '%'. $request->q .'%');
-    //         }
+            if(isset($request->q)){
+                $trader->where('name', 'LIKE', '%'. $request->q .'%')
+                       ->orWhere('address', 'LIKE', '%'. $request->q .'%')
+                       ->orWhere('tin', 'LIKE', '%'. $request->q .'%')
+                       ->orWhere('tel_no', 'LIKE', '%'. $request->q .'%')
+                       ->orWhere('officer', 'LIKE', '%'. $request->q .'%')
+                       ->orWhere('email', 'LIKE', '%'. $request->q .'%');
+            }
 
-    //         return $trader->select('name', 'route', 'icon', 'slug')
-    //                     ->sortable()
-    //                     ->orderBy('updated_at', 'desc')
-    //                     ->paginate($entries);
+            return $trader->select('name', 'slug')
+                          ->sortable()
+                          ->orderBy('updated_at', 'desc')
+                          ->paginate($entries);
 
-    //     });
+        });
 
-    //     return $traders;
+        return $traders;
 
-    // }
-
-
+    }
 
 
-    // public function store($request){
 
-    //     $trader = new Trader;
-    //     $trader->trader_id = $this->getTraderIdInc();
-    //     $trader->slug = $this->str->random(16);
-    //     $trader->name = $request->name;
-    //     $trader->route = $request->route;
-    //     $trader->icon = $request->icon;
-    //     $trader->is_trader = $this->__dataType->string_to_boolean($request->is_trader);
-    //     $trader->is_dropdown = $this->__dataType->string_to_boolean($request->is_dropdown);
-    //     $trader->created_at = $this->carbon->now();
-    //     $trader->updated_at = $this->carbon->now();
-    //     $trader->ip_created = request()->ip();
-    //     $trader->ip_updated = request()->ip();
-    //     $trader->user_created = $this->auth->user()->user_id;
-    //     $trader->user_updated = $this->auth->user()->user_id;
-    //     $trader->save();
+
+    public function store($request){
+
+        $trader = new Trader;
+        $trader->trader_id = $this->getTraderIdInc();
+        $trader->slug = $this->str->random(16);
+        $trader->name = $request->name;
+        $trader->region_id = $request->region_id;
+        $trader->address = $request->address;
+        $trader->tin = $request->tin;
+        $trader->tel_no = $request->tel_no;
+        $trader->officer = $request->officer;
+        $trader->email = $request->email;
+        $trader->created_at = $this->carbon->now();
+        $trader->updated_at = $this->carbon->now();
+        $trader->ip_created = request()->ip();
+        $trader->ip_updated = request()->ip();
+        $trader->user_created = $this->auth->user()->user_id;
+        $trader->user_updated = $this->auth->user()->user_id;
+        $trader->save();
         
-    //     return $trader;
+        return $trader;
 
-    // }
-
-
+    }
 
 
-    // public function update($request, $slug){
 
-    //     $trader = $this->findBySlug($slug);
-    //     $trader->name = $request->name;
-    //     $trader->route = $request->route;
-    //     $trader->icon = $request->icon;
-    //     $trader->is_trader = $this->__dataType->string_to_boolean($request->is_trader);
-    //     $trader->is_dropdown = $this->__dataType->string_to_boolean($request->is_dropdown);
-    //     $trader->updated_at = $this->carbon->now();
-    //     $trader->ip_updated = request()->ip();
-    //     $trader->user_updated = $this->auth->user()->user_id;
-    //     $trader->save();
 
-    //     $trader->subtrader()->delete();
+    public function update($request, $slug){
+
+        $trader = $this->findBySlug($slug);
+        $trader->name = $request->name;
+        $trader->region_id = $request->region_id;
+        $trader->address = $request->address;
+        $trader->tin = $request->tin;
+        $trader->tel_no = $request->tel_no;
+        $trader->officer = $request->officer;
+        $trader->email = $request->email;
+        $trader->updated_at = $this->carbon->now();
+        $trader->ip_updated = request()->ip();
+        $trader->user_updated = $this->auth->user()->user_id;
+        $trader->save();
         
-    //     return $trader;
+        return $trader;
 
-    // }
-
-
-
-
-    // public function destroy($slug){
-
-    //     $trader = $this->findBySlug($slug);
-    //     $trader->delete();
-    //     $trader->subtrader()->delete();
-
-    //     return $trader;
-
-    // }
+    }
 
 
 
 
-    // public function findBySlug($slug){
+    public function destroy($slug){
 
-    //     $trader = $this->cache->remember('traders:findBySlug:' . $slug, 240, function() use ($slug){
-    //         return $this->trader->where('slug', $slug)->first();
-    //     }); 
+        $trader = $this->findBySlug($slug);
+        $trader->delete();
+
+        return $trader;
+
+    }
+
+
+
+
+    public function findBySlug($slug){
+
+        $trader = $this->cache->remember('traders:findBySlug:' . $slug, 240, function() use ($slug){
+            return $this->trader->where('slug', $slug)->first();
+        }); 
         
-    //     if(empty($trader)){
-    //         abort(404);
-    //     }
+        if(empty($trader)){
+            abort(404);
+        }
 
-    //     return $trader;
+        return $trader;
 
-    // }
+    }
 
 
 
@@ -145,39 +151,37 @@ class TraderRepository extends BaseRepository implements TraderInterface {
 
 
 
-    // public function getTraderIdInc(){
+    public function getTraderIdInc(){
 
-    //     $id = 'M10001';
+        $id = 'T10001';
 
-    //     $trader = $this->trader->select('trader_id')->orderBy('trader_id', 'desc')->first();
+        $trader = $this->trader->select('trader_id')->orderBy('trader_id', 'desc')->first();
 
-    //     if($trader != null){
+        if($trader != null){
 
-    //         if($trader->trader_id != null){
-    //             $num = str_replace('M', '', $trader->trader_id) + 1;
-    //             $id = 'M' . $num;
-    //         }
+            if($trader->trader_id != null){
+                $num = str_replace('T', '', $trader->trader_id) + 1;
+                $id = 'T' . $num;
+            }
         
-    //     }
+        }
         
-    //     return $id;
+        return $id;
         
-    // }
+    }
 
 
 
 
-    // public function getAll(){
+    public function getAll(){
 
-    //     $traders = $this->cache->remember('traders:getAll', 240, function(){
-    //         return $this->trader->select('trader_id', 'name')
-    //                           ->with('subtrader')
-    //                           ->get();
-    //     });
+        $traders = $this->cache->remember('traders:getAll', 240, function(){
+            return $this->trader->select('trader_id', 'name')->get();
+        });
         
-    //     return $traders;
+        return $traders;
 
-    // }
+    }
 
 
 

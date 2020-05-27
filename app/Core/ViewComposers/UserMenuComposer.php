@@ -35,9 +35,7 @@ class UserMenuComposer{
 
 
         if($this->auth->check()){
-
             $user_menus = $this->user_menu_repo->getAll();
-
         }  
 
 

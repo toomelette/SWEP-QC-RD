@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
 
-class Trader extends Model{
+class TraderRegistration extends Model{
 
 
     use Sortable;
-    protected $table = 'traders';
-    protected $dates = ['created_at', 'updated_at'];    
+    protected $table = 'trader_registration';
+    protected $dates = ['created_at', 'updated_at', 'reg_date'];    
 	public $timestamps = false;
 
 
@@ -19,14 +19,11 @@ class Trader extends Model{
     protected $attributes = [
 
         'slug' => '',
+        'trader_reg_id' => '',
         'trader_id' => '',
-        'region_id' => '',
-        'name' => '',
-        'address' => '',
-        'tin' => '',
-        'tel_no' => '',
-        'officer' => '',
-        'email' => '',
+        'trader_cat_id' => '',
+        'control_no' => '',
+        'reg_date' => null,
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',

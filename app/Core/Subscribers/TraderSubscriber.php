@@ -50,7 +50,6 @@ class TraderSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:findBySlug:'. $trader->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:findByTraderId:'. $trader->trader_id .'');
 
         $this->session->flash('TRADER_UPDATE_SUCCESS', 'The Trader has been successfully updated!');
         $this->session->flash('TRADER_UPDATE_SUCCESS_SLUG', $trader->slug);
@@ -64,7 +63,6 @@ class TraderSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:findBySlug:'. $trader->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:findByTraderId:'. $trader->trader_id .'');
 
         $this->session->flash('TRADER_DELETE_SUCCESS', 'The Trader has been successfully deleted!');
         $this->session->flash('TRADER_DELETE_SUCCESS_SLUG', $trader->slug);

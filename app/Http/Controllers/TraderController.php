@@ -23,13 +23,13 @@ class TraderController extends Controller{
 
 
     
-    // public function index(TraderFilterRequest $request){
+    public function index(TraderFilterRequest $request){
 
-    //     $traders = $this->trader_repo->fetch($request);
-    //     $request->flash();
-    //     return view('dashboard.menu.index')->with('traders', $traders);
+        $traders = $this->trader_repo->fetch($request);
+        $request->flash();
+        return view('dashboard.trader.index')->with('traders', $traders);
 
-    // }
+    }
 
     
 
@@ -41,59 +41,47 @@ class TraderController extends Controller{
 
    
 
-    // public function store(TraderFormRequest $request){
+    public function store(TraderFormRequest $request){
 
-    //     $menu = $this->trader_repo->store($request);
-
-    //     if(!empty($request->row)){
-    //         foreach ($request->row as $row) {
-    //             $submenu = $this->trader_repo->store($row, $menu);
-    //         }
-    //     }
+        $trader = $this->trader_repo->store($request);
         
-    //     $this->event->fire('menu.store');
-    //     return redirect()->back();
+        $this->event->fire('trader.store');
+        return redirect()->back();
 
-    // }
+    }
  
 
 
 
-    // public function edit($slug){
+    public function edit($slug){
 
-    //     $menu = $this->trader_repo->findbySlug($slug);
-    //     return view('dashboard.menu.edit')->with('menu', $menu);
+        $trader = $this->trader_repo->findbySlug($slug);
+        return view('dashboard.trader.edit')->with('trader', $trader);
 
-    // }
-
-
+    }
 
 
-    // public function update(TraderFormRequest $request, $slug){
 
-    //     $menu = $this->trader_repo->update($request, $slug);
 
-    //     if(!empty($request->row)){
-    //         foreach ($request->row as $row) {
-    //             $submenu = $this->trader_repo->store($row, $menu);
-    //         }
-    //     }
+    public function update(TraderFormRequest $request, $slug){
 
-    //     $this->event->fire('menu.update', $menu);
-    //     return redirect()->route('dashboard.menu.index');
+        $trader = $this->trader_repo->update($request, $slug);
 
-    // }
+        $this->event->fire('trader.update', $trader);
+        return redirect()->route('dashboard.trader.index');
+
+    }
 
     
 
 
-    // public function destroy($slug){
+    public function destroy($slug){
 
-    //     $menu = $this->trader_repo->destroy($slug);
-    //     $this->event->fire('menu.destroy', $menu);
-    //     return redirect()->back();
+        $trader = $this->trader_repo->destroy($slug);
+        $this->event->fire('trader.destroy', $trader);
+        return redirect()->back();
 
-    // }
+    }
 
 
 

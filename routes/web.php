@@ -44,6 +44,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** TRADERS **/
 	Route::resource('trader', 'TraderController');
+
+
+	/** TRADERS CATEGORY **/
+	Route::resource('trader_registration', 'TraderRegistrationController');
 	
 });
 
@@ -53,9 +57,9 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 /** Testing **/
-Route::get('/dashboard/test', function(){
+// Route::get('/dashboard/test', function(){
 
-	//return dd(Illuminate\Support\Str::random(16));
+// 	return dd(Illuminate\Support\Str::random(16));
 
-});
+// });
 
