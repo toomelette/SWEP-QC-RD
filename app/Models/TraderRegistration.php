@@ -37,9 +37,13 @@ class TraderRegistration extends Model{
 
 
     /** RELATIONSHIPS **/
-    // public function user() {
-    // 	return $this->belongsTo('App\Models\User','user_id','user_id');
-   	// }
+    public function trader() {
+    	return $this->belongsTo('App\Models\Trader','trader_id','trader_id');
+   	}
+
+    public function traderCategory() {
+        return $this->belongsTo('App\Models\TraderCategory','trader_cat_id','trader_cat_id');
+    }
 
     
 

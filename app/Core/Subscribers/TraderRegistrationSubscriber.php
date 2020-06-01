@@ -30,7 +30,6 @@ class TraderRegistrationSubscriber extends BaseSubscriber{
     public function onStore(){
         
         $this->__cache->deletePattern(''. config('app.name') .'_cache:trader_registrations:fetch:*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:trader_registrations:getAll');
 
         $this->session->flash('TRADER_REG_CREATE_SUCCESS', 'The Trader Registration has been successfully created!');
 
@@ -41,7 +40,6 @@ class TraderRegistrationSubscriber extends BaseSubscriber{
     public function onUpdate($trader_reg){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:trader_registrations:fetch:*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:trader_registrations:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:trader_registrations:findBySlug:'. $trader_reg->slug .'');
 
         $this->session->flash('TRADER_REG_UPDATE_SUCCESS', 'The Trader Registration has been successfully updated!');
@@ -54,7 +52,6 @@ class TraderRegistrationSubscriber extends BaseSubscriber{
     public function onDestroy($trader_reg){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:trader_registrations:fetch:*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:trader_registrations:getAll');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:trader_registrations:findBySlug:'. $trader_reg->slug .'');
 
         $this->session->flash('TRADER_REG_DELETE_SUCCESS', 'The Trader Registration has been successfully deleted!');

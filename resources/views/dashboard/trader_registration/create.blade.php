@@ -25,12 +25,14 @@
             ) !!}
 
             {!! __form::select_dynamic(
-              '8', 'trader_id', 'Trader *', old('trader_id'), $global_traders_all, 'trader_id', 'name', $errors->has('trader_id'), $errors->first('trader_id'), 'select2', ''
+              '4', 'trader_id', 'Trader *', old('trader_id'), $global_traders_all, 'trader_id', 'name', $errors->has('trader_id'), $errors->first('trader_id'), 'select2', ''
             ) !!}
 
             {!! __form::select_dynamic(
               '4', 'trader_cat_id', 'Category *', old('trader_cat_id'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('trader_cat_id'), $errors->first('trader_cat_id'), 'select2', ''
             ) !!}
+
+            <div class="col-md-12"></div>
 
             {!! __form::datepicker(
               '4', 'reg_date',  'Date of Registration *', old('reg_date'), $errors->has('reg_date'), $errors->first('reg_date')

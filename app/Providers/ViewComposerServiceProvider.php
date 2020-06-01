@@ -39,12 +39,14 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
         // TRADER
         View::composer(['dashboard.trader_registration.create', 
-                        'dashboard.trader_registration.edit'], 'App\Core\ViewComposers\TraderComposer');
+                        'dashboard.trader_registration.edit', 
+                        'dashboard.trader_registration.index'], 'App\Core\ViewComposers\TraderComposer');
         
 
         // TRADER CATEGORY
         View::composer(['dashboard.trader_registration.create', 
-                        'dashboard.trader_registration.edit'], 'App\Core\ViewComposers\TraderCategoryComposer');
+                        'dashboard.trader_registration.edit', 
+                        'dashboard.trader_registration.index'], 'App\Core\ViewComposers\TraderCategoryComposer');
 
         
     }

@@ -37,11 +37,43 @@
 
     </div>
 
+
+    {{-- FORM ERROR MODAL --}}  
+    <div class="modal fade modal-danger" data-backdrop="static" id="error_fields">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">
+              <i class="fa fa-exclamation-triangle"></i> 
+              &nbsp;Whoops!
+            </h4>
+          </div>
+          <div class="modal-body">
+            <p style="font-size: 17px;">
+              Please check for errors in your input fields.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     @include('layouts.js-plugins')
     
     @yield('modals')
 
     @yield('scripts')
+
+    @if($errors->any())
+      <script type="text/javascript">
+        $("#error_fields").modal("show");
+      </script>
+    @endif
 
   </body>
 

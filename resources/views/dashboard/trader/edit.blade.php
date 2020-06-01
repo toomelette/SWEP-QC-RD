@@ -10,6 +10,8 @@
         <h2 class="box-title">Edit Trader</h2>
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
+          &nbsp;
+          {!! __html::back_button(['dashboard.trader.index']) !!}
         </div> 
       </div>
       

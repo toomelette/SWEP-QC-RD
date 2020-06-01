@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Trader;
+namespace App\Http\Requests\TraderRegistration;
 
 use Illuminate\Foundation\Http\FormRequest;
 
