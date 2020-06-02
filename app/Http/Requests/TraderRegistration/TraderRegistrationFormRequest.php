@@ -21,7 +21,9 @@ class TraderRegistrationFormRequest extends FormRequest{
             'control_no'=>'required|string|max:45',
             'trader_id'=>'required|string|max:11',
             'trader_cat_id'=>'required|string|max:11',
+            'crop_year_id'=>'required|string|max:11',
             'reg_date' => 'required|date_format:"m/d/Y"',
+            'signatory'=>'required|string|max:255',
 
         ];
 

@@ -69,6 +69,16 @@ class TraderRegistrationController extends Controller{
         return view('dashboard.trader_registration.show')->with('trader_reg', $trader_reg);
 
     }
+ 
+
+
+
+    public function print($slug){
+
+        $trader_reg = $this->trader_reg_repo->findbySlug($slug);
+        return view('printables.trader_registration.license')->with('trader_reg', $trader_reg);
+
+    }
 
 
 

@@ -22,8 +22,10 @@ class TraderRegistration extends Model{
         'trader_reg_id' => '',
         'trader_id' => '',
         'trader_cat_id' => '',
+        'crop_year_id' => '',
         'control_no' => '',
         'reg_date' => null,
+        'signatory' => '',
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',
@@ -43,6 +45,10 @@ class TraderRegistration extends Model{
 
     public function traderCategory() {
         return $this->belongsTo('App\Models\TraderCategory','trader_cat_id','trader_cat_id');
+    }
+
+    public function cropYear() {
+        return $this->belongsTo('App\Models\CropYear','crop_year_id','crop_year_id');
     }
 
     

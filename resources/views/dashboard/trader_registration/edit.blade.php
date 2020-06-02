@@ -15,7 +15,7 @@
         </div> 
       </div>
       
-      <form method="POST" autocomplete="off" action="{{ route('dashboard.trader_registration.update', $trader_reg->slug) }}">
+      <form method="POST" action="{{ route('dashboard.trader_registration.update', $trader_reg->slug) }}">
 
         <div class="box-body">
           <div class="col-md-12">
@@ -38,8 +38,16 @@
 
             <div class="col-md-12"></div>
 
+            {!! __form::select_dynamic(
+              '4', 'crop_year_id', 'Crop Year *', old('crop_year_id') ? old('crop_year_id') : $trader_reg->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', ''
+            ) !!}
+
             {!! __form::datepicker(
               '4', 'reg_date',  'Date of Registration *', old('reg_date') ? old('reg_date') : $trader_reg->reg_date, $errors->has('reg_date'), $errors->first('reg_date')
+            ) !!}
+
+            {!! __form::textbox(
+              '4', 'signatory', 'text', 'Signatory *', 'Signatory', old('signatory') ? old('signatory') : $trader_reg->signatory, $errors->has('signatory'), $errors->first('signatory'), ''
             ) !!}
 
           </div>
