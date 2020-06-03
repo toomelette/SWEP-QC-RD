@@ -35,11 +35,15 @@
     {!! __html::filter_open() !!}
 
       {!! __form::select_dynamic_for_filter(
-        '6', 't', 'Trader', old('t'), $global_traders_all, 'trader_id', 'name', 'submit_tr_filter', 'select2', 'style="width:100%;"'
+        '4', 't', 'Trader', old('t'), $global_traders_all, 'trader_id', 'name', 'submit_tr_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
       {!! __form::select_dynamic_for_filter(
-        '6', 'tc', 'Category', old('tc'), $global_trader_categories_all, 'trader_cat_id', 'name', 'submit_tr_filter', 'select2', 'style="width:100%;"'
+        '4', 'tc', 'Category', old('tc'), $global_trader_categories_all, 'trader_cat_id', 'name', 'submit_tr_filter', 'select2', 'style="width:100%;"'
+      ) !!}
+
+      {!! __form::select_dynamic_for_filter(
+        '4', 'cy', 'Crop Year', old('cy'), $global_crop_years_all, 'crop_year_id', 'name', 'submit_tr_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
       <div class="col-md-12 no-padding">

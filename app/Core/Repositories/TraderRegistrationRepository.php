@@ -50,6 +50,10 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
                     $trader_reg->where('trader_cat_id', $request->tc);
                 }
 
+                if(isset($request->cy)){
+                    $trader_reg->where('crop_year_id', $request->cy);
+                }
+
                 if(isset($request->df) || isset($request->dt)){
                     $trader_reg->whereBetween('reg_date',[$df, $dt]);
                 }
@@ -161,6 +165,29 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
         
         return $id;
         
+    }
+
+
+
+
+    public function getByRegDate_Category($df, $dt, $tc_id){
+
+        $trader_reg = $this->trader_reg->newQuery();
+
+        if (isset($df) && isset($dt)) {
+            $df = $this->__dataType->date_parse($df, 'Y-m-d');
+            $dt = $this->__dataType->date_parse($dt, 'Y-m-d');
+            $trader_reg->whereBetween('reg_date',[$df, $dt]);
+        }
+
+        if (isset($tc_id)) {
+            $trader_reg->where('trader_cat_id', $tc_id);
+        }
+
+        return $trader_reg->select('trader_id', 'trader_cat_id', 'crop_year_id', 'control_no', 'reg_date', 'signatory')
+                          ->with('trader', 'traderCategory', 'cropYear')
+                          ->get();
+
     }
 
 

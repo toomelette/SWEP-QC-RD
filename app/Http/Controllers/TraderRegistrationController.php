@@ -6,6 +6,10 @@ namespace App\Http\Controllers;
 use App\Core\Interfaces\TraderRegistrationInterface;
 use App\Http\Requests\TraderRegistration\TraderRegistrationFormRequest;
 use App\Http\Requests\TraderRegistration\TraderRegistrationFilterRequest;
+use App\Http\Requests\TraderRegistration\TraderRegistrationReportRequest;
+
+use App\Exports\TraderRegistrationBDC;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class TraderRegistrationController extends Controller{
@@ -20,8 +24,6 @@ class TraderRegistrationController extends Controller{
     }
 
 
-
-
     
     public function index(TraderRegistrationFilterRequest $request){
 
@@ -33,11 +35,9 @@ class TraderRegistrationController extends Controller{
 
     
 
-
     public function create(){
         return view('dashboard.trader_registration.create');
     }
-
 
    
 
@@ -52,7 +52,6 @@ class TraderRegistrationController extends Controller{
  
 
 
-
     public function edit($slug){
 
         $trader_reg = $this->trader_reg_repo->findbySlug($slug);
@@ -62,14 +61,12 @@ class TraderRegistrationController extends Controller{
  
 
 
-
     public function show($slug){
 
         $trader_reg = $this->trader_reg_repo->findbySlug($slug);
         return view('dashboard.trader_registration.show')->with('trader_reg', $trader_reg);
 
     }
- 
 
 
 
@@ -82,7 +79,6 @@ class TraderRegistrationController extends Controller{
 
 
 
-
     public function update(TraderRegistrationFormRequest $request, $slug){
 
         $trader_reg = $this->trader_reg_repo->update($request, $slug);
@@ -92,7 +88,6 @@ class TraderRegistrationController extends Controller{
 
     }
 
-    
 
 
     public function destroy($slug){
@@ -105,5 +100,31 @@ class TraderRegistrationController extends Controller{
 
 
 
-    
+    public function reports(){
+        return view('dashboard.trader_registration.reports');
+    }
+
+
+
+    public function reportsOutput(TraderRegistrationReportRequest $request){
+
+        if ($request->ft == 'bdc') {
+            
+            $trader_registrations = $this->trader_reg_repo->getByRegDate_Category($request->df, $request->dt, $request->tc);
+            
+            if ($request->t == 'p') {
+                
+            }elseif ($request->t == 'e') {
+                return Excel::download(
+                    new TraderRegistrationBDC($trader_registrations), 'list_by_date_category.xlsx'
+                );
+            }
+
+        }
+
+        return abort(404);
+    }
+
+
+   
 }

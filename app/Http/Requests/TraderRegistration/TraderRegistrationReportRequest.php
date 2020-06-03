@@ -4,7 +4,7 @@ namespace App\Http\Requests\TraderRegistration;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TraderRegistrationFilterRequest extends FormRequest{
+class TraderRegistrationReportRequest extends FormRequest{
 
 
 
@@ -18,15 +18,15 @@ class TraderRegistrationFilterRequest extends FormRequest{
 
         return [
             
-            'q'=>'nullable|string|max:90',
-            't'=>'nullable|string|max:11',
+            'df'=>'required|date_format:"m/d/Y"',
+            'dt'=>'required|date_format:"m/d/Y"',
             'tc'=>'nullable|string|max:11',
-            'cy'=>'nullable|string|max:11',
+            'ft'=>'nullable|string|max:5',
+            't'=>'nullable|string|max:5',
 
         ];
 
     }
-
 
 
 

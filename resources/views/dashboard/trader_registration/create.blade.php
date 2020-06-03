@@ -20,22 +20,22 @@
                   
             @csrf   
 
-            {!! __form::textbox(
-              '4', 'control_no', 'text', 'Control No. *', 'Control No.', old('control_no'), $errors->has('control_no'), $errors->first('control_no'), ''
-            ) !!}
-
             {!! __form::select_dynamic(
-              '4', 'trader_id', 'Trader *', old('trader_id'), $global_traders_all, 'trader_id', 'name', $errors->has('trader_id'), $errors->first('trader_id'), 'select2', ''
+              '4', 'crop_year_id', 'Crop Year*', old('crop_year_id'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', ''
             ) !!}
 
             {!! __form::select_dynamic(
               '4', 'trader_cat_id', 'Category *', old('trader_cat_id'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('trader_cat_id'), $errors->first('trader_cat_id'), 'select2', ''
             ) !!}
 
+            {!! __form::textbox(
+              '4', 'control_no', 'text', 'Control No. *', 'Control No.', old('control_no'), $errors->has('control_no'), $errors->first('control_no'), ''
+            ) !!}
+
             <div class="col-md-12"></div>
 
             {!! __form::select_dynamic(
-              '4', 'crop_year_id', 'Crop Year*', old('crop_year_id'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', ''
+              '4', 'trader_id', 'Trader *', old('trader_id'), $global_traders_all, 'trader_id', 'name', $errors->has('trader_id'), $errors->first('trader_id'), 'select2', ''
             ) !!}
 
             {!! __form::datepicker(
@@ -43,7 +43,7 @@
             ) !!}
 
             {!! __form::textbox(
-              '4', 'signatory', 'text', 'Signatory. *', 'Signatory.', old('signatory'), $errors->has('signatory'), $errors->first('signatory'), ''
+              '4', 'signatory', 'text', 'Signatory *', 'Signatory', old('signatory'), $errors->has('signatory'), $errors->first('signatory'), ''
             ) !!}
 
           </div>

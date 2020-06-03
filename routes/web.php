@@ -48,6 +48,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** TRADERS CATEGORY **/
 	Route::get('/trader_registration/print/{slug}', 'TraderRegistrationController@print')->name('trader_registration.print');
+	Route::get('/trader_registration/reports', 'TraderRegistrationController@reports')->name('trader_registration.reports');
+	Route::get('/trader_registration/reports_output', 'TraderRegistrationController@reportsOutput')->name('trader_registration.reports_output');
 	Route::resource('trader_registration', 'TraderRegistrationController');
 	
 });
