@@ -21,6 +21,7 @@ class TraderFormRequest extends FormRequest{
             'name'=>'required|string|max:255',
             'region_id'=>'required|string|max:11',
             'address'=>'required|string|max:255',
+            'address_second'=>'nullable|string|max:255',
             'tin'=>'required|string|max:45',
             'tel_no'=>'nullable|string|max:45',
             'officer'=>'nullable|string|max:90',

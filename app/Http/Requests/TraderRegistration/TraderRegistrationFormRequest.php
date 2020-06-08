@@ -18,12 +18,13 @@ class TraderRegistrationFormRequest extends FormRequest{
 
         return [
             
-            'control_no'=>'required|string|max:45',
-            'trader_id'=>'required|string|max:11',
+            'control_no'=>'required|string|max:45|unique:trader_registration,control_no,'.$this->route('trader_registration').',slug',
             'trader_cat_id'=>'required|string|max:11',
             'crop_year_id'=>'required|string|max:11',
+            'trader_id'=>'required|string|max:11',
+            'trader_officer'=>'nullable|string|max:90',
+            'trader_email'=>'nullable|string|max:90',
             'reg_date' => 'required|date_format:"m/d/Y"',
-            'signatory'=>'required|string|max:255',
 
         ];
 

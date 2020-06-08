@@ -34,7 +34,10 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
         // REGION
         View::composer(['dashboard.trader.create', 
-                        'dashboard.trader.edit'], 'App\Core\ViewComposers\RegionComposer');
+                        'dashboard.trader.edit',
+                        'dashboard.trader_registration.create',
+                        'dashboard.trader_registration.edit',
+                        'printables.trader_registration.list_bcyc',], 'App\Core\ViewComposers\RegionComposer');
         
 
         // TRADER

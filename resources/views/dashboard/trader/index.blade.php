@@ -39,11 +39,13 @@
         <table class="table table-hover">
           <tr>
             <th>@sortablelink('name', 'Name')</th>
+            <th>@sortablelink('address', 'Address')</th>
             <th style="width: 150px">Action</th>
           </tr>
           @foreach($traders as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td id="mid-vert">{{ $data->name }}</td>
+              <td id="mid-vert">{{ $data->address }}</td>
               <td id="mid-vert">
                 <div class="btn-group">
                   @if(in_array('dashboard.trader.edit', $global_user_submenus))

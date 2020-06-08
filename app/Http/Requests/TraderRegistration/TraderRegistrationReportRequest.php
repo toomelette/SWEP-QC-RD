@@ -17,12 +17,16 @@ class TraderRegistrationReportRequest extends FormRequest{
     public function rules(){
 
         return [
+
+            'ft'=>'required|string|max:5',
             
-            'df'=>'required|date_format:"m/d/Y"',
-            'dt'=>'required|date_format:"m/d/Y"',
-            'tc'=>'nullable|string|max:11',
-            'ft'=>'nullable|string|max:5',
-            't'=>'nullable|string|max:5',
+            'bdc_t'=>'sometimes|required|string|max:5',
+            'bdc_df'=>'sometimes|required|date_format:"m/d/Y"',
+            'bdc_dt'=>'sometimes|required|date_format:"m/d/Y"',
+            'bdc_tc'=>'sometimes|nullable|string|max:11',
+
+            'bcyc_cy'=>'sometimes|nullable|string|max:11',
+            'bcyc_tc'=>'sometimes|nullable|string|max:11',
 
         ];
 

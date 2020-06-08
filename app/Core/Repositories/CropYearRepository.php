@@ -37,4 +37,18 @@ class CropYearRepository extends BaseRepository implements CropYearInterface {
 
 
 
+
+
+    public function findByCropYearId($cy_id){
+
+        $crop_year = $this->cache->remember('crop_years:findByCYId:'. $cy_id, 240, function() use ($cy_id){
+            return $this->crop_year->select('name')->where('crop_year_id', $cy_id)->first();
+        });
+        
+        return $crop_year;
+
+    }
+
+
+
 }

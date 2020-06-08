@@ -141,7 +141,7 @@ class __js{
 	                            success:function(data) {
 	                                $("#'.$id_to.'").empty();
 	                                $.each(data, function(key, value) {
-	                                		$("#'.$id_to.'").val(value.'.$value.');
+	                                	$("#'.$id_to.'").val(value.'.$value.');
 	                                }); 
 	                            }
 	                        });

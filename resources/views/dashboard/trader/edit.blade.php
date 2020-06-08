@@ -25,21 +25,25 @@
             @csrf   
 
             {!! __form::textbox(
-              '8', 'name', 'text', 'Name *', 'Name', old('name') ? old('name') : $trader->name, $errors->has('name'), $errors->first('name'), ''
+              '6', 'name', 'text', 'Name *', 'Name', old('name') ? old('name') : $trader->name, $errors->has('name'), $errors->first('name'), ''
+            ) !!}
+
+            {!! __form::textbox(
+              '3', 'tin', 'text', 'TIN *', 'TIN', old('tin') ? old('tin') : $trader->tin, $errors->has('tin'), $errors->first('tin'), ''
             ) !!}
 
             {!! __form::select_dynamic(
-              '4', 'region_id', 'Region *', old('region_id') ? old('region_id') : $trader->region_id, $global_regions_all, 'region_id', 'name', $errors->has('region_id'), $errors->first('region_id'), 'select2', ''
+              '3', 'region_id', 'Region *', old('region_id') ? old('region_id') : $trader->region_id, $global_regions_all, 'region_id', 'name', $errors->has('region_id'), $errors->first('region_id'), 'select2', ''
             ) !!}
 
             <div class="col-md-12"></div>
 
             {!! __form::textbox(
-              '8', 'address', 'text', 'Address *', 'Address', old('address') ? old('address') : $trader->address, $errors->has('address'), $errors->first('address'), ''
+              '6', 'address', 'text', 'Address *', 'Address', old('address') ? old('address') : $trader->address, $errors->has('address'), $errors->first('address'), ''
             ) !!}
 
             {!! __form::textbox(
-              '4', 'tin', 'text', 'TIN *', 'TIN', old('tin') ? old('tin') : $trader->tin, $errors->has('tin'), $errors->first('tin'), ''
+              '6', 'address_second', 'text', 'Address Second', 'Address Second', old('address_second') ? old('address_second') : $trader->address_second, $errors->has('address_second'), $errors->first('address_second'), ''
             ) !!}
 
             <div class="col-md-12"></div>

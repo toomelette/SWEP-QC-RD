@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Core\Interfaces\TraderRegistrationInterface;
+use App\Core\Interfaces\CropYearInterface;
 use App\Http\Requests\TraderRegistration\TraderRegistrationFormRequest;
 use App\Http\Requests\TraderRegistration\TraderRegistrationFilterRequest;
 use App\Http\Requests\TraderRegistration\TraderRegistrationReportRequest;
@@ -16,10 +17,13 @@ class TraderRegistrationController extends Controller{
 
 
     protected $trader_reg_repo;
+    protected $cy_repo;
 
 
-    public function __construct(TraderRegistrationInterface $trader_reg_repo){
+    public function __construct(TraderRegistrationInterface $trader_reg_repo,
+                                CropYearInterface $cy_repo){
         $this->trader_reg_repo = $trader_reg_repo;
+        $this->cy_repo = $cy_repo;
         parent::__construct();
     }
 
@@ -43,9 +47,17 @@ class TraderRegistrationController extends Controller{
 
     public function store(TraderRegistrationFormRequest $request){
 
+        if ($this->trader_reg_repo->isTraderExistInCY_CAT($request->crop_year_id, $request->trader_id, $request->trader_cat_id)) {
+            
+            $this->session->flash('TRADER_REG_IS_EXIST','The Trader is already registered in this current Crop year!');
+            $request->flash();
+            return redirect()->back();
+
+        }
+
         $trader_reg = $this->trader_reg_repo->store($request);
         
-        $this->event->fire('trader_reg.store');
+        $this->event->fire('trader_reg.store', $trader_reg);
         return redirect()->back();
 
     }
@@ -110,19 +122,34 @@ class TraderRegistrationController extends Controller{
 
         if ($request->ft == 'bdc') {
             
-            $trader_registrations = $this->trader_reg_repo->getByRegDate_Category($request->df, $request->dt, $request->tc);
+            $trader_registrations = $this->trader_reg_repo->getByRegDate_Category($request->bdc_df, $request->bdc_dt, $request->bdc_tc);
             
-            if ($request->t == 'p') {
+            if ($request->bdc_t == 'p') {
+
+                return view('printables.trader_registration.list_bdc')->with('trader_registrations', $trader_registrations);
                 
-            }elseif ($request->t == 'e') {
+            }elseif ($request->bdc_t == 'e') {
+
                 return Excel::download(
                     new TraderRegistrationBDC($trader_registrations), 'list_by_date_category.xlsx'
                 );
+
             }
 
+        }elseif ($request->ft == 'bcyc') {
+            
+            $trader_registrations = $this->trader_reg_repo->getByCropYearId_Category($request->bcyc_cy, $request->bcyc_tc);
+            $crop_year = $this->cy_repo->findByCropYearId($request->bcyc_cy);
+
+            return view('printables.trader_registration.list_bcyc')->with([
+                'trader_registrations' => $trader_registrations,
+                'crop_year' => $crop_year
+            ]);
+            
         }
 
         return abort(404);
+
     }
 
 

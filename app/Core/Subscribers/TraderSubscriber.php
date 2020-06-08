@@ -49,6 +49,7 @@ class TraderSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:getByTraderId:'.$trader->trader_id.'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:findBySlug:'. $trader->slug .'');
 
         $this->session->flash('TRADER_UPDATE_SUCCESS', 'The Trader has been successfully updated!');
@@ -62,6 +63,7 @@ class TraderSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:getAll');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:getByTraderId:'.$trader->trader_id.'');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:findBySlug:'. $trader->slug .'');
 
         $this->session->flash('TRADER_DELETE_SUCCESS', 'The Trader has been successfully deleted!');

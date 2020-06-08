@@ -20,9 +20,11 @@ class TraderRegistration extends Model{
 
         'slug' => '',
         'trader_reg_id' => '',
-        'trader_id' => '',
-        'trader_cat_id' => '',
         'crop_year_id' => '',
+        'trader_cat_id' => '',
+        'trader_id' => '',
+        'trader_officer' => '',
+        'trader_email' => '',
         'control_no' => '',
         'reg_date' => null,
         'signatory' => '',

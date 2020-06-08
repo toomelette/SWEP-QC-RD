@@ -23,6 +23,7 @@ class Trader extends Model{
         'region_id' => '',
         'name' => '',
         'address' => '',
+        'address_second' => '',
         'tin' => '',
         'tel_no' => '',
         'officer' => '',
@@ -40,9 +41,9 @@ class Trader extends Model{
 
 
     /** RELATIONSHIPS **/
-    // public function user() {
-    // 	return $this->belongsTo('App\Models\User','user_id','user_id');
-   	// }
+    public function region() {
+    	return $this->belongsTo('App\Models\Region','region_id','region_id');
+   	}
 
     
 

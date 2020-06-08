@@ -35,15 +35,15 @@
     {!! __html::filter_open() !!}
 
       {!! __form::select_dynamic_for_filter(
-        '4', 't', 'Trader', old('t'), $global_traders_all, 'trader_id', 'name', 'submit_tr_filter', 'select2', 'style="width:100%;"'
+        '6', 't', 'Trader', old('t'), $global_traders_all, 'trader_id', 'name', 'submit_tr_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
       {!! __form::select_dynamic_for_filter(
-        '4', 'tc', 'Category', old('tc'), $global_trader_categories_all, 'trader_cat_id', 'name', 'submit_tr_filter', 'select2', 'style="width:100%;"'
+        '3', 'tc', 'Category', old('tc'), $global_trader_categories_all, 'trader_cat_id', 'name', 'submit_tr_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
       {!! __form::select_dynamic_for_filter(
-        '4', 'cy', 'Crop Year', old('cy'), $global_crop_years_all, 'crop_year_id', 'name', 'submit_tr_filter', 'select2', 'style="width:100%;"'
+        '3', 'cy', 'Crop Year', old('cy'), $global_crop_years_all, 'crop_year_id', 'name', 'submit_tr_filter', 'select2', 'style="width:100%;"'
       ) !!}
 
       <div class="col-md-12 no-padding">
@@ -135,6 +135,16 @@
 
   {!! __html::modal_delete('trader_registration_delete') !!}
 
+
+  {{-- TR UPDATE SUCCESS --}}
+  @if(Session::has('TRADER_REG_UPDATE_SUCCESS'))
+
+    {!! __html::modal_print(
+      'tr_update', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('TRADER_REG_UPDATE_SUCCESS'), route('dashboard.trader_registration.show', Session::get('TRADER_REG_UPDATE_SUCCESS_SLUG'))
+    ) !!}
+
+  @endif
+
 @endsection 
 
 
@@ -146,7 +156,7 @@
     {!! __js::button_modal_confirm_delete_caller('trader_registration_delete') !!}
 
     @if(Session::has('TRADER_REG_UPDATE_SUCCESS'))
-      {!! __js::toast(Session::get('TRADER_REG_UPDATE_SUCCESS')) !!}
+      $('#tr_update').modal('show');
     @endif
 
     @if(Session::has('TRADER_REG_DELETE_SUCCESS'))

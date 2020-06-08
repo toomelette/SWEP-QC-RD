@@ -43,6 +43,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** TRADERS **/
+	Route::post('/trader_registration/store_from_tr', 'TraderController@storeFromTR')->name('trader.store_from_tr');
 	Route::resource('trader', 'TraderController');
 
 
@@ -50,6 +51,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/trader_registration/print/{slug}', 'TraderRegistrationController@print')->name('trader_registration.print');
 	Route::get('/trader_registration/reports', 'TraderRegistrationController@reports')->name('trader_registration.reports');
 	Route::get('/trader_registration/reports_output', 'TraderRegistrationController@reportsOutput')->name('trader_registration.reports_output');
+	Route::get('/trader_registration/list_bcd', 'TraderRegistrationController@printListBDC')->name('trader_registration.print_list_bdc');
 	Route::resource('trader_registration', 'TraderRegistrationController');
 	
 });
@@ -62,7 +64,28 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 /** Testing **/
 // Route::get('/dashboard/test', function(){
 
-// 	return dd(Illuminate\Support\Str::random(16));
+// 	$traders = App\Models\Trader::get(); 
+
+// 	foreach ($traders as $data) {
+
+// 		$trader_obj = App\Models\Trader::select('trader_id')->orderBy('trader_id', 'desc')->first();
+
+// 		$id = "T1001";
+
+// 	 	if($trader_obj != null){
+// 	 	    if($trader_obj->trader_id != null){
+// 	 	        $num = str_replace('T', '', $trader_obj->trader_id) + 1;
+// 	 	        $id = 'T' . $num;
+// 	 	    }
+// 	 	}
+
+// 		$emp = App\Models\Trader::find($data->id);
+// 		$emp->trader_id = $id;
+// 		$emp->save();
+
+// 	}
+
+// 	return 'Success';
 
 // });
 
