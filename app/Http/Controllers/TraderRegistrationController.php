@@ -137,11 +137,13 @@ class TraderRegistrationController extends Controller{
             }
 
         }elseif ($request->ft == 'bcyc') {
-            
+
+            $page = $request->rt == 'A' ? 'list_bcyc_br' : 'list_bcyc_a';
+
             $trader_registrations = $this->trader_reg_repo->getByCropYearId_Category($request->bcyc_cy, $request->bcyc_tc);
             $crop_year = $this->cy_repo->findByCropYearId($request->bcyc_cy);
 
-            return view('printables.trader_registration.list_bcyc')->with([
+            return view('printables.trader_registration.'.$page.'')->with([
                 'trader_registrations' => $trader_registrations,
                 'crop_year' => $crop_year
             ]);

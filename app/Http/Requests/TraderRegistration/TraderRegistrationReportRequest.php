@@ -25,8 +25,9 @@ class TraderRegistrationReportRequest extends FormRequest{
             'bdc_dt'=>'sometimes|required|date_format:"m/d/Y"',
             'bdc_tc'=>'sometimes|nullable|string|max:11',
 
-            'bcyc_cy'=>'sometimes|nullable|string|max:11',
+            'bcyc_cy'=>'sometimes|required|string|max:11',
             'bcyc_tc'=>'sometimes|nullable|string|max:11',
+            'bcyc_rt'=>'sometimes|required|string|max:11',
 
         ];
 

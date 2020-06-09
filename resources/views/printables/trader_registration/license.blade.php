@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Purchase Order</title>
+	<title>Trader Certification</title>
 	<link rel="stylesheet" href="{{ asset('template/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('template/bower_components/font-awesome/css/font-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('template/dist/css/AdminLTE.min.css') }}">

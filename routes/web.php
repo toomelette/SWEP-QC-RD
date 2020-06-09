@@ -64,25 +64,25 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 /** Testing **/
 // Route::get('/dashboard/test', function(){
 
-// 	$traders = App\Models\Trader::get(); 
+// 	$trader_regs = App\Models\TraderRegistration::get(); 
 
-// 	foreach ($traders as $data) {
+// 	foreach ($trader_regs as $data) {
 
-// 		$trader_obj = App\Models\Trader::select('trader_id')->orderBy('trader_id', 'desc')->first();
+		// $trader_reg_obj = App\Models\TraderRegistration::select('trader_reg_id')->orderBy('trader_reg_id', 'desc')->first();
 
-// 		$id = "T1001";
+		// $id = "TR1001";
 
-// 	 	if($trader_obj != null){
-// 	 	    if($trader_obj->trader_id != null){
-// 	 	        $num = str_replace('T', '', $trader_obj->trader_id) + 1;
-// 	 	        $id = 'T' . $num;
-// 	 	    }
-// 	 	}
-
-// 		$emp = App\Models\Trader::find($data->id);
-// 		$emp->trader_id = $id;
-// 		$emp->save();
-
+	 // 	if($trader_reg_obj != null){
+	 // 	    if($trader_reg_obj->trader_reg_id != null){
+	 // 	        $num = str_replace('TR', '', $trader_reg_obj->trader_reg_id) + 1;
+	 // 	        $id = 'TR' . $num;
+	 // 	    }
+	 // 	}
+	//	$trader = App\Models\Trader::where('tin', $data->trader_id)->first();
+// 		$trader_reg = App\Models\TraderRegistration::find($data->id);
+// 		$trader_reg->slug = Illuminate\Support\Str::random(16);
+// 		$trader_reg->save();
+	
 // 	}
 
 // 	return 'Success';

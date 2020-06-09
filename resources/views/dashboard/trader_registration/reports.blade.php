@@ -77,11 +77,15 @@
           <input type="hidden" id="ft" name="ft" value="bcyc">
           
           {!! __form::select_dynamic(
-            '3', 'bcyc_cy', 'Crop Year', old('bcyc_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('bcyc_cy'), $errors->first('bcyc_cy'), 'select2', ''
+            '3', 'bcyc_cy', 'Crop Year *', old('bcyc_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('bcyc_cy'), $errors->first('bcyc_cy'), 'select2', ''
           ) !!}
 
           {!! __form::select_dynamic(
             '3', 'bcyc_tc', 'Category', old('bcyc_tc'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('bcyc_tc'), $errors->first('bcyc_tc'), 'select2', ''
+          ) !!}
+
+          {!! __form::select_static(
+            '3', 'bcyc_rt', 'Type *', old('bcyc_rt'), ['By Region' => 'BR', 'Alphabetical' => 'A'], $errors->has('bcyc_rt'), $errors->first('bcyc_rt'), '', ''
           ) !!}
 
         </div>
