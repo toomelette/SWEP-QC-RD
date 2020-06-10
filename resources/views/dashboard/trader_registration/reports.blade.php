@@ -35,7 +35,7 @@
           ) !!}
 
           {!! __form::select_dynamic(
-            '3', 'bdc_tc', 'Category', old('bdc_tc'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('bdc_tc'), $errors->first('bdc_tc'), 'select2', ''
+            '3', 'bdc_tc', 'Trader Category *', old('bdc_tc'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('bdc_tc'), $errors->first('bdc_tc'), 'select2', ''
           ) !!}
 
         </div>
@@ -81,7 +81,7 @@
           ) !!}
 
           {!! __form::select_dynamic(
-            '3', 'bcyc_tc', 'Category', old('bcyc_tc'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('bcyc_tc'), $errors->first('bcyc_tc'), 'select2', ''
+            '3', 'bcyc_tc', 'Trader Category *', old('bcyc_tc'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('bcyc_tc'), $errors->first('bcyc_tc'), 'select2', ''
           ) !!}
 
           {!! __form::select_static(

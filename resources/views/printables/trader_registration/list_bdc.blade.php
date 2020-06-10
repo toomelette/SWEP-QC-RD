@@ -1,63 +1,97 @@
+<?php
+
+  $cat = [
+
+    'TC1001' => 'DOMESTIC SUGAR TRADERS',
+    'TC1002' => 'INTERNATIONAL SUGAR TRADERS',
+    'TC1003' => 'DOMESTIC MOLASSES TRADERS',
+    'TC1004' => 'INTERNATIONAL MOLASSES TRADERS',
+    'TC1005' => 'MUSCOVADO TRADER',
+    'TC1006' => 'HFSC TRADER',
+
+  ];
+
+?>
+
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>List of Trader By Date / Category</title>
-	<link rel="stylesheet" href="{{ asset('template/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('template/bower_components/font-awesome/css/font-awesome.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('template/dist/css/AdminLTE.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('template/dist/css/skins/_all-skins.min.css') }}">
-
+  <title>List of Trader By Crop Year / Category</title>
+  <link rel="stylesheet" href="{{ asset('template/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('template/bower_components/font-awesome/css/font-awesome.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('template/dist/css/AdminLTE.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('template/dist/css/skins/_all-skins.min.css') }}">
 </head>
-<body onload="window.print();" onafterprint="window.close()">
 
-	<section class="invoice">
-      
-    <div class="row">
-      <div class="col-xs-12 table-responsive">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Crop Year</th>
-              <th>Category</th>
-              <th>Control No.</th>
-              <th>Reg. Date</th>
-              <th>Trader Name</th>
-              <th>Trader Address</th>
-              <th>Trader 2nd Address</th>
-              <th>Region</th>
-              <th>TIN</th>
-              <th>Tel No.</th>
-              <th>Officer</th>
-              <th>Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            @foreach($trader_registrations as $data)
+<body onload="window.print();" onafterprint="window.close()" style="font-size: 12px;">
 
-              <tr>
-                <td>{{ optional($data->cropYear)->name }}</td>
-                <td>{{ optional($data->traderCategory)->name }}</td>
-                <td>{{ $data->control_no }}</td>
-                <td>{{ $data->reg_date->format('m/d/Y') }}</td>
-                <td>{{ optional($data->trader)->name }}</td>
-                <td>{{ optional($data->trader)->address }}</td>
-                <td>{{ optional($data->trader)->address_second }}</td>
-                <td>{{ optional($data->trader)->region->name }}</td>
-                <td>{{ optional($data->trader)->tin }}</td>
-                <td>{{ optional($data->trader)->tel_no }}</td>
-                <td>{{ optional($data->trader)->officer }}</td>
-                <td>{{ optional($data->trader)->email }}</td>
-              </tr>
+<section class="invoice">
 
-            @endforeach
-          </tbody>
-        </table>
-      </div>
+  {{-- HEADER --}}
+  <div class="row" style="padding:10px; margin-bottom:10px; margin-top:40px;">
+    <div class="col-xs-12" style="text-align: center;">
+
+      @if (Request::get('bdc_tc') != null)
+        <span>LISTING OF REGISTERED {{ $cat[Request::get('bdc_tc')] }}</span><br>
+      @else
+        <span>LISTING OF REGISTERED TRADERS</span><br>
+      @endif
+      <span>As of {{ __dataType::date_scope(Request::get('bdc_df'), Request::get('bdc_dt')) }}</span>
     </div>
-  
+  </div>
 
+  <div class="row" id="content">
+    <div class="col-xs-12 table-responsive">
 
-  </section>
+      <table>
+
+        <thead style="border-top:1px solid; 
+                      border-bottom:1px solid;">
+          <tr>
+            <th style="width:40px;">#</td>
+            <th style="width:390px;">NAME & ADDRESS</td>
+            <th style="width:150px; text-align: center;">TIN</td>
+            <th style="width:150px; text-align: center;">TEL. NO. / FAX NO.</td>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <?php $i = 0; ?>
+
+          @foreach($trader_registrations as $tr_data)
+            @if (!empty($tr_data->trader))
+              <tr>
+                <td style="width:40px; vertical-align: text-top; padding-top:20px;">
+                  {{ $i += 1 }}
+                </td>
+                <td style="width:390px; padding-top:20px;">
+                  <b>{{ optional($tr_data->trader)->name }}</b><br>
+                  {{ optional($tr_data->trader)->address }}<br>
+                  {{ $tr_data->trader_officer }}<br>
+                  {{ $tr_data->trader_email }}<br>
+                </td>
+                <td style="width:150px; text-align: center; vertical-align: text-top; padding-top:20px;">
+                  {{ optional($tr_data->trader)->tin }}
+                </td>
+                <td style="width:150px; text-align: center; vertical-align: text-top; padding-top:20px;">
+                  {{ optional($tr_data->trader)->tel_no }}
+                </td>
+              </tr>
+            @endif
+          @endforeach
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>
 
 </body>
+
 </html>

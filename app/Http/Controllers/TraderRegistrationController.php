@@ -52,7 +52,7 @@ class TraderRegistrationController extends Controller{
             $this->session->flash('TRADER_REG_IS_EXIST','The Trader is already registered in this current Crop year!');
             $request->flash();
             return redirect()->back();
-
+            
         }
 
         $trader_reg = $this->trader_reg_repo->store($request);
@@ -138,15 +138,27 @@ class TraderRegistrationController extends Controller{
 
         }elseif ($request->ft == 'bcyc') {
 
-            $page = $request->rt == 'A' ? 'list_bcyc_br' : 'list_bcyc_a';
+            if ($request->bcyc_rt == 'A') {
 
-            $trader_registrations = $this->trader_reg_repo->getByCropYearId_Category($request->bcyc_cy, $request->bcyc_tc);
-            $crop_year = $this->cy_repo->findByCropYearId($request->bcyc_cy);
+                $trader_registrations = $this->trader_reg_repo->getByCropYearId_Category($request->bcyc_cy, $request->bcyc_tc);
+                $crop_year = $this->cy_repo->findByCropYearId($request->bcyc_cy);
 
-            return view('printables.trader_registration.'.$page.'')->with([
-                'trader_registrations' => $trader_registrations,
-                'crop_year' => $crop_year
-            ]);
+                return view('printables.trader_registration.list_bcyc_a')->with([
+                    'trader_registrations' => $trader_registrations,
+                    'crop_year' => $crop_year
+                ]);
+                
+            }elseif ($request->bcyc_rt == 'BR') {
+
+                $trader_registrations = $this->trader_reg_repo->getByCropYearId_Category($request->bcyc_cy, $request->bcyc_tc);
+                $crop_year = $this->cy_repo->findByCropYearId($request->bcyc_cy);
+
+                return view('printables.trader_registration.list_bcyc_br')->with([
+                    'trader_registrations' => $trader_registrations,
+                    'crop_year' => $crop_year
+                ]);
+                
+            }
             
         }
 

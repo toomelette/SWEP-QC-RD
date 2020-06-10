@@ -26,7 +26,7 @@
 	<link rel="stylesheet" href="{{ asset('template/dist/css/skins/_all-skins.min.css') }}">
 </head>
 
-<body onload="window.print();" onafterprint="window.close()">
+<body onload="window.print();" onafterprint="window.close()" style="font-size: 12px;">
 
 <section class="invoice">
 
@@ -78,20 +78,19 @@
                 @if (!empty($tr_data->trader))
                   @if ($tr_data->trader->region_id == $region_data->region_id)
                     <tr>
-                      <td style="width:40px; vertical-align: text-top;">
+                      <td style="width:40px; vertical-align: text-top; padding-top:10px;">
                         {{ $i += 1 }}
                       </td>
-                      <td style="width:390px;">
+                      <td style="width:390px; padding-top:10px;">
                         <b>{{ optional($tr_data->trader)->name }}</b><br>
                         {{ optional($tr_data->trader)->address }}<br>
                         {{ $tr_data->trader_officer }}<br>
                         {{ $tr_data->trader_email }}<br>
-                        <br>
                       </td>
-                      <td style="width:150px; text-align: center; vertical-align: text-top;">
+                      <td style="width:150px; text-align: center; vertical-align: text-top; padding-top:10px;">
                         {{ optional($tr_data->trader)->tin }}
                       </td>
-                      <td style="width:150px; text-align: center; vertical-align: text-top;">
+                      <td style="width:150px; text-align: center; vertical-align: text-top; padding-top:10px;">
                         {{ optional($tr_data->trader)->tel_no }}
                       </td>
                     </tr>

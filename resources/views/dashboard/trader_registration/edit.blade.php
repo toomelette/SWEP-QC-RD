@@ -25,21 +25,25 @@
             @csrf   
 
             {!! __form::select_dynamic(
-              '4', 'crop_year_id', 'Crop Year *', old('crop_year_id') ? old('crop_year_id') : $trader_reg->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', ''
+              '3', 'crop_year_id', 'Crop Year', old('crop_year_id') ? old('crop_year_id') : $trader_reg->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', ''
             ) !!}
 
             {!! __form::select_dynamic(
-              '4', 'trader_cat_id', 'Category *', old('trader_cat_id') ? old('trader_cat_id') : $trader_reg->trader_cat_id, $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('trader_cat_id'), $errors->first('trader_cat_id'), 'select2', ''
+              '3', 'trader_cat_id', 'Category', old('trader_cat_id') ? old('trader_cat_id') : $trader_reg->trader_cat_id, $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('trader_cat_id'), $errors->first('trader_cat_id'), 'select2', ''
             ) !!}
 
             {!! __form::textbox(
-              '4', 'control_no', 'text', 'Control No. *', 'Control No.', old('control_no') ? old('control_no') : $trader_reg->control_no, $errors->has('control_no'), $errors->first('control_no'), 'data-transform="uppercase"'
+              '3', 'control_no', 'text', 'Control No.', 'Control No.', old('control_no') ? old('control_no') : $trader_reg->control_no, $errors->has('control_no'), $errors->first('control_no'), 'data-transform="uppercase"'
+            ) !!}
+
+            {!! __form::datepicker(
+              '3', 'reg_date',  'Date of Registration', old('reg_date') ? old('reg_date') : $trader_reg->reg_date, $errors->has('reg_date'), $errors->first('reg_date')
             ) !!}
 
             <div class="col-md-12"></div>
 
             {!! __form::select_dynamic(
-              '11', 'trader_id', 'Trader *', old('trader_id') ? old('trader_id') : $trader_reg->trader_id, $global_traders_all, 'trader_id', 'name', $errors->has('trader_id'), $errors->first('trader_id'), 'select2', ''
+              '11', 'trader_id', 'Trader', old('trader_id') ? old('trader_id') : $trader_reg->trader_id, $global_traders_all, 'trader_id', 'name', $errors->has('trader_id'), $errors->first('trader_id'), 'select2', ''
             ) !!}
 
             <div class="col-md-1" style="padding-top:24px;">
@@ -49,15 +53,11 @@
             <div class="col-md-12"></div>
 
             {!! __form::textbox(
-              '4', 'trader_officer', 'text', 'Officer', 'Officer', old('trader_officer') ? old('trader_officer') : $trader_reg->trader_officer, $errors->has('trader_officer'), $errors->first('trader_officer'), ''
+              '6', 'trader_officer', 'text', 'Officer', 'Officer', old('trader_officer') ? old('trader_officer') : $trader_reg->trader_officer, $errors->has('trader_officer'), $errors->first('trader_officer'), ''
             ) !!}
 
             {!! __form::textbox(
-              '4', 'trader_email', 'text', 'Email', 'Email', old('trader_email') ? old('trader_email') : $trader_reg->trader_email, $errors->has('trader_email'), $errors->first('trader_email'), ''
-            ) !!}
-
-            {!! __form::datepicker(
-              '4', 'reg_date',  'Date of Registration *', old('reg_date') ? old('reg_date') : $trader_reg->reg_date, $errors->has('reg_date'), $errors->first('reg_date')
+              '6', 'trader_email', 'text', 'Email', 'Email', old('trader_email') ? old('trader_email') : $trader_reg->trader_email, $errors->has('trader_email'), $errors->first('trader_email'), ''
             ) !!}
 
           </div>
@@ -96,13 +96,13 @@
               <input type="hidden" id="tr_control_no" name="control_no">
 
               {!! __form::textbox(
-                '12', 'tr_name', 'text', 'Name *', 'Name', old('tr_name'), $errors->has('tr_name'), $errors->first('tr_name'), ''
+                '12', 'tr_name', 'text', 'Name', 'Name', old('tr_name'), $errors->has('tr_name'), $errors->first('tr_name'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
               {!! __form::textbox(
-                '6', 'tr_tin', 'text', 'TIN *', 'TIN', old('tr_tin'), $errors->has('tr_tin'), $errors->first('tr_tin'), ''
+                '6', 'tr_tin', 'text', 'TIN', 'TIN', old('tr_tin'), $errors->has('tr_tin'), $errors->first('tr_tin'), ''
               ) !!}
 
               {!! __form::select_dynamic(
@@ -112,7 +112,7 @@
               <div class="col-md-12"></div>
 
               {!! __form::textbox(
-                '6', 'tr_address', 'text', 'Address *', 'Address', old('tr_address'), $errors->has('tr_address'), $errors->first('tr_address'), ''
+                '6', 'tr_address', 'text', 'Address', 'Address', old('tr_address'), $errors->has('tr_address'), $errors->first('tr_address'), ''
               ) !!}
 
               {!! __form::textbox(

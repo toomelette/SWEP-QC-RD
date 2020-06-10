@@ -24,7 +24,7 @@
 	<link rel="stylesheet" href="{{ asset('template/dist/css/skins/_all-skins.min.css') }}">
 </head>
 
-<body onload="window.print();" onafterprint="window.close()">
+<body onload="window.print();" onafterprint="window.close()" style="font-size: 12px;">
 
 <section class="invoice">
 
@@ -41,7 +41,8 @@
 
       <table>
 
-        <thead  style="border-top:1px solid; border-bottom:1px solid;">
+        <thead style="border-top:1px solid; 
+                      border-bottom:1px solid;">
           <tr>
             <th style="width:40px;">#</td>
             <th style="width:390px;">NAME & ADDRESS</td>
@@ -57,20 +58,19 @@
           @foreach($trader_registrations as $tr_data)
             @if (!empty($tr_data->trader))
               <tr>
-                <td style="width:40px; vertical-align: text-top;">
+                <td style="width:40px; vertical-align: text-top; padding-top:20px;">
                   {{ $i += 1 }}
                 </td>
-                <td style="width:390px;">
+                <td style="width:390px; padding-top:20px;">
                   <b>{{ optional($tr_data->trader)->name }}</b><br>
                   {{ optional($tr_data->trader)->address }}<br>
                   {{ $tr_data->trader_officer }}<br>
                   {{ $tr_data->trader_email }}<br>
-                  <br>
                 </td>
-                <td style="width:150px; text-align: center; vertical-align: text-top;">
+                <td style="width:150px; text-align: center; vertical-align: text-top; padding-top:20px;">
                   {{ optional($tr_data->trader)->tin }}
                 </td>
-                <td style="width:150px; text-align: center; vertical-align: text-top;">
+                <td style="width:150px; text-align: center; vertical-align: text-top; padding-top:20px;">
                   {{ optional($tr_data->trader)->tel_no }}
                 </td>
               </tr>
