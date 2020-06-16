@@ -7,12 +7,15 @@ use App\Core\Interfaces\TraderInterface;
 use App\Http\Requests\Trader\TraderFormRequest;
 use App\Http\Requests\Trader\TraderSFTRFormRequest;
 use App\Http\Requests\Trader\TraderFilterRequest;
+use App\Http\Requests\Trader\TraderRenewLicenseFormRequest;
 
 
 class TraderController extends Controller{
 
 
+
     protected $trader_repo;
+
 
 
     public function __construct(TraderInterface $trader_repo){
@@ -101,6 +104,15 @@ class TraderController extends Controller{
         $trader = $this->trader_repo->destroy($slug);
         $this->event->fire('trader.destroy', $trader);
         return redirect()->back();
+
+    }
+
+    
+
+
+    public function renewLicensePost($slug, TraderRenewLicenseFormRequest $request){
+
+        dd($request);
 
     }
 

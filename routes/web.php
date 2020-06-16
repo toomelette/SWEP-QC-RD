@@ -43,11 +43,12 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** TRADERS **/
-	Route::post('/trader_registration/store_from_tr', 'TraderController@storeFromTR')->name('trader.store_from_tr');
+	Route::post('/trader/store_from_tr', 'TraderController@storeFromTR')->name('trader.store_from_tr');
+	Route::post('/trader/renew_license_post/{slug}', 'TraderController@renewLicensePost')->name('trader.renew_license_post');
 	Route::resource('trader', 'TraderController');
 
 
-	/** TRADERS CATEGORY **/
+	/** TRADERS Registration **/
 	Route::get('/trader_registration/print/{slug}', 'TraderRegistrationController@print')->name('trader_registration.print');
 	Route::get('/trader_registration/reports', 'TraderRegistrationController@reports')->name('trader_registration.reports');
 	Route::get('/trader_registration/reports_output', 'TraderRegistrationController@reportsOutput')->name('trader_registration.reports_output');

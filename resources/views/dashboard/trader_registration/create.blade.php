@@ -13,7 +13,7 @@
         </div> 
       </div>
 
-      <form method="POST" action="{{ route('dashboard.trader_registration.store') }}">
+      <form method="POST" action="{{ route('dashboard.trader_registration.store') }}" >
 
         <div class="box-body">
           <div class="col-md-12">

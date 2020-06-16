@@ -205,7 +205,7 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
         }
 
         return $trader_reg->select('trader_id', 'trader_cat_id', 'crop_year_id', 'trader_officer', 'trader_email', 'control_no', 'reg_date', 'signatory')
-                          ->with('trader', 'traderCategory', 'cropYear')
+                          ->with('trader','trader.region', 'traderCategory', 'cropYear')
                           ->get();
 
     }

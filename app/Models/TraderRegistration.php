@@ -53,9 +53,6 @@ class TraderRegistration extends Model{
         return $this->belongsTo('App\Models\CropYear','crop_year_id','crop_year_id');
     }
 
-    
-
-
 
 
 

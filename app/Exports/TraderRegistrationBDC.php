@@ -22,22 +22,22 @@ class TraderRegistrationBDC implements FromArray, WithHeadings{
 
         $list = [];
 
-        foreach ($this->trader_registrations->sortBy('trader.name') as $data) {
-                
+        foreach ($this->trader_registrations as $data) {
+
             $list[] = [
 
-                'Crop Year' => $data->cropYear->name,
-                'Category' => $data->traderCategory->name,
+                'Crop Year' => optional($data->cropYear)->name,
+                'Category' => optional($data->traderCategory)->name,
                 'Control No' => $data->control_no,
-                'Registration Date' => $data->reg_date->format('m/d/Y'),
-                'Trader Name' => $data->trader->name,
-                'Trader Address' => $data->trader->address,
-                'Trader Second Address' => $data->trader->address_second,
-                'Region' => $data->trader->region->name,
-                'TIN' => $data->trader->tin,
-                'Tel No' => $data->trader->tel_no,
-                'Officer' => $data->trader->officer,
-                'Email' => $data->trader->email,
+                'Registration Date' => optional($data->reg_date)->format('m/d/Y'),
+                'Trader Name' => optional($data->trader)->name,
+                'Trader Address' => optional($data->trader)->address,
+                'Trader Second Address' => optional($data->trader)->address_second,
+                'Region' => optional(optional($data->trader)->region)->name,
+                'TIN' => optional($data->trader)->tin,
+                'Tel No' => optional($data->trader)->tel_no,
+                'Officer' => optional($data->trader)->officer,
+                'Email' => optional($data->trader)->email,
 
             ];
 

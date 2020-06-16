@@ -10,16 +10,6 @@ class CropYear extends Model{
 
     protected $table = 'crop_years';  
 	public $timestamps = false;
-
-
-
-    protected $attributes = [
-
-        'crop_year_id' => '',
-        'name' => '',
-
-    ];
-
-    
+	
 
 }

@@ -20,8 +20,15 @@ class CropYearComposer{
 
 
     public function compose($view){
+        
         $crop_years = $this->crop_year_repo->getAll();
-    	$view->with('global_crop_years_all', $crop_years);
+        $current_cy = $this->crop_year_repo->currentCropYear();
+    	
+    	$view->with([
+    		'global_crop_years_all' => $crop_years,
+    		'global_current_cy' => $current_cy,
+    	]);
+
     }
 
 

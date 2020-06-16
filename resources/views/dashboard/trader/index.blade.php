@@ -40,7 +40,7 @@
           <tr>
             <th>@sortablelink('name', 'Name')</th>
             <th>@sortablelink('address', 'Address')</th>
-            <th style="width: 150px">Action</th>
+            <th style="width: 220px">Action</th>
           </tr>
           @foreach($traders as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
@@ -48,6 +48,11 @@
               <td id="mid-vert">{{ $data->address }}</td>
               <td id="mid-vert">
                 <div class="btn-group">
+                  @if(in_array('dashboard.trader.renew_license_post', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="rl_button" data-action="rl" data-url="{{ route('dashboard.trader.renew_license_post', $data->slug) }}">
+                      Renew License
+                    </a>
+                  @endif
                   @if(in_array('dashboard.trader.edit', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.trader.edit', $data->slug) }}">
                       <i class="fa fa-pencil"></i>
@@ -88,6 +93,53 @@
 
   {!! __html::modal_delete('trader_delete') !!}
 
+  <div class="modal fade" id="trader_rl" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">
+            <i class="fa fa-certificate"></i> &nbsp;Trader's License Renewal
+          </h4>
+        </div>
+        <div class="modal-body" id="rl_body">
+          <p>Crop Year: {{ $global_current_cy->name }}</p>
+          <form method="POST" id="form" autocomplete="off">
+            
+            @csrf
+
+            <div class="row">
+
+              <input type="hidden" name="crop_year_id" value="{{ $global_current_cy->crop_year_id }}">
+
+              {!! __form::select_dynamic(
+                '12', 'trader_cat_id', 'Category', old('trader_cat_id'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('trader_cat_id'), $errors->first('trader_cat_id'), 'select2', 'required'
+              ) !!}
+
+              {!! __form::textbox(
+                '12', 'control_no', 'text', 'Control No.', 'Control No.', old('control_no'), $errors->has('control_no'), $errors->first('control_no'), 'data-transform="uppercase" required'
+              ) !!}
+
+              {!! __form::datepicker(
+                '12', 'reg_date',  'Date of Registration', old('reg_date') ? old('reg_date') : Carbon::now()->format('m/d/Y'), $errors->has('reg_date'), $errors->first('reg_date')
+              ) !!}
+
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save <i class="fa fa-fw fa-save"></i></button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
 @endsection 
 
 
@@ -97,6 +149,13 @@
   <script type="text/javascript">
 
     {!! __js::button_modal_confirm_delete_caller('trader_delete') !!}
+
+    $(document).on("click", "#rl_button", function () {
+      if($(this).data("action") == "rl"){
+        $("#trader_rl").modal("show");
+        $("#rl_body #form").attr("action", $(this).data("url"));
+      }
+    });
 
     @if(Session::has('TRADER_UPDATE_SUCCESS'))
       {!! __js::toast(Session::get('TRADER_UPDATE_SUCCESS')) !!}

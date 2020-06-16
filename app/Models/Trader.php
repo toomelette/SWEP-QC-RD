@@ -45,6 +45,10 @@ class Trader extends Model{
     	return $this->belongsTo('App\Models\Region','region_id','region_id');
    	}
 
+    public function traderRegistration() {
+        return $this->hasMany('App\Models\TraderRegistration','trader_id','trader_id');
+    }
+
     
 
 

@@ -50,14 +50,12 @@ class ViewComposerServiceProvider extends ServiceProvider{
         View::composer(['dashboard.trader_registration.create', 
                         'dashboard.trader_registration.edit', 
                         'dashboard.trader_registration.index', 
-                        'dashboard.trader_registration.reports'], 'App\Core\ViewComposers\TraderCategoryComposer');
+                        'dashboard.trader_registration.reports',
+                        'dashboard.trader.index',], 'App\Core\ViewComposers\TraderCategoryComposer');
         
 
         // Crop Year
-        View::composer(['dashboard.trader_registration.create', 
-                        'dashboard.trader_registration.edit', 
-                        'dashboard.trader_registration.index', 
-                        'dashboard.trader_registration.reports'], 'App\Core\ViewComposers\CropYearComposer');
+        View::composer(['dashboard.trader.index',], 'App\Core\ViewComposers\CropYearComposer');
 
         
     }
@@ -75,6 +73,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
 
     
     }
+
+
 
 
 
