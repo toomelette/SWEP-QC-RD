@@ -24,14 +24,14 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
 
 
 
-    public function fetch($request){
+    public function fetchByTraderId($request, $trader_id){
 
         $key = str_slug($request->fullUrl(), '_');
         $entries = isset($request->e) ? $request->e : 20;
 
-        $trader_registrations = $this->cache->remember('trader_registrations:fetch:' . $key, 240, 
+        $trader_registrations = $this->cache->remember('trader_registrations:fetchByTraderId:'. $trader_id .':'. $key, 240, 
 
-            function() use ($request, $entries){
+            function() use ($request, $trader_id, $entries){
 
                 $trader_reg = $this->trader_reg->newQuery();
 
@@ -58,7 +58,9 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
                     $trader_reg->whereBetween('reg_date',[$df, $dt]);
                 }
 
-                return $trader_reg->select('trader_id', 'trader_cat_id', 'control_no', 'reg_date', 'slug')
+                return $trader_reg->select('crop_year_id', 'trader_cat_id', 'control_no', 'reg_date', 'slug')
+                                  ->with('cropYear', 'traderCategory')
+                                  ->where('trader_id', $trader_id)
                                   ->sortable()
                                   ->orderBy('reg_date', 'desc')
                                   ->paginate($entries);
@@ -72,18 +74,18 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
 
 
 
-    public function store($request){
+    public function store($request, $trader){
 
         $trader_reg = new TraderRegistration;
         $trader_reg->trader_reg_id = $this->getTraderRegIdInc();
         $trader_reg->slug = $this->str->random(16);
         $trader_reg->control_no = $request->control_no;
-        $trader_reg->trader_id = $request->trader_id;
-        $trader_reg->trader_officer = $request->trader_officer;
-        $trader_reg->trader_email = $request->trader_email;
         $trader_reg->trader_cat_id = $request->trader_cat_id;
         $trader_reg->crop_year_id = $request->crop_year_id;
         $trader_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
+        $trader_reg->trader_id = $trader->trader_id;
+        $trader_reg->trader_officer = $trader->officer;
+        $trader_reg->trader_email = $trader->email;
         $trader_reg->signatory = 'HERMENEGILDO R. SERAFICA';
         $trader_reg->created_at = $this->carbon->now();
         $trader_reg->updated_at = $this->carbon->now();
@@ -100,24 +102,52 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
 
 
 
-    public function update($request, $slug){
+    // public function store($request){
 
-        $trader_reg = $this->findBySlug($slug);
-        $trader_reg->control_no = $request->control_no;
-        $trader_reg->trader_id = $request->trader_id;
-        $trader_reg->trader_officer = $request->trader_officer;
-        $trader_reg->trader_email = $request->trader_email;
-        $trader_reg->trader_cat_id = $request->trader_cat_id;
-        $trader_reg->crop_year_id = $request->crop_year_id;
-        $trader_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
-        $trader_reg->updated_at = $this->carbon->now();
-        $trader_reg->ip_updated = request()->ip();
-        $trader_reg->user_updated = $this->auth->user()->user_id;
-        $trader_reg->save();
+    //     $trader_reg = new TraderRegistration;
+    //     $trader_reg->trader_reg_id = $this->getTraderRegIdInc();
+    //     $trader_reg->slug = $this->str->random(16);
+    //     $trader_reg->control_no = $request->control_no;
+    //     $trader_reg->trader_id = $request->trader_id;
+    //     $trader_reg->trader_officer = $request->trader_officer;
+    //     $trader_reg->trader_email = $request->trader_email;
+    //     $trader_reg->trader_cat_id = $request->trader_cat_id;
+    //     $trader_reg->crop_year_id = $request->crop_year_id;
+    //     $trader_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
+    //     $trader_reg->signatory = 'HERMENEGILDO R. SERAFICA';
+    //     $trader_reg->created_at = $this->carbon->now();
+    //     $trader_reg->updated_at = $this->carbon->now();
+    //     $trader_reg->ip_created = request()->ip();
+    //     $trader_reg->ip_updated = request()->ip();
+    //     $trader_reg->user_created = $this->auth->user()->user_id;
+    //     $trader_reg->user_updated = $this->auth->user()->user_id;
+    //     $trader_reg->save();
         
-        return $trader_reg;
+    //     return $trader_reg;
 
-    }
+    // }
+
+
+
+
+    // public function update($request, $slug){
+
+    //     $trader_reg = $this->findBySlug($slug);
+    //     $trader_reg->control_no = $request->control_no;
+    //     $trader_reg->trader_id = $request->trader_id;
+    //     $trader_reg->trader_officer = $request->trader_officer;
+    //     $trader_reg->trader_email = $request->trader_email;
+    //     $trader_reg->trader_cat_id = $request->trader_cat_id;
+    //     $trader_reg->crop_year_id = $request->crop_year_id;
+    //     $trader_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
+    //     $trader_reg->updated_at = $this->carbon->now();
+    //     $trader_reg->ip_updated = request()->ip();
+    //     $trader_reg->user_updated = $this->auth->user()->user_id;
+    //     $trader_reg->save();
+        
+    //     return $trader_reg;
+
+    // }
 
 
 

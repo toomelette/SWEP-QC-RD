@@ -42,7 +42,8 @@ class TraderRepository extends BaseRepository implements TraderInterface {
                        ->orWhere('email', 'LIKE', '%'. $request->q .'%');
             }
 
-            return $trader->select('name', 'address', 'slug')
+            return $trader->select('name', 'trader_id', 'slug')
+                          ->with('traderRegistration')
                           ->sortable()
                           ->orderBy('updated_at', 'desc')
                           ->paginate($entries);

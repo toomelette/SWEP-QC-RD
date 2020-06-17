@@ -26,6 +26,7 @@ class TraderSubscriber extends BaseSubscriber{
         $events->listen('trader.store', 'App\Core\Subscribers\TraderSubscriber@onStore');
         $events->listen('trader.update', 'App\Core\Subscribers\TraderSubscriber@onUpdate');
         $events->listen('trader.destroy', 'App\Core\Subscribers\TraderSubscriber@onDestroy');
+        $events->listen('trader.renew_license', 'App\Core\Subscribers\TraderSubscriber@renewLicense');
 
     }
 
@@ -68,6 +69,19 @@ class TraderSubscriber extends BaseSubscriber{
 
         $this->session->flash('TRADER_DELETE_SUCCESS', 'The Trader has been successfully deleted!');
         $this->session->flash('TRADER_DELETE_SUCCESS_SLUG', $trader->slug);
+
+    }
+
+
+
+    public function renewLicense($trader, $trader_reg){
+
+       
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:trader_registrations:isTraderExistInCY_CAT:'.$trader_reg->crop_year_id.':'.$trader_reg->trader_id.':*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:fetch:*');
+
+        $this->session->flash('TRADER_RENEW_LICENSE_SUCCESS', 'The Trader has been successfully registered!');
+        $this->session->flash('TRADER_RENEW_LICENSE_SUCCESS_SLUG', $trader->slug);
 
     }
 

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 
 use App\Core\Interfaces\TraderInterface;
+use App\Core\Interfaces\TraderRegistrationInterface;
 use App\Http\Requests\Trader\TraderFormRequest;
 use App\Http\Requests\Trader\TraderSFTRFormRequest;
 use App\Http\Requests\Trader\TraderFilterRequest;
 use App\Http\Requests\Trader\TraderRenewLicenseFormRequest;
+use App\Http\Requests\Trader\TraderRenewalHistoryFilterRequest;
 
 
 class TraderController extends Controller{
@@ -15,11 +17,14 @@ class TraderController extends Controller{
 
 
     protected $trader_repo;
+    protected $trader_reg_repo;
 
 
 
-    public function __construct(TraderInterface $trader_repo){
+    public function __construct(TraderInterface $trader_repo, 
+                                TraderRegistrationInterface $trader_reg_repo){
         $this->trader_repo = $trader_repo;
+        $this->trader_reg_repo = $trader_reg_repo;
         parent::__construct();
     }
 
@@ -112,7 +117,35 @@ class TraderController extends Controller{
 
     public function renewLicensePost($slug, TraderRenewLicenseFormRequest $request){
 
-        dd($request);
+        $trader = $this->trader_repo->findbySlug($slug);
+
+        if ($this->trader_reg_repo->isTraderExistInCY_CAT($request->crop_year_id, $trader->trader_id, $request->trader_cat_id)) {
+            
+            $this->session->flash('TRADER_REG_IS_EXIST','The Trader is already registered in the current crop year and category!');
+            $this->session->flash('TRADER_REG_IS_EXIST_SLUG', $slug);
+
+            $request->flash();
+            return redirect()->back();
+            
+        }
+
+        $trader_reg = $this->trader_reg_repo->store($request, $trader);
+
+        $this->event->fire('trader.renew_license', [ $trader, $trader_reg ]);
+        return redirect()->back();
+
+    }
+
+    
+
+
+    public function renewalHistory($slug, TraderRenewalHistoryFilterRequest $request){
+
+        $trader = $this->trader_repo->findbySlug($slug);
+        $trader_reg_list = $this->trader_reg_repo->fetchByTraderId($request, $trader->trader_id);
+
+        $request->flash();
+        return view('dashboard.trader.renewal_history')->with('trader_reg_list', $trader_reg_list);
 
     }
 

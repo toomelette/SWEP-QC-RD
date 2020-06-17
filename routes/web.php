@@ -45,6 +45,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	/** TRADERS **/
 	Route::post('/trader/store_from_tr', 'TraderController@storeFromTR')->name('trader.store_from_tr');
 	Route::post('/trader/renew_license_post/{slug}', 'TraderController@renewLicensePost')->name('trader.renew_license_post');
+	Route::get('/trader/renewal_history/{slug}', 'TraderController@renewalHistory')->name('trader.renewal_history');
 	Route::resource('trader', 'TraderController');
 
 
