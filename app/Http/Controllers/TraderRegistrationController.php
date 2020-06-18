@@ -19,56 +19,14 @@ class TraderRegistrationController extends Controller{
     protected $trader_reg_repo;
     protected $cy_repo;
 
+    protected $administrator = 'HERMENEGILDO R. SERAFICA';
+
 
     public function __construct(TraderRegistrationInterface $trader_reg_repo,
                                 CropYearInterface $cy_repo){
         $this->trader_reg_repo = $trader_reg_repo;
         $this->cy_repo = $cy_repo;
         parent::__construct();
-    }
-
-
-    
-    public function index(TraderRegistrationFilterRequest $request){
-
-        $trader_registrations = $this->trader_reg_repo->fetch($request);
-        $request->flash();
-        return view('dashboard.trader_registration.index')->with('trader_registrations', $trader_registrations);
-
-    }
-
-    
-
-    public function create(){
-        return view('dashboard.trader_registration.create');
-    }
-
-   
-
-    public function store(TraderRegistrationFormRequest $request){
-
-        if ($this->trader_reg_repo->isTraderExistInCY_CAT($request->crop_year_id, $request->trader_id, $request->trader_cat_id)) {
-            
-            $this->session->flash('TRADER_REG_IS_EXIST','The Trader is already registered in this current Crop year!');
-            $request->flash();
-            return redirect()->back();
-            
-        }
-
-        $trader_reg = $this->trader_reg_repo->store($request);
-        
-        $this->event->fire('trader_reg.store', $trader_reg);
-        return redirect()->back();
-
-    }
- 
-
-
-    public function edit($slug){
-
-        $trader_reg = $this->trader_reg_repo->findbySlug($slug);
-        return view('dashboard.trader_registration.edit')->with('trader_reg', $trader_reg);
-
     }
  
 
@@ -91,14 +49,163 @@ class TraderRegistrationController extends Controller{
 
 
 
-    public function update(TraderRegistrationFormRequest $request, $slug){
 
-        $trader_reg = $this->trader_reg_repo->update($request, $slug);
+    public function downloadWordFile($slug){
 
-        $this->event->fire('trader_reg.update', $trader_reg);
-        return redirect()->route('dashboard.trader_registration.index');
+        $trader_reg = $this->trader_reg_repo->findbySlug($slug);
+
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+
+
+        $phpWord->addParagraphStyle('p2Style', array('align'=>'both', 'spaceAfter'=>100));
+
+        // page format
+        $section = $phpWord->addSection([
+            "paperSize" => "Legal",
+            'marginTop' => 6000
+        ]);
+
+        // 1st Paragraph
+        $section = $section->addTextRun();
+
+        // txt
+        $txt = '               ';
+        $section->addText($txt);
+
+        // trader name
+        $trader_name = ''.optional($trader_reg->trader)->name;
+        $section->addText(
+            $trader_name, 
+            [
+                'name' => 'Arial', 
+                'size' => 12, 
+                'underline' => 'single',
+                'bold' => true,
+            ]
+        );
+
+        // txt
+        $txt = ' of';
+        $section->addText($txt, ['name' => 'Arial','size' => 12,]);
+
+        // trader address
+        $trader_address = ' '.optional($trader_reg->trader)->address;
+        $section->addText($trader_address, [
+            'name' => 'Arial', 
+            'size' => 12, 
+            'bold' => true,
+        ]);
+
+        // txt
+        $txt = ', is hereby licensed with this Office to operate as DOMESTIC MOLASSES TRADER during the ';
+        $section->addText($txt, ['name' => 'Arial','size' => 12,]);
+
+        // crop year
+        $cy = ' '.optional($trader_reg->cropYear)->name;
+        $section->addText($cy, ['name' => 'Arial','size' => 12,'bold' => true]);
+
+        // txt
+        $txt = ' Crop Year. Said Trader is hereby authorized to';
+        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+
+        // txt
+        $txt = ' withdraw purchased';
+        $section->addText($txt, ['name' => 'Arial','size' => 12,'bold' => true]);
+
+        // txt
+        $txt = ' molasses from the warehouse of any mill or refinery subject to rules and regulations issued by this Office pursuant thereto.';
+        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+
+
+
+        // 2nd Paragraph
+        $section->addTextBreak();
+        $section->addTextBreak();
+
+        $txt = '               ';
+        $section->addText($txt);
+
+        // txt
+        $txt = 'The licensed/registered trader is required to submit a semi-annual report of its trading activities ';
+        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+
+        // txt
+        $txt = 'and such other report/s as maybe required by SRA. For its failure to submit the same, the trader shall be subject to the provision ';
+        $section->addText($txt, ['name' => 'Arial','size' => 12, 'bold' => true]);
+
+        // txt
+        $txt = 'of SRA Sugar Order No.10, Series of 2009-2010, dated February 26, 2010 ';
+        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+
+        // txt
+        $txt = 'and other pertinent SRA rules and regulations.';
+        $section->addText($txt, ['name' => 'Arial','size' => 12, 'bold' => true]);
+
+
+
+        // 3rd Paragraph
+        $section->addTextBreak();
+        $section->addTextBreak();
+
+        $txt = '               ';
+        $section->addText($txt);
+
+        // txt
+        $txt = 'This license shall be posted conspicuously at the place where business/warehouse is located and shall be presented and/or   surrendered to concerned authorities upon demand. In case of closure of business, this License to Operate must be surrendered to this Office for official retirement.';
+        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+
+
+
+        // 4th Paragraph
+        $section->addTextBreak();
+        $section->addTextBreak();
+        
+        $txt = '               ';
+        $section->addText($txt);
+
+        // txt
+        $txt = 'Any erasure/alteration on this certificate/license will invalidate same. NOT TRANSFERABLE AND NOT VALID WITHOUT OFFICIAL SEAL OF THIS OFFICE.';
+        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+
+
+
+        // 5th Paragraph
+        $section->addTextBreak();
+        $section->addTextBreak();
+        
+        $txt = '               ';
+        $section->addText($txt);
+
+        // txt
+        $txt = 'Given this ' . $this->__dataType->date_parse($trader_reg->reg_date, "jS") .' day of '. $this->__dataType->date_parse($trader_reg->reg_date, "F Y") .'.';
+        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+
+
+
+        // Signatory
+        $section->addTextBreak();
+        $section->addTextBreak();
+        
+        $txt = '                                               ' . $this->administrator;
+        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+        
+        $txt = '                                               Administrator';
+        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+
+
+
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+
+        try {
+            $objWriter->save(storage_path('certificate.docx'));
+        } catch (Exception $e) {
+            abort(500);
+        }
+
+        return response()->download(storage_path('certificate.docx'));
 
     }
+
 
 
 
@@ -109,6 +216,7 @@ class TraderRegistrationController extends Controller{
         return redirect()->back();
 
     }
+
 
 
 

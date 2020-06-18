@@ -102,77 +102,10 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
 
 
 
-    // public function store($request){
-
-    //     $trader_reg = new TraderRegistration;
-    //     $trader_reg->trader_reg_id = $this->getTraderRegIdInc();
-    //     $trader_reg->slug = $this->str->random(16);
-    //     $trader_reg->control_no = $request->control_no;
-    //     $trader_reg->trader_id = $request->trader_id;
-    //     $trader_reg->trader_officer = $request->trader_officer;
-    //     $trader_reg->trader_email = $request->trader_email;
-    //     $trader_reg->trader_cat_id = $request->trader_cat_id;
-    //     $trader_reg->crop_year_id = $request->crop_year_id;
-    //     $trader_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
-    //     $trader_reg->signatory = 'HERMENEGILDO R. SERAFICA';
-    //     $trader_reg->created_at = $this->carbon->now();
-    //     $trader_reg->updated_at = $this->carbon->now();
-    //     $trader_reg->ip_created = request()->ip();
-    //     $trader_reg->ip_updated = request()->ip();
-    //     $trader_reg->user_created = $this->auth->user()->user_id;
-    //     $trader_reg->user_updated = $this->auth->user()->user_id;
-    //     $trader_reg->save();
-        
-    //     return $trader_reg;
-
-    // }
-
-
-
-
-    // public function update($request, $slug){
-
-    //     $trader_reg = $this->findBySlug($slug);
-    //     $trader_reg->control_no = $request->control_no;
-    //     $trader_reg->trader_id = $request->trader_id;
-    //     $trader_reg->trader_officer = $request->trader_officer;
-    //     $trader_reg->trader_email = $request->trader_email;
-    //     $trader_reg->trader_cat_id = $request->trader_cat_id;
-    //     $trader_reg->crop_year_id = $request->crop_year_id;
-    //     $trader_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
-    //     $trader_reg->updated_at = $this->carbon->now();
-    //     $trader_reg->ip_updated = request()->ip();
-    //     $trader_reg->user_updated = $this->auth->user()->user_id;
-    //     $trader_reg->save();
-        
-    //     return $trader_reg;
-
-    // }
-
-
-
-
     public function destroy($slug){
 
         $trader_reg = $this->findBySlug($slug);
         $trader_reg->delete();
-
-        return $trader_reg;
-
-    }
-
-
-
-
-    public function isTraderExistInCY_CAT($crop_year_id, $trader_id, $trader_cat_id){
-
-        $trader_reg = $this->cache->remember('trader_registrations:isTraderExistInCY_CAT:'.$crop_year_id.':'.$trader_id.':'.$trader_cat_id, 240, 
-            function() use ($crop_year_id, $trader_id, $trader_cat_id){
-                return $this->trader_reg->where('crop_year_id', $crop_year_id)
-                                        ->where('trader_id', $trader_id)
-                                        ->where('trader_cat_id', $trader_cat_id)
-                                        ->exists();
-        }); 
 
         return $trader_reg;
 
@@ -220,6 +153,24 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
 
 
 
+
+    public function isTraderExistInCY_CAT($crop_year_id, $trader_id, $trader_cat_id){
+
+        $trader_reg = $this->cache->remember('trader_registrations:isTraderExistInCY_CAT:'.$crop_year_id.':'.$trader_id.':'.$trader_cat_id, 240, 
+            function() use ($crop_year_id, $trader_id, $trader_cat_id){
+                return $this->trader_reg->where('crop_year_id', $crop_year_id)
+                                        ->where('trader_id', $trader_id)
+                                        ->where('trader_cat_id', $trader_cat_id)
+                                        ->exists();
+        }); 
+
+        return $trader_reg;
+
+    }
+
+
+
+
     public function getByRegDate_Category($df, $dt, $tc_id){
 
         $trader_reg = $this->trader_reg->newQuery();
@@ -260,6 +211,7 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
                           ->get();
 
     }
+
 
 
 

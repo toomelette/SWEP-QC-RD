@@ -29,8 +29,6 @@
           autocomplete="off" 
           action="{{ route('dashboard.trader_registration.index') }}">
 
-
-
     {{-- Advance Filters --}}
     {!! __html::filter_open() !!}
 
@@ -131,21 +129,22 @@
 
 
 
+
+
 @section('modals')
 
   {!! __html::modal_delete('trader_registration_delete') !!}
 
-
   {{-- TR UPDATE SUCCESS --}}
   @if(Session::has('TRADER_REG_UPDATE_SUCCESS'))
-
     {!! __html::modal_print(
       'tr_update', '<i class="fa fa-fw fa-check"></i> Saved!', Session::get('TRADER_REG_UPDATE_SUCCESS'), route('dashboard.trader_registration.show', Session::get('TRADER_REG_UPDATE_SUCCESS_SLUG'))
     ) !!}
-
   @endif
 
 @endsection 
+
+
 
 
 

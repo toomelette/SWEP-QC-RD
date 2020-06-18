@@ -26,7 +26,7 @@
   <section class="content">
     
     {{-- Form Start --}}
-    <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.trader.index') }}">
+    <form data-pjax class="form" id="filter_form" method="GET" action="{{ route('dashboard.trader.index') }}">
 
     <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
@@ -104,10 +104,50 @@
 
 @section('modals')
 
+
   {!! __html::modal_delete('trader_delete') !!}
 
+
+  {{-- TR UPDATE SUCCESS --}}
+  @if(Session::has('TRADER_RENEW_LICENSE_SUCCESS'))
+
+    <div class="modal fade" id="trader_renew_success">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"><i class="fa fa-fw fa-check"></i> Saved!</h4>
+          </div>
+          <div class="modal-body">
+            <p><p style="font-size: 17px;">{{ Session::get('TRADER_RENEW_LICENSE_SUCCESS') }}</p></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            @if(in_array('dashboard.trader_registration.show', $global_user_submenus))
+              <a href="{{ route('dashboard.trader_registration.show', Session::get('TRADER_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
+                 type="button" 
+                 class="btn btn-success">
+                Print
+              </a>
+            @endif
+            @if (in_array('dashboard.trader_registration.dl_word_file', $global_user_submenus))
+              <a href="{{ route('dashboard.trader_registration.dl_word_file', Session::get('TRADER_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
+                 type="button" 
+                 class="btn btn-primary">
+                Download Word File
+              </a>
+            @endif
+          </div>
+        </div>
+      </div>
+    </div>
+
+  @endif
+
+
+  {{-- TRADER IS EXIST --}}  
   @if(Session::has('TRADER_REG_IS_EXIST'))
-    {{-- TRADER IS EXIST --}}  
     <div class="modal fade modal-danger" data-backdrop="static" id="tr_is_exist">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -132,6 +172,7 @@
       </div>
     </div>
   @endif
+
 
   {{-- RENEW LICENSE FORM --}}
   <div class="modal fade" id="trader_rl" data-backdrop="static">
@@ -181,6 +222,7 @@
     </div>
   </div>
 
+
 @endsection 
 
 
@@ -227,7 +269,7 @@
     @endif
 
     @if(Session::has('TRADER_RENEW_LICENSE_SUCCESS'))
-      {!! __js::toast(Session::get('TRADER_RENEW_LICENSE_SUCCESS')) !!}
+      $('#trader_renew_success').modal('show');
     @endif
 
     @if(Session::has('TRADER_REG_IS_EXIST'))

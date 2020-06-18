@@ -51,8 +51,18 @@
               <td id="mid-vert">{{ __dataType::date_parse($data->reg_date, 'F d,Y') }}</td>
               <td id="mid-vert">
                 <div class="btn-group">
-                  @if(in_array('dashboard.trader.destroy', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.trader.destroy', $data->slug) }}">
+                  @if(in_array('dashboard.trader_registration.dl_word_file', $global_user_submenus))
+                    <a type="button" class="btn btn-primary" id="dwf_button" href="{{ route('dashboard.trader_registration.dl_word_file', $data->slug) }}">
+                      <i class="fa fa-download"></i> Download
+                    </a>
+                  @endif
+                  @if(in_array('dashboard.trader_registration.show', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="show_button" href="{{ route('dashboard.trader_registration.show', $data->slug) }}">
+                      <i class="fa fa-print"></i>
+                    </a>
+                  @endif
+                  @if(in_array('dashboard.trader_registration.destroy', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.trader_registration.destroy', $data->slug) }}">
                       <i class="fa fa-trash"></i>
                     </a>
                   @endif
@@ -88,7 +98,7 @@
 
 @section('modals')
 
-  {!! __html::modal_delete('trader_delete') !!}
+  {!! __html::modal_delete('trader_registration_delete') !!}
 
 @endsection 
 
@@ -102,8 +112,10 @@
 
   <script type="text/javascript">
 
-    @if(Session::has('TRADER_DELETE_SUCCESS'))
-      {!! __js::toast(Session::get('TRADER_DELETE_SUCCESS')) !!}
+    {!! __js::button_modal_confirm_delete_caller('trader_registration_delete') !!}
+
+    @if(Session::has('TRADER_REG_DELETE_SUCCESS'))
+      {!! __js::toast(Session::get('TRADER_REG_DELETE_SUCCESS')) !!}
     @endif
 
   </script>

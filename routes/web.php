@@ -23,19 +23,28 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** USER **/   
-	Route::post('/user/activate/{slug}', 'UserController@activate')->name('user.activate');
-	Route::post('/user/deactivate/{slug}', 'UserController@deactivate')->name('user.deactivate');
-	Route::post('/user/logout/{slug}', 'UserController@logout')->name('user.logout');
-	Route::get('/user/{slug}/reset_password', 'UserController@resetPassword')->name('user.reset_password');
-	Route::patch('/user/reset_password/{slug}', 'UserController@resetPasswordPost')->name('user.reset_password_post');
+	Route::post('/user/activate/{slug}', 'UserController@activate')
+	->name('user.activate');
+	Route::post('/user/deactivate/{slug}', 'UserController@deactivate')
+	->name('user.deactivate');
+	Route::post('/user/logout/{slug}', 'UserController@logout')
+	->name('user.logout');
+	Route::get('/user/{slug}/reset_password', 'UserController@resetPassword')
+	->name('user.reset_password');
+	Route::patch('/user/reset_password/{slug}', 'UserController@resetPasswordPost')
+	->name('user.reset_password_post');
 	Route::resource('user', 'UserController');
 
 
 	/** PROFILE **/
-	Route::get('/profile', 'ProfileController@details')->name('profile.details');
-	Route::patch('/profile/update_account_username/{slug}', 'ProfileController@updateAccountUsername')->name('profile.update_account_username');
-	Route::patch('/profile/update_account_password/{slug}', 'ProfileController@updateAccountPassword')->name('profile.update_account_password');
-	Route::patch('/profile/update_account_color/{slug}', 'ProfileController@updateAccountColor')->name('profile.update_account_color');
+	Route::get('/profile', 'ProfileController@details')
+	->name('profile.details');
+	Route::patch('/profile/update_account_username/{slug}', 'ProfileController@updateAccountUsername')
+	->name('profile.update_account_username');
+	Route::patch('/profile/update_account_password/{slug}', 'ProfileController@updateAccountPassword')
+	->name('profile.update_account_password');
+	Route::patch('/profile/update_account_color/{slug}', 'ProfileController@updateAccountColor')
+	->name('profile.update_account_color');
 
 
 	/** MENU **/
@@ -43,17 +52,26 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** TRADERS **/
-	Route::post('/trader/store_from_tr', 'TraderController@storeFromTR')->name('trader.store_from_tr');
-	Route::post('/trader/renew_license_post/{slug}', 'TraderController@renewLicensePost')->name('trader.renew_license_post');
-	Route::get('/trader/renewal_history/{slug}', 'TraderController@renewalHistory')->name('trader.renewal_history');
+	Route::post('/trader/store_from_tr', 'TraderController@storeFromTR')
+	->name('trader.store_from_tr');
+	Route::post('/trader/renew_license_post/{slug}', 'TraderController@renewLicensePost')
+	->name('trader.renew_license_post');
+	Route::get('/trader/renewal_history/{slug}', 'TraderController@renewalHistory')
+	->name('trader.renewal_history');
 	Route::resource('trader', 'TraderController');
 
 
 	/** TRADERS Registration **/
-	Route::get('/trader_registration/print/{slug}', 'TraderRegistrationController@print')->name('trader_registration.print');
-	Route::get('/trader_registration/reports', 'TraderRegistrationController@reports')->name('trader_registration.reports');
-	Route::get('/trader_registration/reports_output', 'TraderRegistrationController@reportsOutput')->name('trader_registration.reports_output');
-	Route::get('/trader_registration/list_bcd', 'TraderRegistrationController@printListBDC')->name('trader_registration.print_list_bdc');
+	Route::get('/trader_registration/print/{slug}', 'TraderRegistrationController@print')
+	->name('trader_registration.print');
+	Route::get('/trader_registration/reports', 'TraderRegistrationController@reports')
+	->name('trader_registration.reports');
+	Route::get('/trader_registration/reports_output', 'TraderRegistrationController@reportsOutput')
+	->name('trader_registration.reports_output');
+	Route::get('/trader_registration/list_bcd', 'TraderRegistrationController@printListBDC')
+	->name('trader_registration.print_list_bdc');
+	Route::get('/trader_registration/dl_word_file/{slug}', 'TraderRegistrationController@downloadWordFile')
+	->name('trader_registration.dl_word_file');
 	Route::resource('trader_registration', 'TraderRegistrationController');
 	
 });
