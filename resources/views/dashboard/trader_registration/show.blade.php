@@ -9,7 +9,7 @@
       <div class="box-header with-border">
         <h2 class="box-title">Trader License Details</h2>
         <div class="pull-right">
-          <a href="{{ route('dashboard.trader.index') }}" class="btn btn-default">Back to List</a>
+          <a href="{{ route('dashboard.trader.index') }}" class="btn btn-sm btn-default">Back to List</a>
           &nbsp;
           {!! __html::back_button(['dashboard.trader.renewal_history']) !!}
         </div> 

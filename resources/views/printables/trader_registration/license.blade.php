@@ -61,12 +61,12 @@
     <div class="col-xs-5" style="padding-left:80px;">
 
       <img src="{{ asset('images/flag.png') }}"
-           style="width:210px; position:relative;">
+           style="width:250px; position:relative;">
 
       <span style="position: absolute; 
                    margin: 0 auto; 
                    margin-left: 30px;
-                   margin-top: -57px;
+                   margin-top: -70px;
                    font-weight:bold;
                    font-size:21px;">
         {{ $trader_reg->control_no }}

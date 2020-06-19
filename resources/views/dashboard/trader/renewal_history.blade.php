@@ -27,7 +27,7 @@
 
         {{-- Table Search --}}        
         <div class="box-header with-border">
-          <a href="{{ route('dashboard.trader.index') }}" class="btn btn-default">Back to List</a>
+          <a href="{{ route('dashboard.trader.index') }}" class="btn btn-sm btn-default">Back to List</a>
         </div>
 
       {{-- Form End --}}  

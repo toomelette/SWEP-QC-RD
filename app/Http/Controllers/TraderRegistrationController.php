@@ -56,14 +56,19 @@ class TraderRegistrationController extends Controller{
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-
         $phpWord->addParagraphStyle('p2Style', array('align'=>'both', 'spaceAfter'=>100));
 
         // page format
-        $section = $phpWord->addSection([
-            "paperSize" => "Legal",
-            'marginTop' => 6000
-        ]);
+        $section = $phpWord->addSection(
+            [
+                'paperSize' => 'Legal',
+                'marginTop' => 6000,
+                'marginRight' => 1700,
+                'marginLeft' => 1700
+            ]
+        );
+
+
 
         // 1st Paragraph
         $section = $section->addTextRun();
@@ -78,7 +83,7 @@ class TraderRegistrationController extends Controller{
             $trader_name, 
             [
                 'name' => 'Arial', 
-                'size' => 12, 
+                'size' => 11, 
                 'underline' => 'single',
                 'bold' => true,
             ]
@@ -86,35 +91,35 @@ class TraderRegistrationController extends Controller{
 
         // txt
         $txt = ' of';
-        $section->addText($txt, ['name' => 'Arial','size' => 12,]);
+        $section->addText($txt, ['name' => 'Arial','size' => 11,]);
 
         // trader address
         $trader_address = ' '.optional($trader_reg->trader)->address;
         $section->addText($trader_address, [
             'name' => 'Arial', 
-            'size' => 12, 
+            'size' => 11, 
             'bold' => true,
         ]);
 
         // txt
         $txt = ', is hereby licensed with this Office to operate as DOMESTIC MOLASSES TRADER during the ';
-        $section->addText($txt, ['name' => 'Arial','size' => 12,]);
+        $section->addText($txt, ['name' => 'Arial','size' => 11,]);
 
         // crop year
         $cy = ' '.optional($trader_reg->cropYear)->name;
-        $section->addText($cy, ['name' => 'Arial','size' => 12,'bold' => true]);
+        $section->addText($cy, ['name' => 'Arial','size' => 11,'bold' => true]);
 
         // txt
         $txt = ' Crop Year. Said Trader is hereby authorized to';
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+        $section->addText($txt, ['name' => 'Arial','size' => 11]);
 
         // txt
         $txt = ' withdraw purchased';
-        $section->addText($txt, ['name' => 'Arial','size' => 12,'bold' => true]);
+        $section->addText($txt, ['name' => 'Arial','size' => 11,'bold' => true]);
 
         // txt
         $txt = ' molasses from the warehouse of any mill or refinery subject to rules and regulations issued by this Office pursuant thereto.';
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+        $section->addText($txt, ['name' => 'Arial','size' => 11]);
 
 
 
@@ -127,19 +132,19 @@ class TraderRegistrationController extends Controller{
 
         // txt
         $txt = 'The licensed/registered trader is required to submit a semi-annual report of its trading activities ';
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+        $section->addText($txt, ['name' => 'Arial','size' => 11]);
 
         // txt
         $txt = 'and such other report/s as maybe required by SRA. For its failure to submit the same, the trader shall be subject to the provision ';
-        $section->addText($txt, ['name' => 'Arial','size' => 12, 'bold' => true]);
+        $section->addText($txt, ['name' => 'Arial','size' => 11, 'bold' => true]);
 
         // txt
         $txt = 'of SRA Sugar Order No.10, Series of 2009-2010, dated February 26, 2010 ';
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+        $section->addText($txt, ['name' => 'Arial','size' => 11]);
 
         // txt
         $txt = 'and other pertinent SRA rules and regulations.';
-        $section->addText($txt, ['name' => 'Arial','size' => 12, 'bold' => true]);
+        $section->addText($txt, ['name' => 'Arial','size' => 11, 'bold' => true]);
 
 
 
@@ -152,7 +157,7 @@ class TraderRegistrationController extends Controller{
 
         // txt
         $txt = 'This license shall be posted conspicuously at the place where business/warehouse is located and shall be presented and/or   surrendered to concerned authorities upon demand. In case of closure of business, this License to Operate must be surrendered to this Office for official retirement.';
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+        $section->addText($txt, ['name' => 'Arial','size' => 11]);
 
 
 
@@ -165,7 +170,7 @@ class TraderRegistrationController extends Controller{
 
         // txt
         $txt = 'Any erasure/alteration on this certificate/license will invalidate same. NOT TRANSFERABLE AND NOT VALID WITHOUT OFFICIAL SEAL OF THIS OFFICE.';
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+        $section->addText($txt, ['name' => 'Arial','size' => 11]);
 
 
 
@@ -178,20 +183,59 @@ class TraderRegistrationController extends Controller{
 
         // txt
         $txt = 'Given this ' . $this->__dataType->date_parse($trader_reg->reg_date, "jS") .' day of '. $this->__dataType->date_parse($trader_reg->reg_date, "F Y") .'.';
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+        $section->addText($txt, ['name' => 'Arial','size' => 11]);
 
+
+        $section->addTextBreak();
+        $section->addTextBreak();
+        $section->addTextBreak();
+        $section->addTextBreak();
+        
 
 
         // Signatory
+        $txt = '                                                                           '.$this->administrator;
+        $section->addText($txt, ['name' => 'Arial','size' => 11]);
+            
         $section->addTextBreak();
-        $section->addTextBreak();
-        
-        $txt = '                                               ' . $this->administrator;
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
-        
-        $txt = '                                               Administrator';
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
 
+        $txt = '                                                                                          Administrator';
+        $section->addText($txt, ['name' => 'Arial','size' => 11]);
+
+
+        $section->addTextBreak();  
+        $section->addTextBreak();      
+
+
+
+        // Image & Control No.
+        $section->addImage('images/flag.png', [
+            'width' => 140,
+            'height' => 70,
+            'wrappingStyle' => 'behind',
+            'positioning' => 'absolute',
+            'posHorizontalRel' => 'margin',
+            'posVerticalRel' => 'line',
+        ]);
+
+        $section->addTextBreak(); 
+        $section->addTextBreak();
+
+        $control_no = '   '. $trader_reg->control_no;
+        $section->addText($control_no, ['name' => 'Arial','size' => 13, 'bold' => true]);
+
+        $section->addTextBreak(); 
+        $section->addTextBreak();  
+        $section->addTextBreak();  
+        $section->addTextBreak();          
+
+
+        // TIN
+        $txt = 'TIN: ';
+        $section->addText($txt, ['name' => 'Arial','size' => 13]);
+
+        $tin = optional($trader_reg->trader)->tin;
+        $section->addText($tin, ['name' => 'Arial','size' => 13, 'bold' => true, 'underline' => 'single',]);
 
 
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
