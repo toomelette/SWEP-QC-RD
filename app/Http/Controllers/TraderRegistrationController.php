@@ -3,27 +3,31 @@
 namespace App\Http\Controllers;
 
 
-use App\Core\Interfaces\TraderRegistrationInterface;
+use App\Core\Interfaces\TraderInterface;
 use App\Core\Interfaces\CropYearInterface;
-use App\Http\Requests\TraderRegistration\TraderRegistrationFormRequest;
-use App\Http\Requests\TraderRegistration\TraderRegistrationFilterRequest;
+use App\Core\Interfaces\TraderRegistrationInterface;
+
+use App\Http\Requests\Trader\TraderRenewLicenseFormRequest;
 use App\Http\Requests\TraderRegistration\TraderRegistrationReportRequest;
 
 use App\Exports\TraderRegistrationBDC;
+use App\Exports\TraderRegistrationCert;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 
 class TraderRegistrationController extends Controller{
 
 
+    protected $trader_repo;
     protected $trader_reg_repo;
     protected $cy_repo;
 
-    protected $administrator = 'HERMENEGILDO R. SERAFICA';
 
-
-    public function __construct(TraderRegistrationInterface $trader_reg_repo,
-                                CropYearInterface $cy_repo){
+    public function __construct(TraderInterface $trader_repo,
+                                CropYearInterface $cy_repo, 
+                                TraderRegistrationInterface $trader_reg_repo){
+        $this->trader_repo = $trader_repo;
         $this->trader_reg_repo = $trader_reg_repo;
         $this->cy_repo = $cy_repo;
         parent::__construct();
@@ -54,199 +58,7 @@ class TraderRegistrationController extends Controller{
 
         $trader_reg = $this->trader_reg_repo->findbySlug($slug);
 
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
-
-        $phpWord->addParagraphStyle('p2Style', array('align'=>'both', 'spaceAfter'=>100));
-
-        // page format
-        $section = $phpWord->addSection(
-            [
-                'paperSize' => 'Legal',
-                'marginTop' => 6000,
-                'marginRight' => 1700,
-                'marginLeft' => 1700
-            ]
-        );
-
-
-
-        // 1st Paragraph
-        $section = $section->addTextRun();
-
-        // txt
-        $txt = '               ';
-        $section->addText($txt);
-
-        // trader name
-        $trader_name = ''.optional($trader_reg->trader)->name;
-        $section->addText(
-            $trader_name, 
-            [
-                'name' => 'Arial', 
-                'size' => 11, 
-                'underline' => 'single',
-                'bold' => true,
-            ]
-        );
-
-        // txt
-        $txt = ' of';
-        $section->addText($txt, ['name' => 'Arial','size' => 11,]);
-
-        // trader address
-        $trader_address = ' '.optional($trader_reg->trader)->address;
-        $section->addText($trader_address, [
-            'name' => 'Arial', 
-            'size' => 11, 
-            'bold' => true,
-        ]);
-
-        // txt
-        $txt = ', is hereby licensed with this Office to operate as DOMESTIC MOLASSES TRADER during the ';
-        $section->addText($txt, ['name' => 'Arial','size' => 11,]);
-
-        // crop year
-        $cy = ' '.optional($trader_reg->cropYear)->name;
-        $section->addText($cy, ['name' => 'Arial','size' => 11,'bold' => true]);
-
-        // txt
-        $txt = ' Crop Year. Said Trader is hereby authorized to';
-        $section->addText($txt, ['name' => 'Arial','size' => 11]);
-
-        // txt
-        $txt = ' withdraw purchased';
-        $section->addText($txt, ['name' => 'Arial','size' => 11,'bold' => true]);
-
-        // txt
-        $txt = ' molasses from the warehouse of any mill or refinery subject to rules and regulations issued by this Office pursuant thereto.';
-        $section->addText($txt, ['name' => 'Arial','size' => 11]);
-
-
-
-        // 2nd Paragraph
-        $section->addTextBreak();
-        $section->addTextBreak();
-
-        $txt = '               ';
-        $section->addText($txt);
-
-        // txt
-        $txt = 'The licensed/registered trader is required to submit a semi-annual report of its trading activities ';
-        $section->addText($txt, ['name' => 'Arial','size' => 11]);
-
-        // txt
-        $txt = 'and such other report/s as maybe required by SRA. For its failure to submit the same, the trader shall be subject to the provision ';
-        $section->addText($txt, ['name' => 'Arial','size' => 11, 'bold' => true]);
-
-        // txt
-        $txt = 'of SRA Sugar Order No.10, Series of 2009-2010, dated February 26, 2010 ';
-        $section->addText($txt, ['name' => 'Arial','size' => 11]);
-
-        // txt
-        $txt = 'and other pertinent SRA rules and regulations.';
-        $section->addText($txt, ['name' => 'Arial','size' => 11, 'bold' => true]);
-
-
-
-        // 3rd Paragraph
-        $section->addTextBreak();
-        $section->addTextBreak();
-
-        $txt = '               ';
-        $section->addText($txt);
-
-        // txt
-        $txt = 'This license shall be posted conspicuously at the place where business/warehouse is located and shall be presented and/or   surrendered to concerned authorities upon demand. In case of closure of business, this License to Operate must be surrendered to this Office for official retirement.';
-        $section->addText($txt, ['name' => 'Arial','size' => 11]);
-
-
-
-        // 4th Paragraph
-        $section->addTextBreak();
-        $section->addTextBreak();
-        
-        $txt = '               ';
-        $section->addText($txt);
-
-        // txt
-        $txt = 'Any erasure/alteration on this certificate/license will invalidate same. NOT TRANSFERABLE AND NOT VALID WITHOUT OFFICIAL SEAL OF THIS OFFICE.';
-        $section->addText($txt, ['name' => 'Arial','size' => 11]);
-
-
-
-        // 5th Paragraph
-        $section->addTextBreak();
-        $section->addTextBreak();
-        
-        $txt = '               ';
-        $section->addText($txt);
-
-        // txt
-        $txt = 'Given this ' . $this->__dataType->date_parse($trader_reg->reg_date, "jS") .' day of '. $this->__dataType->date_parse($trader_reg->reg_date, "F Y") .'.';
-        $section->addText($txt, ['name' => 'Arial','size' => 11]);
-
-
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        
-
-
-        // Signatory
-        $txt = '                                                                           '.$this->administrator;
-        $section->addText($txt, ['name' => 'Arial','size' => 11]);
-            
-        $section->addTextBreak();
-
-        $txt = '                                                                                          Administrator';
-        $section->addText($txt, ['name' => 'Arial','size' => 11]);
-
-
-        $section->addTextBreak();  
-        $section->addTextBreak();      
-
-
-
-        // Image & Control No.
-        $section->addImage('images/flag.png', [
-            'width' => 140,
-            'height' => 70,
-            'wrappingStyle' => 'behind',
-            'positioning' => 'absolute',
-            'posHorizontalRel' => 'margin',
-            'posVerticalRel' => 'line',
-        ]);
-
-        $section->addTextBreak(); 
-        $section->addTextBreak();
-
-        $control_no = '   '. $trader_reg->control_no;
-        $section->addText($control_no, ['name' => 'Arial','size' => 13, 'bold' => true]);
-
-        $section->addTextBreak(); 
-        $section->addTextBreak();  
-        $section->addTextBreak();  
-        $section->addTextBreak();          
-
-
-        // TIN
-        $txt = 'TIN: ';
-        $section->addText($txt, ['name' => 'Arial','size' => 13]);
-
-        $tin = optional($trader_reg->trader)->tin;
-        $section->addText($tin, ['name' => 'Arial','size' => 13, 'bold' => true, 'underline' => 'single',]);
-
-
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-
-        try {
-            $objWriter->save(storage_path('certificate.docx'));
-        } catch (Exception $e) {
-            abort(500);
-        }
-
-        return response()->download(storage_path('certificate.docx'));
+        return TraderRegistrationCert::molassesCert($trader_reg);
 
     }
 
@@ -257,6 +69,34 @@ class TraderRegistrationController extends Controller{
 
         $trader_reg = $this->trader_reg_repo->destroy($slug);
         $this->event->fire('trader_reg.destroy', $trader_reg);
+        return redirect()->back();
+
+    }
+
+
+
+
+    public function update(TraderRenewLicenseFormRequest $request, $slug){
+
+        $trader_reg = $this->trader_reg_repo->findBySlug($slug);
+
+        if ($trader_reg->trader_cat_id != $request->trader_cat_id) {
+
+            if ($this->trader_reg_repo->isTraderExistInCY_CAT($request->crop_year_id, $trader_reg->trader_id, $request->trader_cat_id)) {
+                
+                $this->session->flash('TRADER_REG_IS_EXIST','The Trader is already registered in the current crop year and category!');
+                $this->session->flash('TRADER_REG_IS_EXIST_SLUG', $slug);
+
+                $request->flash();
+                return redirect()->back();
+                
+            }
+            
+        }
+
+        $trader_reg = $this->trader_reg_repo->update($request, $slug);
+
+        $this->event->fire('trader.renew_license', [ $trader_reg->trader, $trader_reg ]);
         return redirect()->back();
 
     }
@@ -317,6 +157,7 @@ class TraderRegistrationController extends Controller{
         return abort(404);
 
     }
+
 
 
    

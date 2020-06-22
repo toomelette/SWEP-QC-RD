@@ -10,7 +10,7 @@ interface TraderRegistrationInterface {
 
 	public function store($request, $trader);
 
-	//public function update($request, $slug);
+	public function update($request, $slug);
 
 	public function destroy($slug);
 

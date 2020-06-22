@@ -102,6 +102,25 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
 
 
 
+    public function update($request, $slug){
+
+        $trader_reg = $this->findBySlug($slug);
+        $trader_reg->control_no = $request->control_no;
+        $trader_reg->trader_cat_id = $request->trader_cat_id;
+        $trader_reg->crop_year_id = $request->crop_year_id;
+        $trader_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
+        $trader_reg->updated_at = $this->carbon->now();
+        $trader_reg->ip_updated = request()->ip();
+        $trader_reg->user_updated = $this->auth->user()->user_id;
+        $trader_reg->save();
+        
+        return $trader_reg;
+
+    }
+
+
+
+
     public function destroy($slug){
 
         $trader_reg = $this->findBySlug($slug);

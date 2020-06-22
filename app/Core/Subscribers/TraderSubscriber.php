@@ -79,11 +79,12 @@ class TraderSubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:traders:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:trader_registrations:isTraderExistInCY_CAT:'.$trader_reg->crop_year_id.':'.$trader_reg->trader_id.':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:trader_registrations:fetchByTraderId:'. $trader_reg->trader_id .':*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:trader_registrations:findBySlug:'. $trader_reg->slug);
 
         $this->session->flash('TRADER_RENEW_LICENSE_SUCCESS', 'The Trader has been successfully registered!');
         $this->session->flash('TRADER_RENEW_LICENSE_SUCCESS_SLUG', $trader->slug);
         $this->session->flash('TRADER_RENEW_LICENSE_SUCCESS_TR_SLUG', $trader_reg->slug);
-
+        
     }
 
 

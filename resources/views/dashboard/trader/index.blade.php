@@ -44,7 +44,7 @@
           <tr>
             <th>@sortablelink('name', 'Name')</th>
             <th>Licenses</th>
-            <th style="width: 350px">Action</th>
+            <th style="width: 400px">Action</th>
           </tr>
           @foreach($traders as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
@@ -59,7 +59,7 @@
                   @endif
                   @if(in_array('dashboard.trader.renewal_history', $global_user_submenus))
                     <a type="button" class="btn btn-default" id="rh_button" href="{{ route('dashboard.trader.renewal_history', $data->slug) }}">
-                      <i class="fa fa-tasks"></i>&nbsp; History
+                      <i class="fa fa-tasks"></i>&nbsp; Renewal History
                     </a>
                   @endif
                   @if(in_array('dashboard.trader.edit', $global_user_submenus))
@@ -124,13 +124,6 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            @if(in_array('dashboard.trader_registration.show', $global_user_submenus))
-              <a href="{{ route('dashboard.trader_registration.show', Session::get('TRADER_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
-                 type="button" 
-                 class="btn btn-success">
-                Print
-              </a>
-            @endif
             @if (in_array('dashboard.trader_registration.dl_word_file', $global_user_submenus))
               <a href="{{ route('dashboard.trader_registration.dl_word_file', Session::get('TRADER_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
                  type="button" 
