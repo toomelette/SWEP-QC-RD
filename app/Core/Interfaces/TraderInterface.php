@@ -10,8 +10,6 @@ interface TraderInterface {
 
 	public function store($request);
 
-	public function storeFromTR($request);
-
 	public function update($request, $slug);
 
 	public function destroy($slug);

@@ -24,27 +24,27 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 	/** USER **/   
 	Route::post('/user/activate/{slug}', 'UserController@activate')
-	->name('user.activate');
+		->name('user.activate');
 	Route::post('/user/deactivate/{slug}', 'UserController@deactivate')
-	->name('user.deactivate');
+		->name('user.deactivate');
 	Route::post('/user/logout/{slug}', 'UserController@logout')
-	->name('user.logout');
+		->name('user.logout');
 	Route::get('/user/{slug}/reset_password', 'UserController@resetPassword')
-	->name('user.reset_password');
+		->name('user.reset_password');
 	Route::patch('/user/reset_password/{slug}', 'UserController@resetPasswordPost')
-	->name('user.reset_password_post');
+		->name('user.reset_password_post');
 	Route::resource('user', 'UserController');
 
 
 	/** PROFILE **/
 	Route::get('/profile', 'ProfileController@details')
-	->name('profile.details');
+		->name('profile.details');
 	Route::patch('/profile/update_account_username/{slug}', 'ProfileController@updateAccountUsername')
-	->name('profile.update_account_username');
+		->name('profile.update_account_username');
 	Route::patch('/profile/update_account_password/{slug}', 'ProfileController@updateAccountPassword')
-	->name('profile.update_account_password');
+		->name('profile.update_account_password');
 	Route::patch('/profile/update_account_color/{slug}', 'ProfileController@updateAccountColor')
-	->name('profile.update_account_color');
+		->name('profile.update_account_color');
 
 
 	/** MENU **/
@@ -52,27 +52,26 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** TRADERS **/
-	Route::post('/trader/store_from_tr', 'TraderController@storeFromTR')
-	->name('trader.store_from_tr');
 	Route::post('/trader/renew_license_post/{slug}', 'TraderController@renewLicensePost')
-	->name('trader.renew_license_post');
+		->name('trader.renew_license_post');
 	Route::get('/trader/renewal_history/{slug}', 'TraderController@renewalHistory')
-	->name('trader.renewal_history');
+		->name('trader.renewal_history');
+	Route::get('/trader/reports', 'TraderController@reports')
+		->name('trader.reports');
 	Route::resource('trader', 'TraderController');
 
 
 	/** TRADERS Registration **/
-	Route::get('/trader_registration/print/{slug}', 'TraderRegistrationController@print')
-	->name('trader_registration.print');
-	Route::get('/trader_registration/reports', 'TraderRegistrationController@reports')
-	->name('trader_registration.reports');
 	Route::get('/trader_registration/reports_output', 'TraderRegistrationController@reportsOutput')
-	->name('trader_registration.reports_output');
-	Route::get('/trader_registration/list_bcd', 'TraderRegistrationController@printListBDC')
-	->name('trader_registration.print_list_bdc');
+		->name('trader_registration.reports_output');
 	Route::get('/trader_registration/dl_word_file/{slug}', 'TraderRegistrationController@downloadWordFile')
-	->name('trader_registration.dl_word_file');
+		->name('trader_registration.dl_word_file');
 	Route::resource('trader_registration', 'TraderRegistrationController');
+
+
+	/** MILLS **/
+	Route::resource('mill', 'MillController');
+	
 	
 });
 
@@ -84,24 +83,24 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 /** Testing **/
 // Route::get('/dashboard/test', function(){
 
-// 	$trader_regs = App\Models\TraderRegistration::get(); 
+// 	$mills = App\Models\Mill::get(); 
 
-// 	foreach ($trader_regs as $data) {
+// 	foreach ($mills as $data) {
 
-		// $trader_reg_obj = App\Models\TraderRegistration::select('trader_reg_id')->orderBy('trader_reg_id', 'desc')->first();
+// 		$trader_reg_obj = App\Models\TraderRegistration::select('trader_reg_id')->orderBy('trader_reg_id', 'desc')->first();
 
-		// $id = "TR1001";
+// 		$id = "TR1001";
 
-	 // 	if($trader_reg_obj != null){
-	 // 	    if($trader_reg_obj->trader_reg_id != null){
-	 // 	        $num = str_replace('TR', '', $trader_reg_obj->trader_reg_id) + 1;
-	 // 	        $id = 'TR' . $num;
-	 // 	    }
-	 // 	}
-	//	$trader = App\Models\Trader::where('tin', $data->trader_id)->first();
-// 		$trader_reg = App\Models\TraderRegistration::find($data->id);
-// 		$trader_reg->slug = Illuminate\Support\Str::random(16);
-// 		$trader_reg->save();
+// 	 	if($trader_reg_obj != null){
+// 	 	    if($trader_reg_obj->trader_reg_id != null){
+// 	 	        $num = str_replace('TR', '', $trader_reg_obj->trader_reg_id) + 1;
+// 	 	        $id = 'TR' . $num;
+// 	 	    }
+// 	 	}
+// 		$trader = App\Models\Trader::where('tin', $data->trader_id)->first();
+// 		$mill = App\Models\Mill::find($data->id);
+// 		$mill->slug = Illuminate\Support\Str::random(16);
+// 		$mill->save();
 	
 // 	}
 

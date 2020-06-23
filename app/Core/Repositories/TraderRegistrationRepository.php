@@ -125,7 +125,6 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
 
         $trader_reg = $this->findBySlug($slug);
         $trader_reg->delete();
-
         return $trader_reg;
 
     }
@@ -228,7 +227,7 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
         return $trader_reg->select('trader_id', 'trader_officer', 'trader_email')
                           ->with('trader', 'trader.region')
                           ->get();
-
+                          
     }
 
 

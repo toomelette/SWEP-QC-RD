@@ -66,38 +66,11 @@ class TraderRepository extends BaseRepository implements TraderInterface {
         $trader->region_id = $request->region_id;
         $trader->address = $request->address;
         $trader->address_second = $request->address_second;
+        $trader->address_third = $request->address_third;
         $trader->tin = $request->tin;
         $trader->tel_no = $request->tel_no;
         $trader->officer = $request->officer;
         $trader->email = $request->email;
-        $trader->created_at = $this->carbon->now();
-        $trader->updated_at = $this->carbon->now();
-        $trader->ip_created = request()->ip();
-        $trader->ip_updated = request()->ip();
-        $trader->user_created = $this->auth->user()->user_id;
-        $trader->user_updated = $this->auth->user()->user_id;
-        $trader->save();
-        
-        return $trader;
-
-    }
-
-
-
-
-    public function storeFromTR($request){
-
-        $trader = new Trader;
-        $trader->trader_id = $this->getTraderIdInc();
-        $trader->slug = $this->str->random(16);
-        $trader->name = $request->tr_name;
-        $trader->region_id = $request->tr_region_id;
-        $trader->address = $request->tr_address;
-        $trader->address_second = $request->tr_address_second;
-        $trader->tin = $request->tr_tin;
-        $trader->tel_no = $request->tr_tel_no;
-        $trader->officer = $request->tr_officer;
-        $trader->email = $request->tr_email;
         $trader->created_at = $this->carbon->now();
         $trader->updated_at = $this->carbon->now();
         $trader->ip_created = request()->ip();
@@ -120,6 +93,7 @@ class TraderRepository extends BaseRepository implements TraderInterface {
         $trader->region_id = $request->region_id;
         $trader->address = $request->address;
         $trader->address_second = $request->address_second;
+        $trader->address_third = $request->address_third;
         $trader->tin = $request->tin;
         $trader->tel_no = $request->tel_no;
         $trader->officer = $request->officer;

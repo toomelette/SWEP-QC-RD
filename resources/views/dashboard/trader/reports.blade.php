@@ -9,7 +9,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">List by Date and Category</h2>
+      <h2 class="box-title">List of Registered Traders by Date and Category</h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
@@ -60,7 +60,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">List by Crop Year and Category</h2>
+      <h2 class="box-title">List of Registered Traders by Crop Year and Category</h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 

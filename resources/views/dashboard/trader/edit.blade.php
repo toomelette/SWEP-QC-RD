@@ -36,17 +36,17 @@
               '3', 'region_id', 'Region *', old('region_id') ? old('region_id') : $trader->region_id, $global_regions_all, 'region_id', 'name', $errors->has('region_id'), $errors->first('region_id'), 'select2', ''
             ) !!}
 
-            <div class="col-md-12"></div>
-
             {!! __form::textbox(
-              '6', 'address', 'text', 'Address *', 'Address', old('address') ? old('address') : $trader->address, $errors->has('address'), $errors->first('address'), ''
+              '12', 'address', 'text', 'Address *', 'Address', old('address') ? old('address') : $trader->address, $errors->has('address'), $errors->first('address'), ''
             ) !!}
 
             {!! __form::textbox(
-              '6', 'address_second', 'text', 'Address Second', 'Address Second', old('address_second') ? old('address_second') : $trader->address_second, $errors->has('address_second'), $errors->first('address_second'), ''
+              '12', 'address_second', 'text', 'Address Second', 'Address Second', old('address_second') ? old('address_second') : $trader->address_second, $errors->has('address_second'), $errors->first('address_second'), ''
             ) !!}
 
-            <div class="col-md-12"></div>
+            {!! __form::textbox(
+              '12', 'address_third', 'text', 'Address Third', 'Address Third', old('address_third') ? old('address_third') : $trader->address_third, $errors->has('address_third'), $errors->first('address_third'), ''
+            ) !!}
 
             {!! __form::textbox(
               '4', 'tel_no', 'text', 'Tel No.', 'Tel No.', old('tel_no') ? old('tel_no') : $trader->tel_no, $errors->has('tel_no'), $errors->first('tel_no'), ''

@@ -33,11 +33,12 @@ class TraderRegistrationBDC implements FromArray, WithHeadings{
                 'Trader Name' => optional($data->trader)->name,
                 'Trader Address' => optional($data->trader)->address,
                 'Trader Second Address' => optional($data->trader)->address_second,
+                'Trader Third Address' => optional($data->trader)->address_third,
                 'Region' => optional(optional($data->trader)->region)->name,
                 'TIN' => optional($data->trader)->tin,
                 'Tel No' => optional($data->trader)->tel_no,
-                'Officer' => optional($data->trader)->officer,
-                'Email' => optional($data->trader)->email,
+                'Officer' => $data->trader_officer,
+                'Email' => $data->trader_email,
 
             ];
 
@@ -59,6 +60,7 @@ class TraderRegistrationBDC implements FromArray, WithHeadings{
             'Trader Name', 
             'Trader Address', 
             'Trader Second Address',
+            'Trader Third Address',
             'Region', 
             'TIN', 
             'Tel No', 

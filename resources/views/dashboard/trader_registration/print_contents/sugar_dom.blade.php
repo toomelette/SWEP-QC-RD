@@ -1,8 +1,7 @@
 
 <p>
   <span style="text-decoration: underline; font-weight: bold;">{{ optional($trader_reg->trader)->name }}
-  </span>&nbsp; of &nbsp;<span style="font-weight: bold;">{{ optional($trader_reg->trader)->address }}</span>, is hereby licensed with this Office to operate as a DOMESTIC SUGAR TRADER during
-  the <span style="font-weight: bold;">{{ optional($trader_reg->cropYear)->name }}</span> Crop Year. Said Trader is hereby authorized to <span style="font-weight: bold;">withdraw purchased</span> sugar from the warehouse of any mill or refinery subject to rules and regulations issued by this Office pursuant thereto.
+  </span>&nbsp; of &nbsp;<span style="font-weight: bold;">{{ optional($trader_reg->trader)->address }}</span>, is hereby licensed with this Office to operate as a DOMESTIC SUGAR TRADER during the <span style="font-weight: bold;">{{ optional($trader_reg->cropYear)->name }}</span> Crop Year. Said Trader is hereby authorized to <span style="font-weight: bold;">withdraw purchased</span> sugar from the warehouse of any mill or refinery subject to rules and regulations issued by this Office pursuant thereto.
 </p>
 
 <p>

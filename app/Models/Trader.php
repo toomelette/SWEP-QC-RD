@@ -24,6 +24,7 @@ class Trader extends Model{
         'name' => '',
         'address' => '',
         'address_second' => '',
+        'address_third' => '',
         'tin' => '',
         'tel_no' => '',
         'officer' => '',
@@ -56,7 +57,7 @@ class Trader extends Model{
         if (!$list_of_tr_current_cy->isEmpty()) {
             $list = '';
             foreach ($list_of_tr_current_cy as $data) {
-                $list .= '<span class="badge bg-green">'. $cat[$data->trader_cat_id] .'</span><br>';
+                $list .= '<span class="badge bg-green">'. $cat[$data->trader_cat_id] .' - '. $data->control_no .'</span><br>';
             }
             return $list;
         }

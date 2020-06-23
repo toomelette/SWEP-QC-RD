@@ -58,26 +58,6 @@ class TraderController extends Controller{
         return redirect()->back();
 
     }
-
-
-   
-
-    public function storeFromTR(TraderSFTRFormRequest $request){
-        
-        $trader = $this->trader_repo->storeFromTR($request);
-
-        $request->request->add([
-            'trader_id' => $trader->trader_id,
-            'trader_officer' => $trader->officer,
-            'trader_email' => $trader->email,
-        ]);
-        
-        $request->flash();
-
-        $this->event->fire('trader.store');
-        return redirect()->back();
-
-    }
  
 
 
@@ -149,6 +129,12 @@ class TraderController extends Controller{
 
     }
 
+
+
+
+    public function reports(){
+        return view('dashboard.trader.reports');
+    }
 
 
     
