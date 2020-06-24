@@ -22,8 +22,8 @@ class MillFilterRequest extends FormRequest{
 
         return [
         
-
-
+            'q'=>'nullable|string|max:90',
+        
         ];
 
     }

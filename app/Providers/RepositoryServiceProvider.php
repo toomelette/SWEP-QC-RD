@@ -33,6 +33,8 @@ class RepositoryServiceProvider extends ServiceProvider {
 		$this->app->bind('App\Core\Interfaces\RegionInterface', 'App\Core\Repositories\RegionRepository');
 
 		$this->app->bind('App\Core\Interfaces\CropYearInterface', 'App\Core\Repositories\CropYearRepository');
+
+		$this->app->bind('App\Core\Interfaces\MillInterface', 'App\Core\Repositories\MillRepository');
 		
 	}
 

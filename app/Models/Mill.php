@@ -40,6 +40,10 @@ class Mill extends Model{
 
     ];
 
+    public function millRegistration() {
+        return $this->hasMany('App\Models\MillRegistration','mill_id','mill_id');
+    }
+
 
 
 

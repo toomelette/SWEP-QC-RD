@@ -70,6 +70,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** MILLS **/
+	Route::post('/mill/renew_license_post/{slug}', 'MillController@renewLicensePost')
+		->name('mill.renew_license_post');
+	Route::get('/mill/renewal_history/{slug}', 'MillController@renewalHistory')
+		->name('mill.renewal_history');
 	Route::resource('mill', 'MillController');
 	
 	

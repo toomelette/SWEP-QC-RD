@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use App\Core\Interfaces\TraderInterface;
 use App\Core\Interfaces\TraderRegistrationInterface;
 use App\Http\Requests\Trader\TraderFormRequest;
-use App\Http\Requests\Trader\TraderSFTRFormRequest;
 use App\Http\Requests\Trader\TraderFilterRequest;
 use App\Http\Requests\Trader\TraderRenewLicenseFormRequest;
 use App\Http\Requests\Trader\TraderRenewalHistoryFilterRequest;
@@ -21,8 +20,7 @@ class TraderController extends Controller{
 
 
 
-    public function __construct(TraderInterface $trader_repo, 
-                                TraderRegistrationInterface $trader_reg_repo){
+    public function __construct(TraderInterface $trader_repo, TraderRegistrationInterface $trader_reg_repo){
         $this->trader_repo = $trader_repo;
         $this->trader_reg_repo = $trader_reg_repo;
         parent::__construct();

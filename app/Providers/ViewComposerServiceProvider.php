@@ -55,7 +55,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
         // Crop Year
         View::composer(['dashboard.trader.index',
                         'dashboard.trader.renewal_history',
-                        'dashboard.trader.reports',], 'App\Core\ViewComposers\CropYearComposer');
+                        'dashboard.trader.reports',
+                        'dashboard.mill.index',], 'App\Core\ViewComposers\CropYearComposer');
 
         
     }
