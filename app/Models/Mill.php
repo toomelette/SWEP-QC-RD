@@ -47,5 +47,20 @@ class Mill extends Model{
 
 
 
+    public function displayLicensesStatus($cy_id){
+
+        $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id);
+
+        if (!$mill_reg->isEmpty()) {
+            return '<span class="badge bg-green">Registered</span>';
+        }
+
+        return '<span class="badge bg-red">Not Registered</span>';
+
+    }
+
+
+
+
 
 }

@@ -75,6 +75,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/mill/renewal_history/{slug}', 'MillController@renewalHistory')
 		->name('mill.renewal_history');
 	Route::resource('mill', 'MillController');
+
+
+	/** MILLS Registration **/
+	Route::resource('mill_registration', 'MillRegistrationController');
 	
 	
 });

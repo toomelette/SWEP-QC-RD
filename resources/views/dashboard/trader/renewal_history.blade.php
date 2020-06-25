@@ -18,7 +18,7 @@
 @section('content')
     
   <section class="content-header">
-      <h1>Renewal History</h1>
+      <h1>Trader Renewal History</h1>
   </section>
 
   <section class="content">

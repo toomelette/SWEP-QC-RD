@@ -35,29 +35,6 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
 
                 $trader_reg = $this->trader_reg->newQuery();
 
-                $df = $this->__dataType->date_parse($request->df, 'Y-m-d');
-                $dt = $this->__dataType->date_parse($request->dt, 'Y-m-d');
-                
-                if(isset($request->q)){
-                    $trader_reg->where('control_no', 'LIKE', '%'. $request->q .'%');
-                }
-
-                if(isset($request->t)){
-                    $trader_reg->where('trader_id', $request->t);
-                }
-
-                if(isset($request->tc)){
-                    $trader_reg->where('trader_cat_id', $request->tc);
-                }
-
-                if(isset($request->cy)){
-                    $trader_reg->where('crop_year_id', $request->cy);
-                }
-
-                if(isset($request->df) || isset($request->dt)){
-                    $trader_reg->whereBetween('reg_date',[$df, $dt]);
-                }
-
                 return $trader_reg->select('crop_year_id', 'trader_cat_id', 'control_no', 'reg_date', 'slug')
                                   ->with('cropYear', 'traderCategory')
                                   ->where('trader_id', $trader_id)

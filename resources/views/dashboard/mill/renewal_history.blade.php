@@ -1,13 +1,11 @@
 <?php
 
-  $table_sessions = [ 
-    Session::get('MILL_UPDATE_SUCCESS_SLUG'),
-    Session::get('MILL_RENEW_LICENSE_SUCCESS_SLUG'),
+  $table_sessions = [
+    Session::get('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG'),
     Session::get('MILL_REG_IS_EXIST_SLUG'),
   ];
 
   $appended_requests = [
-                        'q'=> Request::get('q'),
                         'sort' => Request::get('sort'),
                         'direction' => Request::get('direction'),
                       ];
@@ -20,74 +18,91 @@
 @section('content')
     
   <section class="content-header">
-      <h1>Mill List</h1>
+      <h1>Mill Renewal History</h1>
   </section>
 
   <section class="content">
-    
-    {{-- Form Start --}}
-    <form data-pjax class="form" id="filter_form" method="GET" action="{{ route('dashboard.mill.index') }}">
 
-    <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
+      {{-- Form Start --}}
+      <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.mill.index') }}">
 
-      {{-- Table Search --}}        
-      <div class="box-header with-border">
-        {!! __html::table_search(route('dashboard.mill.index')) !!}
-      </div>
+      <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
-    {{-- Form End --}}  
-    </form>
+        {{-- Table Search --}}        
+        <div class="box-header with-border">
+          <div class="pull-right">
+            <a href="{{ route('dashboard.mill.index') }}" class="btn btn-sm btn-default">Back to List</a>
+          </div> 
+        </div>
 
-    {{-- Table Grid --}}        
-    <div class="box-body no-padding">
-      <table class="table table-hover">
-        <tr>
-          <th>@sortablelink('name', 'Name')</th>
-          <th>@sortablelink('', 'Status')</th>
-          <th style="width: 400px">Action</th>
-        </tr>
-        @foreach($mills as $data) 
-          <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
-            <td id="mid-vert">{{ $data->name }}</td>
-            <td id="mid-vert">{!! $data->displayLicensesStatus($global_current_cy->crop_year_id) !!}</td>
-            <td id="mid-vert">
-              <div class="btn-group">
-                @if(in_array('dashboard.mill.renew_license_post', $global_user_submenus))
-                  <a type="button" class="btn btn-default" id="rl_button" data-action="rl" data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}">
-                    <i class="fa fa-certificate"></i>&nbsp; Renew License
-                  </a>
-                @endif
-                @if(in_array('dashboard.mill.renewal_history', $global_user_submenus))
-                  <a type="button" class="btn btn-default" id="rh_button" href="{{ route('dashboard.mill.renewal_history', $data->slug) }}">
-                    <i class="fa fa-tasks"></i>&nbsp; Renewal History
-                  </a>
-                @endif
-                @if(in_array('dashboard.mill.edit', $global_user_submenus))
-                  <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.mill.edit', $data->slug) }}">
-                    <i class="fa fa-pencil"></i>
-                  </a>
-                @endif
-                @if(in_array('dashboard.mill.destroy', $global_user_submenus))
-                  <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.mill.destroy', $data->slug) }}">
-                    <i class="fa fa-trash"></i>
-                  </a>
-                @endif
-              </div>
-            </td>
+      {{-- Form End --}}  
+      </form>
+
+      {{-- Table Grid --}}        
+      <div class="box-body no-padding">
+        <table class="table table-hover">
+          <tr>
+            <th>@sortablelink('cropYear.name', 'Crop Year')</th>
+            <th>@sortablelink('license_no', 'License No')</th>
+            <th>@sortablelink('reg_date', 'Date of Registration')</th>
+            <th>Action</th>
           </tr>
-        @endforeach
+          @foreach($mill_reg_list as $data) 
+            <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
+              <td id="mid-vert">{{ optional($data->cropYear)->name }}</td>
+              <td id="mid-vert">{{ $data->license_no }}</td>
+              <td id="mid-vert">{{ __dataType::date_parse($data->reg_date, 'F d,Y') }}</td>
+              <td id="mid-vert">
+                <div class="btn-group">
+                  @if(in_array('dashboard.mill_registration.show', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="show_button" href="{{ route('dashboard.mill_registration.show', $data->slug) }}">
+                      <i class="fa fa-eye"></i>
+                    </a>
+                  @endif
+                  @if(in_array('dashboard.mill_registration.update', $global_user_submenus))
+                    <a type="button" 
+                       class="btn btn-default" 
+                       id="update_button"  
+                       data-crop_year_id="{{ $data->crop_year_id }}"
+                       data-crop_year_name="{{ optional($data->cropYear)->name }}"
+                       data-license_no="{{ $data->license_no }}"
+                       data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
+                       data-mt="{{ $data->mt }}"
+                       data-lkg="{{ $data->lkg }}"
+                       data-milling_fee="{{ $data->milling_fee }}"
+                       data-payment_status="{{ $data->payment_status }}"
+                       data-under_payment="{{ $data->under_payment }}"
+                       data-excess_payment="{{ $data->excess_payment }}"
+                       data-balance_fee="{{ $data->balance_fee }}"
+                       data-rated_capacity="{{ $data->rated_capacity }}"
+                       data-start_milling="{{ __dataType::date_parse($data->start_milling, 'm/d/Y') }}"
+                       data-end_milling="{{ __dataType::date_parse($data->end_milling, 'm/d/Y') }}"
+                       data-action="update" 
+                       data-url="{{ route('dashboard.mill_registration.update', $data->slug) }}">
+                      <i class="fa fa-pencil"></i>
+                    </a>
+                  @endif
+                  @if(in_array('dashboard.mill_registration.destroy', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.mill_registration.destroy', $data->slug) }}">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                  @endif
+                </div>
+              </td>
+            </tr>
+          @endforeach
         </table>
       </div>
 
-      @if($mills->isEmpty())
+      @if($mill_reg_list->isEmpty())
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>
       @endif
 
       <div class="box-footer">
-        {!! __html::table_counter($mills) !!}
-        {!! $mills->appends($appended_requests)->render('vendor.pagination.bootstrap-4')!!}
+        {!! __html::table_counter($mill_reg_list) !!}
+        {!! $mill_reg_list->appends($appended_requests)->render('vendor.pagination.bootstrap-4')!!}
       </div>
 
     </div>
@@ -105,7 +120,7 @@
 @section('modals')
 
 
-  {!! __html::modal_delete('mill_delete') !!}
+  {!! __html::modal_delete('mill_registration_delete') !!}
 
 
   {{-- TR UPDATE SUCCESS --}}
@@ -179,48 +194,50 @@
             </div> 
           </h4>
         </div>
-        <div class="modal-body" id="rl_body">
-          <p>Crop Year: {{ $global_current_cy->name }}</p>
-          <form method="POST" id="form" autocomplete="off">
+        <div class="modal-body" id="mill_rl_body">
+          <p>Crop Year: <span id="crop_year_name"></span></p>
+          <form method="POST" id="mill_rl_form" autocomplete="off">
             
             @csrf
 
             <div class="row">
 
-              <input type="hidden" name="crop_year_id" value="{{ $global_current_cy->crop_year_id }}">
+              <input type="hidden" name="_method" value="PUT">
+
+              <input type="hidden" name="crop_year_id" id="crop_year_id" value="">
 
               {!! __form::textbox(
-                '6', 'license_no', 'text', 'License No. *', 'License No.', old('license_no'), $errors->has('license_no'), $errors->first('license_no'), 'data-transform="uppercase" required'
+                '6', 'license_no', 'text', 'License No. *', 'License No.', '', $errors->has('license_no'), $errors->first('license_no'), 'data-transform="uppercase" required'
               ) !!}
 
               {!! __form::datepicker(
-                '6', 'reg_date',  'Date of Registration *', old('reg_date') ? old('reg_date') : Carbon::now()->format('m/d/Y'), $errors->has('reg_date'), $errors->first('reg_date')
+                '6', 'reg_date',  'Date of Registration *', '', $errors->has('reg_date'), $errors->first('reg_date')
               ) !!}
 
               <div class="col-md-12"></div>
 
               {!! __form::textbox_numeric(
-                '6', 'mt', 'text', 'MT *', 'MT', old('mt') , $errors->has('mt'), $errors->first('mt'), 'required'
+                '6', 'mt', 'text', 'MT *', 'MT', '', $errors->has('mt'), $errors->first('mt'), 'required'
               ) !!}
 
               {!! __form::textbox_numeric(
-                '6', 'lkg', 'text', 'LKG *', 'LKG', old('lkg') , $errors->has('lkg'), $errors->first('lkg'), 'required'
+                '6', 'lkg', 'text', 'LKG *', 'LKG', '', $errors->has('lkg'), $errors->first('lkg'), 'required'
               ) !!}
 
               <div class="col-md-12"></div>
 
               {!! __form::textbox_numeric(
-                '6', 'milling_fee', 'text', 'Milling Fee *', 'Milling Fee', old('milling_fee') , $errors->has('milling_fee'), $errors->first('milling_fee'), 'required'
+                '6', 'milling_fee', 'text', 'Milling Fee *', 'Milling Fee', '', $errors->has('milling_fee'), $errors->first('milling_fee'), 'required'
               ) !!}
 
               {!! __form::select_static(
-                '6', 'payment_status', 'Payment Status *', old('payment_status'), ['Exact' => 'E', 'Underpayment' => 'UP', 'Excess Payment ' => 'EP'], $errors->has('payment_status'), $errors->first('payment_status'), 'select2', 'style="width:100%;" required'
+                '6', 'payment_status', 'Payment Status *', '', ['Exact' => 'E', 'Underpayment' => 'UP', 'Excess Payment ' => 'EP'], $errors->has('payment_status'), $errors->first('payment_status'), 'select2', 'style="width:100%;" required'
               ) !!}
 
               <div class="col-md-12"></div>
 
               {!! __form::textbox_numeric(
-                '6', 'under_payment', 'text', 'Underpayment', 'Underpayment', old('under_payment') , $errors->has('under_payment'), $errors->first('under_payment'), ''
+                '6', 'under_payment', 'text', 'Underpayment', 'Underpayment', '', $errors->has('under_payment'), $errors->first('under_payment'), ''
               ) !!}
 
               {!! __form::textbox_numeric(
@@ -230,21 +247,21 @@
               <div class="col-md-12"></div>
 
               {!! __form::textbox_numeric(
-                '6', 'balance_fee', 'text', 'Balance', 'Balance', old('balance_fee') , $errors->has('balance_fee'), $errors->first('balance_fee'), ''
+                '6', 'balance_fee', 'text', 'Balance', 'Balance', '', $errors->has('balance_fee'), $errors->first('balance_fee'), ''
               ) !!}
 
               {!! __form::textbox_numeric(
-                '6', 'rated_capacity', 'text', 'Rated Capacity', 'Rated Capacity', old('rated_capacity') , $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
+                '6', 'rated_capacity', 'text', 'Rated Capacity', 'Rated Capacity', '', $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
               {!! __form::datepicker(
-                '6', 'start_milling',  'Start of Milling', old('start_milling'), $errors->has('start_milling'), $errors->first('start_milling')
+                '6', 'start_milling',  'Start of Milling', '', $errors->has('start_milling'), $errors->first('start_milling')
               ) !!}
 
               {!! __form::datepicker(
-                '6', 'end_milling',  'End of Milling', old('end_milling'), $errors->has('end_milling'), $errors->first('end_milling')
+                '6', 'end_milling',  'End of Milling', '', $errors->has('end_milling'), $errors->first('end_milling')
               ) !!}
 
             </div>
@@ -261,7 +278,6 @@
     </div>
   </div>
 
-
 @endsection 
 
 
@@ -275,29 +291,61 @@
   <script type="text/javascript">
 
 
-    {!! __js::button_modal_confirm_delete_caller('mill_delete') !!}
+    {!! __js::button_modal_confirm_delete_caller('mill_registration_delete') !!}
 
 
-    // ON CLICK APPEAR MODAL
-    $(document).on("click", "#rl_button", function () {
-      if($(this).data("action") == "rl"){
-        $('.select2').select2();
-        $('.datepicker').each(function(){
-            $(this).datepicker({
-                autoclose: true,
-                dateFormat: "mm/dd/yy",
-                orientation: "bottom"
-            });
-        });
+    // ONCLICK UPDATE BUTTON
+    $(document).on("click", "#update_button", function () {
+
+      $('.select2').select2();
+
+      $('.datepicker').each(function(){
+          $(this).datepicker({
+              autoclose: true,
+              dateFormat: "mm/dd/yy",
+              orientation: "bottom"
+          });
+      });
+
+      if($(this).data("action") == "update"){
+
+        $("#mill_rl").modal("show");
+        $("#mill_rl_body #mill_rl_form").attr("action", $(this).data("url"));
+
+        $('#crop_year_name').text($(this).data("crop_year_name"));
+        $("#mill_rl_form #crop_year_id").val($(this).data("crop_year_id"));
+        $("#mill_rl_form #license_no").val($(this).data("license_no"));
+        $("#mill_rl_form #reg_date").val($(this).data("reg_date"));
+        $("#mill_rl_form #mt").val($(this).data("mt"));
+        $("#mill_rl_form #lkg").val($(this).data("lkg"));
+        $("#mill_rl_form #milling_fee").val($(this).data("milling_fee"));
+        $("#mill_rl_form #payment_status").val($(this).data("payment_status")).change();
+        $("#mill_rl_form #under_payment").val($(this).data("under_payment"));
+        $("#mill_rl_form #excess_payment").val($(this).data("excess_payment"));
+        $("#mill_rl_form #balance_fee").val($(this).data("balance_fee"));
+        $("#mill_rl_form #rated_capacity").val($(this).data("rated_capacity"));
+        $("#mill_rl_form #rated_capacity").val($(this).data("rated_capacity"));
+        $("#mill_rl_form #start_milling").val($(this).data("start_milling"));
+        $("#mill_rl_form #end_milling").val($(this).data("end_milling"));
+
+        if($(this).data("payment_status") == "E"){
+          $("#excess_payment").attr('disabled','disabled');
+          $("#under_payment").attr('disabled','disabled');
+        }else if($(this).data("payment_status") == "UP"){
+          $("#excess_payment").attr('disabled','disabled');
+        }else if($(this).data("payment_status") == "EP"){
+          $("#under_payment").attr('disabled','disabled');
+        }
+
         $(".priceformat").priceFormat({
             prefix: "",
             thousandsSeparator: ",",
             clearOnEmpty: true,
             allowNegative: true
         });
-        $("#mill_rl").modal("show");
-        $("#rl_body #form").attr("action", $(this).data("url"));
+        
       }
+
     });
 
 
@@ -452,13 +500,9 @@
     }, 50));
 
 
-    // TOAST
-    @if(Session::has('MILL_UPDATE_SUCCESS'))
-      {!! __js::toast(Session::get('MILL_UPDATE_SUCCESS')) !!}
-    @endif
-
-    @if(Session::has('MILL_DELETE_SUCCESS'))
-      {!! __js::toast(Session::get('MILL_DELETE_SUCCESS')) !!}
+    // TOAST NOTIFICATION
+    @if(Session::has('MILL_REG_DELETE_SUCCESS'))
+      {!! __js::toast(Session::get('MILL_REG_DELETE_SUCCESS')) !!}
     @endif
 
     @if(Session::has('MILL_RENEW_LICENSE_SUCCESS'))
@@ -468,7 +512,6 @@
     @if(Session::has('MILL_REG_IS_EXIST'))
       $('#mill_is_exist').modal('show');
     @endif
-
 
   </script>
     

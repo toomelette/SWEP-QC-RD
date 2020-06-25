@@ -56,7 +56,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
         View::composer(['dashboard.trader.index',
                         'dashboard.trader.renewal_history',
                         'dashboard.trader.reports',
-                        'dashboard.mill.index',], 'App\Core\ViewComposers\CropYearComposer');
+                        'dashboard.mill.index',
+                        'dashboard.mill.renewal_history',], 'App\Core\ViewComposers\CropYearComposer');
 
         
     }
