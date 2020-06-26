@@ -123,14 +123,25 @@
             <p><p style="font-size: 17px;">{{ Session::get('MILL_RENEW_LICENSE_SUCCESS') }}</p></p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            @if (in_array('dashboard.mill_registration.dl_word_file', $global_user_submenus))
-              <a href="{{ route('dashboard.mill_registration.dl_word_file', Session::get('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
+
+            @if (in_array('dashboard.mill_registration.dl_cover', $global_user_submenus))
+              <a href="{{ route('dashboard.mill_registration.dl_cover', Session::get('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
                  type="button" 
                  class="btn btn-primary">
-                Download Word File
+                <i class="fa fa-download"></i> Cover Letter
               </a>
             @endif
+
+            @if (in_array('dashboard.mill_registration.dl_billing', $global_user_submenus))
+              <a href="{{ route('dashboard.mill_registration.dl_billing', Session::get('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
+                 type="button" 
+                 class="btn btn-primary">
+                <i class="fa fa-download"></i> Billing Statement
+              </a>
+            @endif
+
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
           </div>
         </div>
       </div>
@@ -214,7 +225,7 @@
               ) !!}
 
               {!! __form::select_static(
-                '6', 'payment_status', 'Payment Status *', old('payment_status'), ['Exact' => 'E', 'Underpayment' => 'UP', 'Excess Payment ' => 'EP'], $errors->has('payment_status'), $errors->first('payment_status'), 'select2', 'style="width:100%;" required'
+                '6', 'payment_status', 'Payment Status *', old('payment_status'), ['Underpayment' => 'UP', 'Excess Payment ' => 'EP'], $errors->has('payment_status'), $errors->first('payment_status'), 'select2', 'style="width:100%;" required'
               ) !!}
 
               <div class="col-md-12"></div>
@@ -304,11 +315,7 @@
     // ONCLICK SELECT DISABLE
     $('#payment_status').on('select2:select', function (e) {
       val = $(this).val();
-      if(val == "E"){
-        $("#excess_payment").attr('disabled','disabled').val('');
-        $("#under_payment").attr('disabled','disabled').val('');
-        $("#balance_fee").val($("#milling_fee").val());
-      }else if(val == "UP"){
+      if(val == "UP"){
         $("#excess_payment").attr('disabled','disabled').val('');
         $("#under_payment").removeAttr("disabled").val('');
         $("#balance_fee").val(0);

@@ -70,8 +70,8 @@ class MillRepository extends BaseRepository implements MillInterface {
         $mill->fax_no = $request->fax_no;
         $mill->fax_no_second = $request->fax_no_second;
         $mill->officer = $request->officer;
+        $mill->position = $request->position;
         $mill->salutation = $request->salutation;
-        $mill->salutation_pos = $request->salutation_pos;
         $mill->created_at = $this->carbon->now();
         $mill->updated_at = $this->carbon->now();
         $mill->ip_created = request()->ip();
@@ -99,8 +99,8 @@ class MillRepository extends BaseRepository implements MillInterface {
         $mill->fax_no = $request->fax_no;
         $mill->fax_no_second = $request->fax_no_second;
         $mill->officer = $request->officer;
+        $mill->position = $request->position;
         $mill->salutation = $request->salutation;
-        $mill->salutation_pos = $request->salutation_pos;
         $mill->updated_at = $this->carbon->now();
         $mill->ip_updated = request()->ip();
         $mill->user_updated = $this->auth->user()->user_id;

@@ -6,9 +6,9 @@ use App\Core\Interfaces\CropYearInterface;
 use App\Core\Interfaces\MillRegistrationInterface;
 use App\Http\Requests\Mill\MillRenewLicenseFormRequest;
 use App\Http\Requests\MillRegistration\MillRegistrationReportRequest;
-// use App\Exports\MillRegistrationBDC;
-// use App\Exports\MillRegistrationCert;
-// use Maatwebsite\Excel\Facades\Excel;
+
+use App\Exports\MillRegistrationCover;
+use App\Exports\MillRegistrationBilling;
 
 
 
@@ -21,8 +21,7 @@ class MillRegistrationController extends Controller{
 
 
 
-    public function __construct(CropYearInterface $cy_repo, 
-                                MillRegistrationInterface $mill_reg_repo){
+    public function __construct(CropYearInterface $cy_repo, MillRegistrationInterface $mill_reg_repo){
         $this->mill_reg_repo = $mill_reg_repo;
         $this->cy_repo = $cy_repo;
         parent::__construct();
@@ -35,16 +34,6 @@ class MillRegistrationController extends Controller{
 
     //     $mill_reg = $this->mill_reg_repo->findbySlug($slug);
     //     return view('dashboard.mill_registration.show')->with('mill_reg', $mill_reg);
-
-    // }
-
-
-
-
-    // public function downloadWordFile($slug){
-
-    //     $mill_reg = $this->mill_reg_repo->findbySlug($slug);
-    //     return MillRegistrationCert::cert($mill_reg);
 
     // }
 
@@ -68,6 +57,26 @@ class MillRegistrationController extends Controller{
 
         $this->event->fire('mill.renew_license', [ $mill_reg->mill, $mill_reg ]);
         return redirect()->back();
+
+    }
+
+
+
+
+    public function downloadCoverLetter($slug){
+
+        $mill_reg = $this->mill_reg_repo->findbySlug($slug);
+        return MillRegistrationCover::coverLetter($mill_reg);
+
+    }
+
+
+
+
+    public function downloadBillingStatement($slug){
+
+        $mill_reg = $this->mill_reg_repo->findbySlug($slug);
+        return MillRegistrationBilling::billingStatement($mill_reg);
 
     }
 

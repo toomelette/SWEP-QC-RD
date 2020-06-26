@@ -78,6 +78,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** MILLS Registration **/
+	Route::get('/mill_registration/dl_cover/{slug}', 'MillRegistrationController@downloadCoverLetter')
+		->name('mill_registration.dl_cover');
+	Route::get('/mill_registration/dl_billing/{slug}', 'MillRegistrationController@downloadBillingStatement')
+		->name('mill_registration.dl_billing');
 	Route::resource('mill_registration', 'MillRegistrationController');
 	
 	

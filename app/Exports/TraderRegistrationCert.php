@@ -6,14 +6,10 @@ use App\Core\Helpers\__dataType;
 class TraderRegistrationCert{
     
 
-
     const ADMINISTRATOR = 'HERMENEGILDO R. SERAFICA';
 
 
-
-
-    // MOLASSES DOMESTIC
-
+    // TRADER CERTIFICATE
     public static function cert($trader_reg){
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();

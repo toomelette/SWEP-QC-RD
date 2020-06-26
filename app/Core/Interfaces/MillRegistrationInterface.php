@@ -14,7 +14,7 @@ interface MillRegistrationInterface {
 
 	public function destroy($slug);
 
-	// public function findBySlug($slug);
+	public function findBySlug($slug);
 
 	public function isMillExistInCY($crop_year_id, $mill_id);
 

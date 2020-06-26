@@ -63,11 +63,11 @@
             ) !!}
 
             {!! __form::textbox(
-              '4', 'salutation', 'text', 'Salutation', 'Salutation', old('salutation'), $errors->has('salutation'), $errors->first('salutation'), ''
+              '4', 'position', 'text', 'Position', 'Position', old('position'), $errors->has('position'), $errors->first('position'), ''
             ) !!}
 
             {!! __form::textbox(
-              '4', 'salutation_pos', 'text', 'Position', 'Position', old('salutation_pos'), $errors->has('salutation_pos'), $errors->first('salutation_pos'), ''
+              '4', 'salutation', 'text', 'Salutation', 'Salutation', old('salutation'), $errors->has('salutation'), $errors->first('salutation'), ''
             ) !!}
 
           </div>

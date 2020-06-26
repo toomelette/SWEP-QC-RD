@@ -142,6 +142,119 @@ class __dataType{
 
 
 
+    public static function num_to_words($num){ 
+
+      $ones = array( 
+          0 => "",
+          1 => "one", 
+          2 => "two", 
+          3 => "three", 
+          4 => "four", 
+          5 => "five", 
+          6 => "six", 
+          7 => "seven", 
+          8 => "eight", 
+          9 => "nine", 
+          10 => "ten", 
+          11 => "eleven", 
+          12 => "twelve", 
+          13 => "thirteen", 
+          14 => "fourteen", 
+          15 => "fifteen", 
+          16 => "sixteen", 
+          17 => "seventeen", 
+          18 => "eighteen", 
+          19 => "nineteen" 
+      ); 
+
+      $tens = array( 
+          0 => "",
+          1 => "ten",
+          2 => "twenty", 
+          3 => "thirty", 
+          4 => "forty", 
+          5 => "fifty", 
+          6 => "sixty", 
+          7 => "seventy", 
+          8 => "eighty", 
+          9 => "ninety" 
+      ); 
+
+      $hundreds = array( 
+          "hundred", 
+          "thousand", 
+          "million", 
+          "billion", 
+          "trillion", 
+          "quadrillion" 
+      );
+
+      $num = number_format($num,2,".",","); 
+      $num_arr = explode(".",$num); 
+      $wholenum = $num_arr[0]; 
+      $decnum = $num_arr[1]; 
+      $whole_arr = array_reverse(explode(",",$wholenum)); 
+      krsort($whole_arr); 
+      $rettxt = ""; 
+
+      foreach($whole_arr as $key => $i){ 
+
+        if($i > 0 && $i < 20){ 
+          $rettxt .= $ones[$i]; 
+        }elseif($i > 0 && $i < 100){
+          if(substr($i,1,1) == 0) {
+             $rettxt .= $tens[substr($i,0,1)];
+          }else{
+            if (substr($i,0,1) == 0) {
+              $rettxt .= $tens[substr($i,1,1)];
+              $rettxt .= " ".$ones[substr($i,2,1)];
+            }else{
+              $rettxt .= $tens[substr($i,0,1)];
+              $rettxt .= " ".$ones[substr($i,1,1)];
+            }
+          } 
+        }elseif($i == 0){
+          $rettxt .= "";
+        }else{
+          $rettxt .= $ones[substr($i,0,1)]." ".$hundreds[0];
+          if(substr($i,1,1) == 1){
+            $rettxt .= " ".$ones[substr($i,-2)];
+          }elseif(substr($i,1,1) == 0){
+            $rettxt .= " ".$ones[substr($i,2,1)];
+          }elseif(substr($i,1,1) == 0 && substr($i,2,1) == 0){
+            $rettxt .= "";
+          }else{
+            $rettxt .= " ".$tens[substr($i,1,1)];
+            $rettxt .= " ".$ones[substr($i,2,1)];
+          }
+        }
+
+        if($i > 0 && $key > 0){ 
+          $rettxt .= " ".$hundreds[$key]." "; 
+        }
+
+      } 
+
+
+      if($decnum > 0){ 
+        $rettxt .= " point "; 
+        if($decnum < 20){ 
+          $rettxt .= $ones[$decnum]; 
+        }elseif($decnum < 100){ 
+          $rettxt .= $tens[substr($decnum,0,1)]; 
+          $rettxt .= " ".$ones[substr($decnum,1,1)]; 
+        } 
+      }
+          
+
+      return strtoupper($rettxt); 
+
+
+    }
+
+
+
+
 
 
 }
