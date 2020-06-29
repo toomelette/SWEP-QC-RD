@@ -82,7 +82,17 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 		->name('mill_registration.dl_cover');
 	Route::get('/mill_registration/dl_billing/{slug}', 'MillRegistrationController@downloadBillingStatement')
 		->name('mill_registration.dl_billing');
+	Route::get('/mill_registration/dl_license/{slug}', 'MillRegistrationController@downloadLicense')
+		->name('mill_registration.dl_license');
 	Route::resource('mill_registration', 'MillRegistrationController');
+
+
+	/** REFINERY **/
+	Route::post('/refinery/renew_license_post/{slug}', 'RefineryController@renewLicensePost')
+		->name('refinery.renew_license_post');
+	Route::get('/refinery/renewal_history/{slug}', 'RefineryController@renewalHistory')
+		->name('refinery.renewal_history');
+	Route::resource('refinery', 'RefineryController');
 	
 	
 });
@@ -95,7 +105,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 /** Testing **/
 // Route::get('/dashboard/test', function(){
 
-// 	$mills = App\Models\Mill::get(); 
+// 	$mills = App\Models\Refinery::get(); 
 
 // 	foreach ($mills as $data) {
 
@@ -110,7 +120,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 // 	 	    }
 // 	 	}
 // 		$trader = App\Models\Trader::where('tin', $data->trader_id)->first();
-// 		$mill = App\Models\Mill::find($data->id);
+// 		$mill = App\Models\Refinery::find($data->id);
 // 		$mill->slug = Illuminate\Support\Str::random(16);
 // 		$mill->save();
 	

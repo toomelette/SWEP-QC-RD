@@ -1,9 +1,9 @@
 <?php
 
   $table_sessions = [ 
-    Session::get('MILL_UPDATE_SUCCESS_SLUG'),
-    Session::get('MILL_RENEW_LICENSE_SUCCESS_SLUG'),
-    Session::get('MILL_REG_IS_EXIST_SLUG'),
+    Session::get('REFINERY_UPDATE_SUCCESS_SLUG'),
+    Session::get('REFINERY_RENEW_LICENSE_SUCCESS_SLUG'),
+    Session::get('REFINERY_REG_IS_EXIST_SLUG'),
   ];
 
   $appended_requests = [
@@ -20,19 +20,19 @@
 @section('content')
     
   <section class="content-header">
-      <h1>Mill List</h1>
+      <h1>Refinery List</h1>
   </section>
 
   <section class="content">
     
     {{-- Form Start --}}
-    <form data-pjax class="form" id="filter_form" method="GET" action="{{ route('dashboard.mill.index') }}">
+    <form data-pjax class="form" id="filter_form" method="GET" action="{{ route('dashboard.refinery.index') }}">
 
     <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! __html::table_search(route('dashboard.mill.index')) !!}
+        {!! __html::table_search(route('dashboard.refinery.index')) !!}
       </div>
 
     {{-- Form End --}}  
@@ -46,19 +46,21 @@
           <th>@sortablelink('', 'Status')</th>
           <th style="width: 400px">Action</th>
         </tr>
-        @foreach($mills as $data) 
+        @foreach($refineries as $data) 
           <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
             <td id="mid-vert">{{ $data->name }}</td>
-            <td id="mid-vert">{!! $data->displayLicensesStatusSpan($global_current_cy->crop_year_id) !!}</td>
+            <td id="mid-vert">
+              {{-- {!! $data->displayLicensesStatusSpan($global_current_cy->crop_year_id) !!} --}}
+            </td>
             <td id="mid-vert">
               <div class="btn-group">
-                @if(in_array('dashboard.mill.renew_license_post', $global_user_submenus))
+                {{-- @if(in_array('dashboard.refinery.renew_license_post', $global_user_submenus))
                   <a type="button" 
                      class="btn btn-default" 
                      @if ($data->licensesStatus($global_current_cy->crop_year_id) == false)
                        id="rl_button" 
                        data-action="rl" 
-                       data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
+                       data-url="{{ route('dashboard.refinery.renew_license_post', $data->slug) }}"
                      @else
                        disabled
                      @endif
@@ -66,18 +68,18 @@
                     <i class="fa fa-certificate"></i>&nbsp; Renew License
                   </a>
                 @endif
-                @if(in_array('dashboard.mill.renewal_history', $global_user_submenus))
-                  <a type="button" class="btn btn-default" id="rh_button" href="{{ route('dashboard.mill.renewal_history', $data->slug) }}">
+                @if(in_array('dashboard.refinery.renewal_history', $global_user_submenus))
+                  <a type="button" class="btn btn-default" id="rh_button" href="{{ route('dashboard.refinery.renewal_history', $data->slug) }}">
                     <i class="fa fa-tasks"></i>&nbsp; Renewal History
                   </a>
-                @endif
-                @if(in_array('dashboard.mill.edit', $global_user_submenus))
-                  <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.mill.edit', $data->slug) }}">
+                @endif --}}
+                @if(in_array('dashboard.refinery.edit', $global_user_submenus))
+                  <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.refinery.edit', $data->slug) }}">
                     <i class="fa fa-pencil"></i>
                   </a>
                 @endif
-                @if(in_array('dashboard.mill.destroy', $global_user_submenus))
-                  <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.mill.destroy', $data->slug) }}">
+                @if(in_array('dashboard.refinery.destroy', $global_user_submenus))
+                  <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.refinery.destroy', $data->slug) }}">
                     <i class="fa fa-trash"></i>
                   </a>
                 @endif
@@ -88,15 +90,15 @@
         </table>
       </div>
 
-      @if($mills->isEmpty())
+      @if($refineries->isEmpty())
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>
       @endif
 
       <div class="box-footer">
-        {!! __html::table_counter($mills) !!}
-        {!! $mills->appends($appended_requests)->render('vendor.pagination.bootstrap-4')!!}
+        {!! __html::table_counter($refineries) !!}
+        {!! $refineries->appends($appended_requests)->render('vendor.pagination.bootstrap-4')!!}
       </div>
 
     </div>
@@ -114,13 +116,13 @@
 @section('modals')
 
 
-  {!! __html::modal_delete('mill_delete') !!}
+  {!! __html::modal_delete('refinery_delete') !!}
 
 
   {{-- TR UPDATE SUCCESS --}}
-  @if(Session::has('MILL_RENEW_LICENSE_SUCCESS'))
+  @if(Session::has('REFINERY_RENEW_LICENSE_SUCCESS'))
 
-    <div class="modal fade" id="mill_renew_success">
+    <div class="modal fade" id="refinery_renew_success">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -129,28 +131,28 @@
             <h4 class="modal-title"><i class="fa fa-fw fa-check"></i> Saved!</h4>
           </div>
           <div class="modal-body">
-            <p><p style="font-size: 17px;">{{ Session::get('MILL_RENEW_LICENSE_SUCCESS') }}</p></p>
+            <p><p style="font-size: 17px;">{{ Session::get('REFINERY_RENEW_LICENSE_SUCCESS') }}</p></p>
           </div>
           <div class="modal-footer">
 
-            @if (in_array('dashboard.mill_registration.dl_cover', $global_user_submenus))
-              <a href="{{ route('dashboard.mill_registration.dl_cover', Session::get('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
+            @if (in_array('dashboard.refinery_registration.dl_cover', $global_user_submenus))
+              <a href="{{ route('dashboard.refinery_registration.dl_cover', Session::get('REFINERY_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
                  type="button" 
                  class="btn btn-primary">
                 <i class="fa fa-download"></i> Cover Letter
               </a>
             @endif
 
-            @if (in_array('dashboard.mill_registration.dl_billing', $global_user_submenus))
-              <a href="{{ route('dashboard.mill_registration.dl_billing', Session::get('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
+            @if (in_array('dashboard.refinery_registration.dl_billing', $global_user_submenus))
+              <a href="{{ route('dashboard.refinery_registration.dl_billing', Session::get('REFINERY_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
                  type="button" 
                  class="btn btn-primary">
                 <i class="fa fa-download"></i> Billing Statement
               </a>
             @endif
 
-            @if (in_array('dashboard.mill_registration.dl_license', $global_user_submenus))
-              <a href="{{ route('dashboard.mill_registration.dl_license', Session::get('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
+            @if (in_array('dashboard.refinery_registration.dl_license', $global_user_submenus))
+              <a href="{{ route('dashboard.refinery_registration.dl_license', Session::get('REFINERY_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
                  type="button" 
                  class="btn btn-primary">
                 <i class="fa fa-download"></i> License
@@ -167,9 +169,9 @@
   @endif
 
 
-  {{-- MILL IS EXIST --}}  
-  @if(Session::has('MILL_REG_IS_EXIST'))
-    <div class="modal fade modal-danger" data-backdrop="static" id="mill_is_exist">
+  {{-- REFINERY IS EXIST --}}  
+  @if(Session::has('REFINERY_REG_IS_EXIST'))
+    <div class="modal fade modal-danger" data-backdrop="static" id="refinery_is_exist">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -183,7 +185,7 @@
           </div>
           <div class="modal-body">
             <p style="font-size: 17px;">
-              {{ Session::get('MILL_REG_IS_EXIST') }}
+              {{ Session::get('REFINERY_REG_IS_EXIST') }}
             </p>
           </div>
           <div class="modal-footer">
@@ -196,7 +198,7 @@
 
 
   {{-- RENEW LICENSE FORM --}}
-  <div class="modal fade" id="mill_rl" data-backdrop="static">
+  <div class="modal fade" id="refinery_rl" data-backdrop="static">
     <div class="modal-lg modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -238,7 +240,7 @@
               <div class="col-md-12"></div>
 
               {!! __form::textbox_numeric(
-                '6', 'milling_fee', 'text', 'Milling Fee *', 'Milling Fee', old('milling_fee') , $errors->has('milling_fee'), $errors->first('milling_fee'), 'required'
+                '6', 'refinerying_fee', 'text', 'Milling Fee *', 'Milling Fee', old('refinerying_fee') , $errors->has('refinerying_fee'), $errors->first('refinerying_fee'), 'required'
               ) !!}
 
               {!! __form::select_static(
@@ -268,11 +270,11 @@
               <div class="col-md-12"></div>
 
               {!! __form::datepicker(
-                '6', 'start_milling',  'Start of Milling', old('start_milling'), $errors->has('start_milling'), $errors->first('start_milling')
+                '6', 'start_refinerying',  'Start of Milling', old('start_refinerying'), $errors->has('start_refinerying'), $errors->first('start_refinerying')
               ) !!}
 
               {!! __form::datepicker(
-                '6', 'end_milling',  'End of Milling', old('end_milling'), $errors->has('end_milling'), $errors->first('end_milling')
+                '6', 'end_refinerying',  'End of Milling', old('end_refinerying'), $errors->has('end_refinerying'), $errors->first('end_refinerying')
               ) !!}
 
             </div>
@@ -303,7 +305,7 @@
   <script type="text/javascript">
 
 
-    {!! __js::button_modal_confirm_delete_caller('mill_delete') !!}
+    {!! __js::button_modal_confirm_delete_caller('refinery_delete') !!}
 
 
     // ON CLICK APPEAR MODAL
@@ -323,7 +325,7 @@
             clearOnEmpty: true,
             allowNegative: true
         });
-        $("#mill_rl").modal("show");
+        $("#refinery_rl").modal("show");
         $("#rl_body #form").attr("action", $(this).data("url"));
       }
     });
@@ -375,10 +377,10 @@
     // ON FILL UNDERPAYMENT
     $('#under_payment').keyup(delay(function() { 
       balance_fee = 0;
-      if ($('#milling_fee').val() != ""){
-        milling_fee = $('#milling_fee').val().replace(/,/g, "");
+      if ($('#refinerying_fee').val() != ""){
+        refinerying_fee = $('#refinerying_fee').val().replace(/,/g, "");
         underpayment = $('#under_payment').val().replace(/,/g, "");
-        mf_float = parseFloat(milling_fee);
+        mf_float = parseFloat(refinerying_fee);
         up_float = parseFloat(underpayment);
         balance_fee = mf_float - up_float;
       }
@@ -388,10 +390,10 @@
 
     $('#under_payment').keydown(delay(function() {
       balance_fee = 0;
-      if ($('#milling_fee').val() != ""){
-        milling_fee = $('#milling_fee').val().replace(/,/g, "");
+      if ($('#refinerying_fee').val() != ""){
+        refinerying_fee = $('#refinerying_fee').val().replace(/,/g, "");
         underpayment = $('#under_payment').val().replace(/,/g, "");
-        mf_float = parseFloat(milling_fee);
+        mf_float = parseFloat(refinerying_fee);
         up_float = parseFloat(underpayment);
         balance_fee = mf_float - up_float;
       }
@@ -403,10 +405,10 @@
     // ON FILL EXCESS PAYMENT
     $('#excess_payment').keyup(delay(function() { 
       balance_fee = 0;
-      if ($('#milling_fee').val() != ""){
-        milling_fee = $('#milling_fee').val().replace(/,/g, "");
+      if ($('#refinerying_fee').val() != ""){
+        refinerying_fee = $('#refinerying_fee').val().replace(/,/g, "");
         excess_payment = $('#excess_payment').val().replace(/,/g, "");
-        mf_float = parseFloat(milling_fee);
+        mf_float = parseFloat(refinerying_fee);
         ep_float = parseFloat(excess_payment);
         balance_fee = mf_float + ep_float;
       }
@@ -416,10 +418,10 @@
 
     $('#excess_payment').keydown(delay(function() {
       balance_fee = 0;
-      if ($('#milling_fee').val() != ""){
-        milling_fee = $('#milling_fee').val().replace(/,/g, "");
+      if ($('#refinerying_fee').val() != ""){
+        refinerying_fee = $('#refinerying_fee').val().replace(/,/g, "");
         excess_payment = $('#excess_payment').val().replace(/,/g, "");
-        mf_float = parseFloat(milling_fee);
+        mf_float = parseFloat(refinerying_fee);
         ep_float = parseFloat(excess_payment);
         balance_fee = mf_float + ep_float;
       }
@@ -428,47 +430,47 @@
     }, 50));
 
 
-     // ON FILL MILLING FEE
-    $('#milling_fee').keyup(delay(function() {
+     // ON FILL REFINERYING FEE
+    $('#refinerying_fee').keyup(delay(function() {
       balance_fee = 0;
       if ($('#payment_status').val() == "UP"){
-        milling_fee = $('#milling_fee').val().replace(/,/g, "");
+        refinerying_fee = $('#refinerying_fee').val().replace(/,/g, "");
         under_payment = $('#under_payment').val().replace(/,/g, "");
-        mf_float = parseFloat(milling_fee);
+        mf_float = parseFloat(refinerying_fee);
         up_float = parseFloat(under_payment);
         balance_fee = mf_float - up_float;
       }else if($('#payment_status').val() == "EP"){
-        milling_fee = $('#milling_fee').val().replace(/,/g, "");
+        refinerying_fee = $('#refinerying_fee').val().replace(/,/g, "");
         excess_payment = $('#excess_payment').val().replace(/,/g, "");
-        mf_float = parseFloat(milling_fee);
+        mf_float = parseFloat(refinerying_fee);
         ep_float = parseFloat(excess_payment);
         balance_fee = mf_float + ep_float;
       }else{
-        milling_fee = $('#milling_fee').val().replace(/,/g, "");
-        mf_float = parseFloat(milling_fee);
+        refinerying_fee = $('#refinerying_fee').val().replace(/,/g, "");
+        mf_float = parseFloat(refinerying_fee);
         balance_fee = mf_float;
       }
       $('#balance_fee').val(balance_fee.toFixed(2)); 
       pf('#balance_fee');
     }, 50));
 
-    $('#milling_fee').keydown(delay(function() {
+    $('#refinerying_fee').keydown(delay(function() {
       balance_fee = 0;
       if ($('#payment_status').val() == "UP"){
-        milling_fee = $('#milling_fee').val().replace(/,/g, "");
+        refinerying_fee = $('#refinerying_fee').val().replace(/,/g, "");
         under_payment = $('#under_payment').val().replace(/,/g, "");
-        mf_float = parseFloat(milling_fee);
+        mf_float = parseFloat(refinerying_fee);
         up_float = parseFloat(under_payment);
         balance_fee = mf_float - up_float;
       }else if($('#payment_status').val() == "EP"){
-        milling_fee = $('#milling_fee').val().replace(/,/g, "");
+        refinerying_fee = $('#refinerying_fee').val().replace(/,/g, "");
         excess_payment = $('#excess_payment').val().replace(/,/g, "");
-        mf_float = parseFloat(milling_fee);
+        mf_float = parseFloat(refinerying_fee);
         ep_float = parseFloat(excess_payment);
         balance_fee = mf_float + ep_float;
       }else{
-        milling_fee = $('#milling_fee').val().replace(/,/g, "");
-        mf_float = parseFloat(milling_fee);
+        refinerying_fee = $('#refinerying_fee').val().replace(/,/g, "");
+        mf_float = parseFloat(refinerying_fee);
         balance_fee = mf_float;
       }
       $('#balance_fee').val(balance_fee.toFixed(2)); 
@@ -477,20 +479,20 @@
 
 
     // TOAST
-    @if(Session::has('MILL_UPDATE_SUCCESS'))
-      {!! __js::toast(Session::get('MILL_UPDATE_SUCCESS')) !!}
+    @if(Session::has('REFINERY_UPDATE_SUCCESS'))
+      {!! __js::toast(Session::get('REFINERY_UPDATE_SUCCESS')) !!}
     @endif
 
-    @if(Session::has('MILL_DELETE_SUCCESS'))
-      {!! __js::toast(Session::get('MILL_DELETE_SUCCESS')) !!}
+    @if(Session::has('REFINERY_DELETE_SUCCESS'))
+      {!! __js::toast(Session::get('REFINERY_DELETE_SUCCESS')) !!}
     @endif
 
-    @if(Session::has('MILL_RENEW_LICENSE_SUCCESS'))
-      $('#mill_renew_success').modal('show');
+    @if(Session::has('REFINERY_RENEW_LICENSE_SUCCESS'))
+      $('#refinery_renew_success').modal('show');
     @endif
 
-    @if(Session::has('MILL_REG_IS_EXIST'))
-      $('#mill_is_exist').modal('show');
+    @if(Session::has('REFINERY_REG_IS_EXIST'))
+      $('#refinery_is_exist').modal('show');
     @endif
 
 

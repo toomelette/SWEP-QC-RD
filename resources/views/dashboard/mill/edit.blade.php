@@ -86,18 +86,3 @@
 </section>
 
 @endsection
-
-
-
-
-@section('scripts')
-
-  <script type="text/javascript">
-
-    @if(Session::has('MILL_CREATE_SUCCESS'))
-      {!! __js::toast(Session::get('MILL_CREATE_SUCCESS')) !!}
-    @endif
-
-  </script>
-    
-@endsection

@@ -9,6 +9,7 @@ use App\Http\Requests\MillRegistration\MillRegistrationReportRequest;
 
 use App\Exports\MillRegistrationCover;
 use App\Exports\MillRegistrationBilling;
+use App\Exports\MillRegistrationLicense;
 
 
 
@@ -30,12 +31,12 @@ class MillRegistrationController extends Controller{
 
 
 
-    // public function show($slug){
+    public function show($slug){
 
-    //     $mill_reg = $this->mill_reg_repo->findbySlug($slug);
-    //     return view('dashboard.mill_registration.show')->with('mill_reg', $mill_reg);
+        $mill_reg = $this->mill_reg_repo->findbySlug($slug);
+        return view('dashboard.mill_registration.show')->with('mill_reg', $mill_reg);
 
-    // }
+    }
 
 
 
@@ -77,6 +78,16 @@ class MillRegistrationController extends Controller{
 
         $mill_reg = $this->mill_reg_repo->findbySlug($slug);
         return MillRegistrationBilling::billingStatement($mill_reg);
+
+    }
+
+
+
+
+    public function downloadLicense($slug){
+
+        $mill_reg = $this->mill_reg_repo->findbySlug($slug);
+        return MillRegistrationLicense::license($mill_reg);
 
     }
 

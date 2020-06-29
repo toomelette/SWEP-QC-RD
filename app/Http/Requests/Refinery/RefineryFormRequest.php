@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Http\Requests\Mill;
+namespace App\Http\Requests\Refinery;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MillFormRequest extends FormRequest{
+class RefineryFormRequest extends FormRequest{
 
 
     
-
     public function authorize(){
-
         return true;
-    
     }
-
     
 
 
@@ -33,13 +29,10 @@ class MillFormRequest extends FormRequest{
             'officer'=>'nullable|string|max:90',
             'salutation'=>'nullable|string|max:90',
             'position'=>'nullable|string|max:90',
-
+        
         ];
 
     }
-
-
-
 
 
 

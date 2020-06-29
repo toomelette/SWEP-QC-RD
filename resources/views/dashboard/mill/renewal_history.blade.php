@@ -155,6 +155,14 @@
               </a>
             @endif
 
+            @if (in_array('dashboard.mill_registration.dl_license', $global_user_submenus))
+              <a href="{{ route('dashboard.mill_registration.dl_license', Session::get('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
+                 type="button" 
+                 class="btn btn-primary">
+                <i class="fa fa-download"></i> License
+              </a>
+            @endif
+
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
           </div>

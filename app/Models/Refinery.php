@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
 
-class Mill extends Model{
+class Refinery extends Model{
 
 
     use Sortable;
-    protected $table = 'mills';
+    protected $table = 'refineries';
     protected $dates = ['created_at', 'updated_at'];    
 	public $timestamps = false;
 
@@ -19,7 +19,7 @@ class Mill extends Model{
     protected $attributes = [
 
         'slug' => '',
-        'mill_id' => '',
+        'refinery_id' => '',
         'name' => '',
         'address' => '',
         'address_second' => '',
@@ -40,39 +40,24 @@ class Mill extends Model{
 
     ];
 
-    public function millRegistration() {
-        return $this->hasMany('App\Models\MillRegistration','mill_id','mill_id');
-    }
+    // public function millRegistration() {
+    //     return $this->hasMany('App\Models\MillRegistration','mill_id','mill_id');
+    // }
 
 
 
 
-    public function displayLicensesStatusSpan($cy_id){
+    // public function displayLicensesStatus($cy_id){
 
-        $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id);
+    //     $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id);
 
-        if (!$mill_reg->isEmpty()) {
-            return '<span class="badge bg-green">Registered</span>';
-        }
+    //     if (!$mill_reg->isEmpty()) {
+    //         return '<span class="badge bg-green">Registered</span>';
+    //     }
 
-        return '<span class="badge bg-red">Not Registered</span>';
+    //     return '<span class="badge bg-red">Not Registered</span>';
 
-    }
-
-
-
-
-    public function licensesStatus($cy_id){
-
-        $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id);
-
-        if (!$mill_reg->isEmpty()) {
-            return true;
-        }
-
-        return false;
-
-    }
+    // }
 
 
 

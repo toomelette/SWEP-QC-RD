@@ -57,7 +57,8 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.trader.renewal_history',
                         'dashboard.trader.reports',
                         'dashboard.mill.index',
-                        'dashboard.mill.renewal_history',], 'App\Core\ViewComposers\CropYearComposer');
+                        'dashboard.mill.renewal_history',
+                        'dashboard.refinery.index',], 'App\Core\ViewComposers\CropYearComposer');
 
         
     }
