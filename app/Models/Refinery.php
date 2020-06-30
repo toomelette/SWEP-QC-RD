@@ -40,24 +40,39 @@ class Refinery extends Model{
 
     ];
 
-    // public function millRegistration() {
-    //     return $this->hasMany('App\Models\MillRegistration','mill_id','mill_id');
-    // }
+    public function refineryRegistration() {
+        return $this->hasMany('App\Models\RefineryRegistration','refinery_id','refinery_id');
+    }
 
 
 
 
-    // public function displayLicensesStatus($cy_id){
+    public function displayLicensesStatusSpan($cy_id){
 
-    //     $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id);
+        $refinery_reg = $this->refineryRegistration->where('crop_year_id', $cy_id);
 
-    //     if (!$mill_reg->isEmpty()) {
-    //         return '<span class="badge bg-green">Registered</span>';
-    //     }
+        if (!$refinery_reg->isEmpty()) {
+            return '<span class="badge bg-green">Registered</span>';
+        }
 
-    //     return '<span class="badge bg-red">Not Registered</span>';
+        return '<span class="badge bg-red">Not Registered</span>';
 
-    // }
+    }
+
+
+
+
+    public function licensesStatus($cy_id){
+
+        $refinery_reg = $this->refineryRegistration->where('crop_year_id', $cy_id);
+
+        if (!$refinery_reg->isEmpty()) {
+            return true;
+        }
+
+        return false;
+
+    }
 
 
 

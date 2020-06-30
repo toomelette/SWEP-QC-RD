@@ -10,6 +10,8 @@
         <h2 class="box-title">Edit Refinery</h2>
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
+            &nbsp;
+            {!! __html::back_button(['dashboard.refinery.index']) !!}
         </div> 
       </div>
       

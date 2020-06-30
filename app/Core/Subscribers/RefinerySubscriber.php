@@ -69,19 +69,19 @@ class RefinerySubscriber extends BaseSubscriber{
 
 
 
-    // public function onRenewLicense($refinery, $refinery_reg){
+    public function onRenewLicense($refinery, $refinery_reg){
 
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:refineries:fetch:*');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:refineries:findBySlug:'. $refinery->slug .'');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:refinery_registrations:isRefineryExistInCY:'.$refinery_reg->crop_year_id.':*');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:refinery_registrations:fetchByRefineryId:'. $refinery_reg->refinery_id .':*');
-    //     $this->__cache->deletePattern(''. config('app.name') .'_cache:refinery_registrations:findBySlug:'. $refinery_reg->slug);
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:refineries:fetch:*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:refineries:findBySlug:'. $refinery->slug .'');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:refinery_registrations:isRefineryExistInCY:'.$refinery_reg->crop_year_id.':*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:refinery_registrations:fetchByRefineryId:'. $refinery_reg->refinery_id .':*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:refinery_registrations:findBySlug:'. $refinery_reg->slug);
 
-    //     $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS', 'The Refinery has been successfully registered!');
-    //     $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS_SLUG', $refinery->slug);
-    //     $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS_TR_SLUG', $refinery_reg->slug);
+        $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS', 'The Refinery has been successfully registered!');
+        $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS_SLUG', $refinery->slug);
+        $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS_RR_SLUG', $refinery_reg->slug);
         
-    // }
+    }
 
 
 

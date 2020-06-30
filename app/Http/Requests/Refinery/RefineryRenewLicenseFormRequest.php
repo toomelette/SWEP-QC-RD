@@ -17,6 +17,10 @@ class RefineryRenewLicenseFormRequest extends FormRequest{
     public function rules(){
 
         return [
+            
+            'crop_year_id'=>'required|string|max:11',
+            'license_no'=>'required|string|max:45',
+            'reg_date' => 'nullable|date_format:"m/d/Y"',
         
         ];
 

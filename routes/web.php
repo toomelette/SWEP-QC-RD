@@ -93,6 +93,14 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::get('/refinery/renewal_history/{slug}', 'RefineryController@renewalHistory')
 		->name('refinery.renewal_history');
 	Route::resource('refinery', 'RefineryController');
+
+
+	/** REFINERY Registration **/
+	Route::get('/refinery_registration/dl_cover/{slug}', 'RefineryRegistrationController@downloadCoverLetter')
+		->name('refinery_registration.dl_cover');
+	Route::get('/refinery_registration/dl_license/{slug}', 'RefineryRegistrationController@downloadLicense')
+		->name('refinery_registration.dl_license');
+	Route::resource('refinery_registration', 'RefineryRegistrationController');
 	
 	
 });

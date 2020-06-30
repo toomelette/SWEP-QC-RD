@@ -50,11 +50,11 @@
           <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
             <td id="mid-vert">{{ $data->name }}</td>
             <td id="mid-vert">
-              {{-- {!! $data->displayLicensesStatusSpan($global_current_cy->crop_year_id) !!} --}}
+              {!! $data->displayLicensesStatusSpan($global_current_cy->crop_year_id) !!}
             </td>
             <td id="mid-vert">
               <div class="btn-group">
-                {{-- @if(in_array('dashboard.refinery.renew_license_post', $global_user_submenus))
+                @if(in_array('dashboard.refinery.renew_license_post', $global_user_submenus))
                   <a type="button" 
                      class="btn btn-default" 
                      @if ($data->licensesStatus($global_current_cy->crop_year_id) == false)
@@ -72,7 +72,7 @@
                   <a type="button" class="btn btn-default" id="rh_button" href="{{ route('dashboard.refinery.renewal_history', $data->slug) }}">
                     <i class="fa fa-tasks"></i>&nbsp; Renewal History
                   </a>
-                @endif --}}
+                @endif
                 @if(in_array('dashboard.refinery.edit', $global_user_submenus))
                   <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.refinery.edit', $data->slug) }}">
                     <i class="fa fa-pencil"></i>
@@ -136,23 +136,15 @@
           <div class="modal-footer">
 
             @if (in_array('dashboard.refinery_registration.dl_cover', $global_user_submenus))
-              <a href="{{ route('dashboard.refinery_registration.dl_cover', Session::get('REFINERY_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
+              <a href="{{ route('dashboard.refinery_registration.dl_cover', Session::get('REFINERY_RENEW_LICENSE_SUCCESS_RR_SLUG')) }}" 
                  type="button" 
                  class="btn btn-primary">
                 <i class="fa fa-download"></i> Cover Letter
               </a>
             @endif
 
-            @if (in_array('dashboard.refinery_registration.dl_billing', $global_user_submenus))
-              <a href="{{ route('dashboard.refinery_registration.dl_billing', Session::get('REFINERY_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
-                 type="button" 
-                 class="btn btn-primary">
-                <i class="fa fa-download"></i> Billing Statement
-              </a>
-            @endif
-
             @if (in_array('dashboard.refinery_registration.dl_license', $global_user_submenus))
-              <a href="{{ route('dashboard.refinery_registration.dl_license', Session::get('REFINERY_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
+              <a href="{{ route('dashboard.refinery_registration.dl_license', Session::get('REFINERY_RENEW_LICENSE_SUCCESS_RR_SLUG')) }}" 
                  type="button" 
                  class="btn btn-primary">
                 <i class="fa fa-download"></i> License
@@ -170,7 +162,7 @@
 
 
   {{-- REFINERY IS EXIST --}}  
-  @if(Session::has('REFINERY_REG_IS_EXIST'))
+  {{-- @if(Session::has('REFINERY_REG_IS_EXIST'))
     <div class="modal fade modal-danger" data-backdrop="static" id="refinery_is_exist">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -194,19 +186,16 @@
         </div>
       </div>
     </div>
-  @endif
+  @endif --}}
 
 
   {{-- RENEW LICENSE FORM --}}
   <div class="modal fade" id="refinery_rl" data-backdrop="static">
-    <div class="modal-lg modal-dialog">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">
-            <i class="fa fa-certificate"></i> &nbsp;Mill License Renewal
-            <div class="pull-right">
-              <code>Fields with asterisks(*) are required</code>
-            </div> 
+            <i class="fa fa-certificate"></i> &nbsp;Refinery License Renewal
           </h4>
         </div>
         <div class="modal-body" id="rl_body">
@@ -220,61 +209,11 @@
               <input type="hidden" name="crop_year_id" value="{{ $global_current_cy->crop_year_id }}">
 
               {!! __form::textbox(
-                '6', 'license_no', 'text', 'License No. *', 'License No.', old('license_no'), $errors->has('license_no'), $errors->first('license_no'), 'data-transform="uppercase" required'
+                '12', 'license_no', 'text', 'License No.', 'License No.', old('license_no'), $errors->has('license_no'), $errors->first('license_no'), 'data-transform="uppercase" required'
               ) !!}
 
               {!! __form::datepicker(
-                '6', 'reg_date',  'Date of Registration *', old('reg_date') ? old('reg_date') : Carbon::now()->format('m/d/Y'), $errors->has('reg_date'), $errors->first('reg_date')
-              ) !!}
-
-              <div class="col-md-12"></div>
-
-              {!! __form::textbox_numeric(
-                '6', 'mt', 'text', 'MT *', 'MT', old('mt') , $errors->has('mt'), $errors->first('mt'), 'required'
-              ) !!}
-
-              {!! __form::textbox_numeric(
-                '6', 'lkg', 'text', 'LKG *', 'LKG', old('lkg') , $errors->has('lkg'), $errors->first('lkg'), 'required'
-              ) !!}
-
-              <div class="col-md-12"></div>
-
-              {!! __form::textbox_numeric(
-                '6', 'refinerying_fee', 'text', 'Milling Fee *', 'Milling Fee', old('refinerying_fee') , $errors->has('refinerying_fee'), $errors->first('refinerying_fee'), 'required'
-              ) !!}
-
-              {!! __form::select_static(
-                '6', 'payment_status', 'Payment Status *', old('payment_status'), ['Underpayment' => 'UP', 'Excess Payment ' => 'EP'], $errors->has('payment_status'), $errors->first('payment_status'), 'select2', 'style="width:100%;" required'
-              ) !!}
-
-              <div class="col-md-12"></div>
-
-              {!! __form::textbox_numeric(
-                '6', 'under_payment', 'text', 'Underpayment', 'Underpayment', old('under_payment') , $errors->has('under_payment'), $errors->first('under_payment'), ''
-              ) !!}
-
-              {!! __form::textbox_numeric(
-                '6', 'excess_payment', 'text', 'Excess Payment', 'Excess Payment', '00' , $errors->has('excess_payment'), $errors->first('excess_payment'), ''
-              ) !!}
-
-              <div class="col-md-12"></div>
-
-              {!! __form::textbox_numeric(
-                '6', 'balance_fee', 'text', 'Balance', 'Balance', old('balance_fee') , $errors->has('balance_fee'), $errors->first('balance_fee'), ''
-              ) !!}
-
-              {!! __form::textbox_numeric(
-                '6', 'rated_capacity', 'text', 'Rated Capacity', 'Rated Capacity', old('rated_capacity') , $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
-              ) !!}
-
-              <div class="col-md-12"></div>
-
-              {!! __form::datepicker(
-                '6', 'start_refinerying',  'Start of Milling', old('start_refinerying'), $errors->has('start_refinerying'), $errors->first('start_refinerying')
-              ) !!}
-
-              {!! __form::datepicker(
-                '6', 'end_refinerying',  'End of Milling', old('end_refinerying'), $errors->has('end_refinerying'), $errors->first('end_refinerying')
+                '12', 'reg_date',  'Date of Registration', old('reg_date') ? old('reg_date') : Carbon::now()->format('m/d/Y'), $errors->has('reg_date'), $errors->first('reg_date')
               ) !!}
 
             </div>
