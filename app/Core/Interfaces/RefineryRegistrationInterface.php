@@ -14,7 +14,7 @@ interface RefineryRegistrationInterface {
 
 	public function destroy($slug);
 
-	// public function findBySlug($slug);
+	public function findBySlug($slug);
 
 	public function isRefineryExistInCY($crop_year_id, $refinery_id);
 

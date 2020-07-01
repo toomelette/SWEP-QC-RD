@@ -162,7 +162,7 @@
 
 
   {{-- REFINERY IS EXIST --}}  
-  {{-- @if(Session::has('REFINERY_REG_IS_EXIST'))
+  @if(Session::has('REFINERY_REG_IS_EXIST'))
     <div class="modal fade modal-danger" data-backdrop="static" id="refinery_is_exist">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -186,7 +186,7 @@
         </div>
       </div>
     </div>
-  @endif --}}
+  @endif
 
 
   {{-- RENEW LICENSE FORM --}}

@@ -18,7 +18,6 @@ class RefineryRenewLicenseFormRequest extends FormRequest{
 
         return [
             
-            'crop_year_id'=>'required|string|max:11',
             'license_no'=>'required|string|max:45',
             'reg_date' => 'nullable|date_format:"m/d/Y"',
         

@@ -63,7 +63,6 @@
                     <a type="button" 
                        class="btn btn-default" 
                        id="update_button"  
-                       data-crop_year_id="{{ $data->crop_year_id }}"
                        data-crop_year_name="{{ optional($data->cropYear)->name }}"
                        data-license_no="{{ $data->license_no }}"
                        data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
@@ -223,8 +222,6 @@
 
               <input type="hidden" name="_method" value="PUT">
 
-              <input type="hidden" name="crop_year_id" id="crop_year_id" value="">
-
               {!! __form::textbox(
                 '6', 'license_no', 'text', 'License No. *', 'License No.', '', $errors->has('license_no'), $errors->first('license_no'), 'data-transform="uppercase" required'
               ) !!}
@@ -332,7 +329,6 @@
         $("#mill_rl_body #mill_rl_form").attr("action", $(this).data("url"));
 
         $('#crop_year_name').text($(this).data("crop_year_name"));
-        $("#mill_rl_form #crop_year_id").val($(this).data("crop_year_id"));
         $("#mill_rl_form #license_no").val($(this).data("license_no"));
         $("#mill_rl_form #reg_date").val($(this).data("reg_date"));
         $("#mill_rl_form #mt").val($(this).data("mt"));

@@ -88,7 +88,6 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
     public function update($request, $slug){
 
         $mill_reg = $this->findBySlug($slug);
-        $mill_reg->crop_year_id = $request->crop_year_id;
         $mill_reg->license_no = $request->license_no;
         $mill_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
         $mill_reg->mt = $this->__dataType->string_to_num($request->mt);

@@ -6,8 +6,8 @@ use App\Core\Interfaces\CropYearInterface;
 use App\Core\Interfaces\RefineryRegistrationInterface;
 use App\Http\Requests\Refinery\RefineryRenewLicenseFormRequest;
 
-// use App\Exports\RefineryRegistrationBDC;
-// use App\Exports\RefineryRegistrationCert;
+use App\Exports\RefineryRegistrationCover;
+use App\Exports\RefineryRegistrationLicense;
 
 
 
@@ -27,22 +27,32 @@ class RefineryRegistrationController extends Controller{
 
 
 
-    // public function show($slug){
+    public function show($slug){
 
-    //     $refinery_reg = $this->refinery_reg_repo->findbySlug($slug);
-    //     return view('dashboard.refinery_registration.show')->with('refinery_reg', $refinery_reg);
+        $refinery_reg = $this->refinery_reg_repo->findbySlug($slug);
+        return view('dashboard.refinery_registration.show')->with('refinery_reg', $refinery_reg);
 
-    // }
-
-
+    }
 
 
-    // public function downloadWordFile($slug){
 
-    //     $refinery_reg = $this->refinery_reg_repo->findbySlug($slug);
-    //     return RefineryRegistrationCert::cert($refinery_reg);
 
-    // }
+    public function downloadCoverLetter($slug){
+
+        $refinery_reg = $this->refinery_reg_repo->findbySlug($slug);
+        return RefineryRegistrationCover::coverLetter($refinery_reg);
+
+    }
+
+
+
+
+    public function downloadLicense($slug){
+
+        $refinery_reg = $this->refinery_reg_repo->findbySlug($slug);
+        return RefineryRegistrationLicense::license($refinery_reg);
+
+    }
 
 
 

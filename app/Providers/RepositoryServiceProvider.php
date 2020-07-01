@@ -30,6 +30,8 @@ class RepositoryServiceProvider extends ServiceProvider {
 
 		$this->app->bind('App\Core\Interfaces\TraderRegistrationInterface', 'App\Core\Repositories\TraderRegistrationRepository');
 
+		$this->app->bind('App\Core\Interfaces\TraderFileInterface', 'App\Core\Repositories\TraderFileRepository');
+
 		$this->app->bind('App\Core\Interfaces\RegionInterface', 'App\Core\Repositories\RegionRepository');
 
 		$this->app->bind('App\Core\Interfaces\CropYearInterface', 'App\Core\Repositories\CropYearRepository');

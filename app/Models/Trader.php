@@ -78,6 +78,10 @@ class Trader extends Model{
         return $this->hasMany('App\Models\TraderRegistration','trader_id','trader_id');
     }
 
+    public function traderFile() {
+        return $this->hasMany('App\Models\TraderFile','trader_id','trader_id');
+    }
+
 
 
 

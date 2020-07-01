@@ -64,7 +64,8 @@
                   @if(in_array('dashboard.trader_registration.update', $global_user_submenus))
                     <a type="button" 
                        class="btn btn-default" 
-                       id="update_button"  
+                       id="update_button" 
+                       data-crop_year_id="{{ $data->crop_year_id }}" 
                        data-trader_cat_id="{{ $data->trader_cat_id }}"
                        data-control_no="{{ $data->control_no }}"
                        data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
@@ -134,7 +135,7 @@
               <a href="{{ route('dashboard.trader_registration.dl_word_file', Session::get('TRADER_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
                  type="button" 
                  class="btn btn-primary">
-                Download Word File
+                <i class="fa fa-download"></i> License
               </a>
             @endif
           </div>
@@ -195,7 +196,7 @@
 
             <div class="row">
 
-              <input type="hidden" name="crop_year_id" value="{{ $global_current_cy->crop_year_id }}">
+              <input type="hidden" name="crop_year_id" id="crop_year_id">
 
               {!! __form::select_dynamic(
                 '12', 'trader_cat_id', 'Category', old('trader_cat_id'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('trader_cat_id'), $errors->first('trader_cat_id'), 'select2', 'style="width:100%; "required'
@@ -255,6 +256,7 @@
         $("#update_trader_reg").modal("show");
         $("#update_trader_reg_body #update_trader_reg_form").attr("action", $(this).data("url"));
 
+        $("#update_trader_reg_form #crop_year_id").val($(this).data("crop_year_id"));
         $("#update_trader_reg_form #trader_cat_id").val($(this).data("trader_cat_id")).change();
         $("#update_trader_reg_form #control_no").val($(this).data("control_no"));
         $("#update_trader_reg_form #reg_date").val($(this).data("reg_date"));

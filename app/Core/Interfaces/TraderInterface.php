@@ -15,7 +15,7 @@ interface TraderInterface {
 	public function destroy($slug);
 
 	public function findBySlug($slug);
-
+	
 	public function getByTraderId($trader_id);
 
 	public function getAll();

@@ -62,6 +62,10 @@
               <dd>{{ optional($mill_reg->mill)->address }}</dd>
               <dt>Date of Registration:</dt>
               <dd>{{ __dataType::date_parse($mill_reg->reg_date, 'F d,Y') }}</dd>
+              <dt>Rated Capacity:</dt>
+              <dd>{{ number_format($mill_reg->rated_capacity, 2) }}</dd>
+              <dt>Milling Date:</dt>
+              <dd>{{ __dataType::date_scope($mill_reg->start_milling, $mill_reg->end_milling) }}</dd>
             </dl>
           </div>
         </div>
@@ -92,6 +96,7 @@
         </div>
       </div> 
 
+      <div class="col-md-12"></div>
 
       <div class="col-md-6">
         <div class="box">

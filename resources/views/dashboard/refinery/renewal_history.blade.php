@@ -62,7 +62,7 @@
                   @if(in_array('dashboard.refinery_registration.update', $global_user_submenus))
                     <a type="button" 
                        class="btn btn-default" 
-                       id="update_button"  
+                       id="update_button" 
                        data-license_no="{{ $data->license_no }}"
                        data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
                        data-action="update" 
@@ -201,8 +201,6 @@
             <input name="_method" value="PUT" type="hidden">
 
             <div class="row">
-
-              <input type="hidden" name="crop_year_id" value="{{ $global_current_cy->crop_year_id }}">
 
               {!! __form::textbox(
                 '12', 'license_no', 'text', 'License No.', 'License No.', old('license_no'), $errors->has('license_no'), $errors->first('license_no'), 'data-transform="uppercase" required'

@@ -4,14 +4,14 @@ namespace App\Exports;
 use App\Core\Helpers\__dataType;
 use Carbon;
 
-class MillRegistrationCover{
+class RefineryRegistrationCover{
     
 
     const ADMINISTRATOR = 'ENGR. HERMENEGILDO R. SERAFICA';
 
 
     // COVER LETTER
-    public static function coverLetter($mill_reg){
+    public static function coverLetter($refinery_reg){
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
@@ -41,25 +41,25 @@ class MillRegistrationCover{
         $section->addTextBreak();
 
         // Header
-        $officer = optional($mill_reg->mill)->officer;
+        $officer = optional($refinery_reg->refinery)->officer;
         $section->addText($officer, ['name' => 'Cambria', 'size' => 12, 'bold' => true,]);
         $section->addTextBreak();
 
-        $position = optional($mill_reg->mill)->position;
+        $position = optional($refinery_reg->refinery)->position;
         $section->addText($position, ['name' => 'Cambria', 'size' => 12]);
         $section->addTextBreak();
 
-        $name = optional($mill_reg->mill)->name;
+        $name = optional($refinery_reg->refinery)->name;
         $section->addText($name, ['name' => 'Cambria', 'size' => 12, 'bold' => true,]);
         $section->addTextBreak();
 
-        $address = optional($mill_reg->mill)->address;
+        $address = optional($refinery_reg->refinery)->address;
         $section->addText($address, ['name' => 'Cambria', 'size' => 12]);
         $section->addTextBreak();
         $section->addTextBreak();
 
         // Salutation
-        $salutation = optional($mill_reg->mill)->salutation .':';
+        $salutation = optional($refinery_reg->refinery)->salutation .':';
         $section->addText($salutation, ['name' => 'Cambria', 'size' => 12]);
         $section->addTextBreak();
         $section->addTextBreak();
@@ -68,7 +68,7 @@ class MillRegistrationCover{
         $txt = 'Enclosed is your ';
         $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
 
-        $license = 'Milling License No. ' . $mill_reg->license_no . ' for CY ' . optional($mill_reg->cropYear)->name;
+        $license = 'Refining License No. ' . $refinery_reg->license_no . ' for CY ' . optional($refinery_reg->cropYear)->name;
         $section->addText($license, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
 
         $txt = ' duly approved by this Office.';

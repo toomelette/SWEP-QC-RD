@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 
 use App\Core\Interfaces\TraderInterface;
 use App\Core\Interfaces\TraderRegistrationInterface;
+use App\Core\Interfaces\TraderFileInterface;
 use App\Http\Requests\Trader\TraderFormRequest;
 use App\Http\Requests\Trader\TraderFilterRequest;
 use App\Http\Requests\Trader\TraderRenewLicenseFormRequest;
 use App\Http\Requests\Trader\TraderRenewalHistoryFilterRequest;
+use App\Http\Requests\TraderFile\TraderFileFilterRequest;
 
 
 class TraderController extends Controller{
@@ -17,12 +19,16 @@ class TraderController extends Controller{
 
     protected $trader_repo;
     protected $trader_reg_repo;
+    protected $trader_file_repo;
 
 
 
-    public function __construct(TraderInterface $trader_repo, TraderRegistrationInterface $trader_reg_repo){
+    public function __construct(TraderInterface $trader_repo, 
+                                TraderRegistrationInterface $trader_reg_repo, 
+                                TraderFileInterface $trader_file_repo){
         $this->trader_repo = $trader_repo;
         $this->trader_reg_repo = $trader_reg_repo;
+        $this->trader_file_repo = $trader_file_repo;
         parent::__construct();
     }
 
@@ -124,6 +130,19 @@ class TraderController extends Controller{
 
         $request->flash();
         return view('dashboard.trader.renewal_history')->with('trader_reg_list', $trader_reg_list);
+
+    }
+
+    
+
+
+    public function files($slug, TraderFileFilterRequest $request){
+
+        $trader = $this->trader_repo->findbySlug($slug);
+        $trader_file_list = $this->trader_file_repo->fetchByTraderId($request, $trader->trader_id);
+
+        $request->flash();
+        return view('dashboard.trader_file.index')->with('trader_file_list', $trader_file_list);
 
     }
 

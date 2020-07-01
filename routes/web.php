@@ -58,6 +58,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 		->name('trader.renewal_history');
 	Route::get('/trader/reports', 'TraderController@reports')
 		->name('trader.reports');
+	Route::get('/trader/files/{slug}', 'TraderController@files')
+		->name('trader.files');
 	Route::resource('trader', 'TraderController');
 
 
