@@ -71,6 +71,10 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::resource('trader_registration', 'TraderRegistrationController');
 
 
+	/** TRADERS Registration **/
+	Route::resource('trader_file', 'TraderFileController');
+
+
 	/** MILLS **/
 	Route::post('/mill/renew_license_post/{slug}', 'MillController@renewLicensePost')
 		->name('mill.renew_license_post');

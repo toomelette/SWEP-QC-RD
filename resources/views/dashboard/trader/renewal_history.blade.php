@@ -16,10 +16,6 @@
 @extends('layouts.admin-master')
 
 @section('content')
-    
-  <section class="content-header">
-      <h1>Trader Renewal History</h1>
-  </section>
 
   <section class="content">
 
@@ -30,8 +26,11 @@
 
         {{-- Table Search --}}        
         <div class="box-header with-border">
+        <h2 class="box-title" style="margin-top: 6px;">Renewal History ({{ $trader->name }})</h2>
           <div class="pull-right">
-            <a href="{{ route('dashboard.trader.index') }}" class="btn btn-sm btn-default">Back to List</a>
+            <a href="{{ route('dashboard.trader.index') }}" class="btn btn-sm btn-default">
+              Back to List
+            </a>
           </div> 
         </div>
 

@@ -8,12 +8,12 @@ interface TraderFileInterface {
 
 	public function fetchByTraderId($request, $trader_id);
 
-	// public function store($request, $trader);
+	public function store($trader_id, $filename, $file_location);
 
-	// public function update($request, $slug);
+	public function update($filename, $file_location, $slug);
 
-	// public function destroy($slug);
+	public function destroy($trader_file);
 
-	// public function findBySlug($slug);
+	public function findBySlug($slug);
 		
 }

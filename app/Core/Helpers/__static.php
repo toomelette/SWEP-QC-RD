@@ -31,4 +31,14 @@ class __static{
     }
 
 
+
+
+    // File Directory
+    public static function archive_dir(){
+
+        return '/swep_qc_rd_storage';
+    
+    }
+
+
 }

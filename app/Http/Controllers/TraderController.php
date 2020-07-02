@@ -129,7 +129,10 @@ class TraderController extends Controller{
         $trader_reg_list = $this->trader_reg_repo->fetchByTraderId($request, $trader->trader_id);
 
         $request->flash();
-        return view('dashboard.trader.renewal_history')->with('trader_reg_list', $trader_reg_list);
+        return view('dashboard.trader.renewal_history')->with([
+            'trader_reg_list' => $trader_reg_list,
+            'trader' => $trader,
+        ]);
 
     }
 
@@ -142,7 +145,11 @@ class TraderController extends Controller{
         $trader_file_list = $this->trader_file_repo->fetchByTraderId($request, $trader->trader_id);
 
         $request->flash();
-        return view('dashboard.trader_file.index')->with('trader_file_list', $trader_file_list);
+        
+        return view('dashboard.trader_file.index')->with([
+            'trader_file_list' => $trader_file_list,
+            'trader' => $trader,
+        ]);
 
     }
 
@@ -152,6 +159,7 @@ class TraderController extends Controller{
     public function reports(){
         return view('dashboard.trader.reports');
     }
+
 
 
     

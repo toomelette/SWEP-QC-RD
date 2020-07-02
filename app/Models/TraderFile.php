@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
-
+use File;
 
 class TraderFile extends Model{
 
@@ -21,6 +21,7 @@ class TraderFile extends Model{
         'slug' => '',
         'trader_file_id' => '',
         'trader_id' => '',
+        'filename' => '',
         'file_location' => '',
         'created_at' => null,
         'updated_at' => null,
@@ -36,8 +37,13 @@ class TraderFile extends Model{
         return $this->belongsTo('App\Models\Trader','trader_id','trader_id');
     }
 
-    
 
+    public function getTrimmedFilenameAttribute(){
+
+        $file_ext = File::extension($this->filename);
+        return trim($this->filename, '.'. $file_ext);
+
+    }
 
 
 

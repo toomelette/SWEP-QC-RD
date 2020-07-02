@@ -34,6 +34,7 @@ class EventServiceProvider extends ServiceProvider{
         'App\Core\Subscribers\MenuSubscriber',
         'App\Core\Subscribers\TraderSubscriber',
         'App\Core\Subscribers\TraderRegistrationSubscriber',
+        'App\Core\Subscribers\TraderFileSubscriber',
         'App\Core\Subscribers\MillSubscriber',
         'App\Core\Subscribers\MillRegistrationSubscriber',
         'App\Core\Subscribers\RefinerySubscriber',
