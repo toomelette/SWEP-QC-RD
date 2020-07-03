@@ -203,7 +203,7 @@ class __html{
 
     	foreach($route as $data){
 	    	if(self::previous_route() == $data){
-	        	return '<a href="'. URL::previous() .'" class="btn btn-sm btn-default"><i class="fa fa-fw fa-arrow-left"></i>Back</a>';
+	        	return '<a href="'. URL::previous() .'" class="btn btn-md btn-default"><i class="fa fa-fw fa-arrow-left"></i>Back</a>';
 	    	}
     	}
 

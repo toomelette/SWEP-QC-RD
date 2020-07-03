@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 
 use App\Core\Interfaces\MillInterface;
 use App\Core\Interfaces\MillRegistrationInterface;
+use App\Core\Interfaces\MillFileInterface;
 use App\Http\Requests\Mill\MillFormRequest;
 use App\Http\Requests\Mill\MillFilterRequest;
 use App\Http\Requests\Mill\MillRenewLicenseFormRequest;
 use App\Http\Requests\Mill\MillRenewalHistoryFilterRequest;
+use App\Http\Requests\MillFile\MillFileFilterRequest;
 
 
 class MillController extends Controller{
@@ -17,11 +19,15 @@ class MillController extends Controller{
 
     protected $mill_repo;
     protected $mill_reg_repo;
+    protected $mill_file_repo;
 
 
-    public function __construct(MillInterface $mill_repo, MillRegistrationInterface $mill_reg_repo){
+    public function __construct(MillInterface $mill_repo, 
+                                MillRegistrationInterface $mill_reg_repo,
+                                MillFileInterface $mill_file_repo){
         $this->mill_repo = $mill_repo;
         $this->mill_reg_repo = $mill_reg_repo;
+        $this->mill_file_repo = $mill_file_repo;
         parent::__construct();
     }
 
@@ -122,7 +128,27 @@ class MillController extends Controller{
         $mill_reg_list = $this->mill_reg_repo->fetchByMillId($request, $mill->mill_id);
 
         $request->flash();
-        return view('dashboard.mill.renewal_history')->with('mill_reg_list', $mill_reg_list);
+        return view('dashboard.mill.renewal_history')->with([
+            'mill_reg_list' => $mill_reg_list,
+            'mill' => $mill
+        ]);
+
+    }
+
+    
+
+
+    public function files($slug, MillFileFilterRequest $request){
+
+        $mill = $this->mill_repo->findbySlug($slug);
+        $mill_file_list = $this->mill_file_repo->fetchByMillId($request, $mill->mill_id);
+
+        $request->flash();
+        
+        return view('dashboard.mill_file.index')->with([
+            'mill_file_list' => $mill_file_list,
+            'mill' => $mill,
+        ]);
 
     }
 

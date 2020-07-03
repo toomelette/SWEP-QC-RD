@@ -1,7 +1,7 @@
 <?php
 
   $table_sessions = [ 
-    Session::get('TRADER_FILE_UPDATE_SUCCESS_SLUG'),
+    Session::get('REFINERY_FILE_UPDATE_SUCCESS_SLUG'),
   ];
 
   $appended_requests = [
@@ -18,9 +18,9 @@
 @section('content')
     
   <section class="content-header">
-    <h1>TRADER FILES ({{ $trader->name }})</h1>
+    <h1>REFINERY FILES ({{ $refinery->name }})</h1>
     <div class="pull-right" style="margin-top: -27px;">
-      <a href="{{ route('dashboard.trader.index') }}" class="btn btn-md btn-default">
+      <a href="{{ route('dashboard.refinery.index') }}" class="btn btn-md btn-default">
         <i class="fa fa-fw fa-arrow-left"></i>Back to list
       </a>
       &nbsp;
@@ -33,13 +33,13 @@
   <section class="content">
     
     {{-- Form Start --}}
-    <form data-pjax class="form" id="filter_form" method="GET" action="{{ route('dashboard.trader.files', $trader->slug) }}">
+    <form data-pjax class="form" id="filter_form" method="GET" action="{{ route('dashboard.refinery.files', $refinery->slug) }}">
 
     <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
       {{-- Table Search --}}        
       <div class="box-header with-border">
-        {!! __html::table_search(route('dashboard.trader.files', $trader->slug)) !!}
+        {!! __html::table_search(route('dashboard.refinery.files', $refinery->slug)) !!}
       </div>
 
     {{-- Form End --}}  
@@ -53,7 +53,7 @@
             <th>Last Modified</th>
             <th>Action</th>
           </tr>
-          @foreach($trader_file_list as $data) 
+          @foreach($refinery_file_list as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
               <td id="mid-vert">{{ $data->filename }}</td>
               <td id="mid-vert">
@@ -61,18 +61,18 @@
               </td>
               <td id="mid-vert">
                 <div class="btn-group">
-                  @if(in_array('dashboard.trader_file.update', $global_user_submenus))
+                  @if(in_array('dashboard.refinery_file.update', $global_user_submenus))
                     <a type="button" 
                        class="btn btn-default" 
                        id="update_button" 
                        data-filename="{{ $data->trimmed_filename }}"
                        data-action="rename" 
-                       data-url="{{ route('dashboard.trader_file.update', $data->slug) }}">
+                       data-url="{{ route('dashboard.refinery_file.update', $data->slug) }}">
                       Rename
                     </a>
                   @endif
-                  @if(in_array('dashboard.trader_file.destroy', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.trader_file.destroy', $data->slug) }}">
+                  @if(in_array('dashboard.refinery_file.destroy', $global_user_submenus))
+                    <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.refinery_file.destroy', $data->slug) }}">
                       <i class="fa fa-trash"></i>
                     </a>
                   @endif
@@ -83,15 +83,15 @@
           </table>
       </div>
 
-      @if($trader_file_list->isEmpty())
+      @if($refinery_file_list->isEmpty())
         <div style="padding :5px;">
           <center><h4>No Records found!</h4></center>
         </div>
       @endif
 
       <div class="box-footer">
-        {!! __html::table_counter($trader_file_list) !!}
-        {!! $trader_file_list->appends($appended_requests)->render('vendor.pagination.bootstrap-4')!!}
+        {!! __html::table_counter($refinery_file_list) !!}
+        {!! $refinery_file_list->appends($appended_requests)->render('vendor.pagination.bootstrap-4')!!}
       </div>
 
     </div>
@@ -109,7 +109,7 @@
 @section('modals')
 
 
-  {!! __html::modal_delete('trader_file_delete') !!}
+  {!! __html::modal_delete('refinery_file_delete') !!}
 
 
   {{-- ADD FILE FORM --}}
@@ -128,13 +128,13 @@
           <form method="POST" 
                 autocomplete="off" 
                 enctype="multipart/form-data" 
-                action="{{ route('dashboard.trader_file.store') }}">
+                action="{{ route('dashboard.refinery_file.store') }}">
 
             <div class="row">
             
               @csrf
 
-              <input type="hidden" name="s" value="{{ $trader->slug }}">
+              <input type="hidden" name="s" value="{{ $refinery->slug }}">
 
               <div class="col-md-12" style="margin-bottom:20px;">
                 <small class="text-danger">
@@ -212,7 +212,7 @@
 
   <script type="text/javascript">
 
-    {!! __js::button_modal_confirm_delete_caller('trader_file_delete') !!}
+    {!! __js::button_modal_confirm_delete_caller('refinery_file_delete') !!}
 
     $(document).on("click", "#add_files", function () {
       $("#add_files_modal").modal("show");
@@ -232,16 +232,16 @@
 
     });
 
-    @if(Session::has('TRADER_FILE_CREATE_SUCCESS'))
-      {!! __js::toast(Session::get('TRADER_FILE_CREATE_SUCCESS')) !!}
+    @if(Session::has('REFINERY_FILE_CREATE_SUCCESS'))
+      {!! __js::toast(Session::get('REFINERY_FILE_CREATE_SUCCESS')) !!}
     @endif
 
-    @if(Session::has('TRADER_FILE_UPDATE_SUCCESS'))
-      {!! __js::toast(Session::get('TRADER_FILE_UPDATE_SUCCESS')) !!}
+    @if(Session::has('REFINERY_FILE_UPDATE_SUCCESS'))
+      {!! __js::toast(Session::get('REFINERY_FILE_UPDATE_SUCCESS')) !!}
     @endif
 
-    @if(Session::has('TRADER_FILE_DELETE_SUCCESS'))
-      {!! __js::toast(Session::get('TRADER_FILE_DELETE_SUCCESS')) !!}
+    @if(Session::has('REFINERY_FILE_DELETE_SUCCESS'))
+      {!! __js::toast(Session::get('REFINERY_FILE_DELETE_SUCCESS')) !!}
     @endif
 
     $("#files").fileinput({

@@ -40,9 +40,13 @@ class RepositoryServiceProvider extends ServiceProvider {
 
 		$this->app->bind('App\Core\Interfaces\MillRegistrationInterface', 'App\Core\Repositories\MillRegistrationRepository');
 
+		$this->app->bind('App\Core\Interfaces\MillFileInterface', 'App\Core\Repositories\MillFileRepository');
+
 		$this->app->bind('App\Core\Interfaces\RefineryInterface', 'App\Core\Repositories\RefineryRepository');
 
 		$this->app->bind('App\Core\Interfaces\RefineryRegistrationInterface', 'App\Core\Repositories\RefineryRegistrationRepository');
+
+		$this->app->bind('App\Core\Interfaces\RefineryFileInterface', 'App\Core\Repositories\RefineryFileRepository');
 		
 		
 	}

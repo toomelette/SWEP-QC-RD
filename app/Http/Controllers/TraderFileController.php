@@ -38,9 +38,9 @@ class TraderFileController extends Controller{
             $file_ext = File::extension($data->getClientOriginalName());
             $trimmed_file_name = trim($data->getClientOriginalName(), '.'. $file_ext);
             $file_name = $this->__dataType::fileFilterReservedChar($trimmed_file_name .'-'. $this->str->random(8), '.'. $file_ext);
-            $file_location = $trader->name.'/'.$file_name;
-
-            $data->storeAs($trader->name, $file_name);
+            $file_location = 'TRADER/'.$trader->name.'/'.$file_name;
+            $dir = 'TRADER/'.$trader->name;
+            $data->storeAs($dir, $file_name);
 
             $this->trader_file_repo->store($trader->trader_id, $data->getClientOriginalName(), $file_location);
             
@@ -59,12 +59,12 @@ class TraderFileController extends Controller{
 
         $trader_file = $this->trader_file_repo->findBySlug($slug);
 
-
         $file_ext = File::extension($trader_file->filename);
         $new_trimmed_file_name = trim($request->filename, '.'. $file_ext);
         $new_file_name = $this->__dataType::fileFilterReservedChar($new_trimmed_file_name .'-'. $this->str->random(8), '.'. $file_ext);
 
-        $new_file_location = optional($trader_file->trader)->name.'/'.$new_file_name;
+        $dir = 'TRADER/'.optional($trader_file->trader)->name;
+        $new_file_location = $dir.'/'.$new_file_name;
 
         if(!is_null($trader_file->file_location)){
             if ($this->storage->disk('local')->exists($trader_file->file_location)) {

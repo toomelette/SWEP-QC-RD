@@ -12,7 +12,7 @@
 
         @if (in_array('dashboard.mill_registration.dl_cover', $global_user_submenus))
           <a href="{{ route('dashboard.mill_registration.dl_cover', $mill_reg->slug) }}" 
-             class="btn btn-sm bg-blue"
+             class="btn btn-md bg-blue"
              target="_blank">
              <i class="fa fa-download"></i> Cover Letter
           </a>
@@ -21,7 +21,7 @@
 
         @if (in_array('dashboard.mill_registration.dl_billing', $global_user_submenus))
           <a href="{{ route('dashboard.mill_registration.dl_billing', $mill_reg->slug) }}" 
-             class="btn btn-sm bg-blue"
+             class="btn btn-md bg-blue"
              target="_blank">
              <i class="fa fa-download"></i> Billing Statement
           </a>
@@ -30,15 +30,13 @@
 
         @if (in_array('dashboard.mill_registration.dl_license', $global_user_submenus))
           <a href="{{ route('dashboard.mill_registration.dl_license', $mill_reg->slug) }}" 
-             class="btn btn-sm bg-blue"
+             class="btn btn-md bg-blue"
              target="_blank">
              <i class="fa fa-download"></i> License
           </a>
         @endif
         &nbsp;
-
-        <a href="{{ route('dashboard.mill.index') }}" class="btn btn-sm btn-default">Back to List</a>
-        &nbsp;
+        
         {!! __html::back_button(['dashboard.mill.renewal_history']) !!}
       </div> 
     </div>

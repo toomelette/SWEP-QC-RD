@@ -12,7 +12,7 @@
 
         @if (in_array('dashboard.refinery_registration.dl_cover', $global_user_submenus))
           <a href="{{ route('dashboard.refinery_registration.dl_cover', $refinery_reg->slug) }}" 
-             class="btn btn-sm bg-blue"
+             class="btn btn-md bg-blue"
              target="_blank">
              <i class="fa fa-download"></i> Cover Letter
           </a>
@@ -21,14 +21,11 @@
 
         @if (in_array('dashboard.refinery_registration.dl_license', $global_user_submenus))
           <a href="{{ route('dashboard.refinery_registration.dl_license', $refinery_reg->slug) }}" 
-             class="btn btn-sm bg-blue"
+             class="btn btn-md bg-blue"
              target="_blank">
              <i class="fa fa-download"></i> License
           </a>
         @endif
-        &nbsp;
-
-        <a href="{{ route('dashboard.refinery.index') }}" class="btn btn-sm btn-default">Back to List</a>
         &nbsp;
         {!! __html::back_button(['dashboard.refinery.renewal_history']) !!}
       </div> 

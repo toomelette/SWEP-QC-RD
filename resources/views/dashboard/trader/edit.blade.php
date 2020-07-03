@@ -7,7 +7,7 @@
     <div class="box box-solid">
         
       <div class="box-header with-border">
-        <h2 class="box-title">Edit Trader</h2>
+        <h2 class="box-title"  style="margin-top: 10px;">Edit Trader</h2>
         <div class="pull-right">
             <code>Fields with asterisks(*) are required</code>
             &nbsp;

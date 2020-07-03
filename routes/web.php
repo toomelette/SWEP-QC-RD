@@ -71,7 +71,7 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 	Route::resource('trader_registration', 'TraderRegistrationController');
 
 
-	/** TRADERS Registration **/
+	/** TRADERS File **/
 	Route::resource('trader_file', 'TraderFileController');
 
 
@@ -80,7 +80,13 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 		->name('mill.renew_license_post');
 	Route::get('/mill/renewal_history/{slug}', 'MillController@renewalHistory')
 		->name('mill.renewal_history');
+	Route::get('/mill/files/{slug}', 'MillController@files')
+		->name('mill.files');
 	Route::resource('mill', 'MillController');
+
+
+	/** Mill File **/
+	Route::resource('mill_file', 'MillFileController');
 
 
 	/** MILLS Registration **/
@@ -98,7 +104,13 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 		->name('refinery.renew_license_post');
 	Route::get('/refinery/renewal_history/{slug}', 'RefineryController@renewalHistory')
 		->name('refinery.renewal_history');
+	Route::get('/refinery/files/{slug}', 'RefineryController@files')
+		->name('refinery.files');
 	Route::resource('refinery', 'RefineryController');
+
+
+	/** Refinery File **/
+	Route::resource('refinery_file', 'RefineryFileController');
 
 
 	/** REFINERY Registration **/

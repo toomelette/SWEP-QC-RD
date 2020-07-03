@@ -20,7 +20,7 @@
 @section('content')
     
   <section class="content-header">
-      <h1>Mill List</h1>
+      <h1>Mills</h1>
   </section>
 
   <section class="content">
@@ -44,7 +44,7 @@
         <tr>
           <th>@sortablelink('name', 'Name')</th>
           <th>@sortablelink('', 'Status')</th>
-          <th style="width: 400px">Action</th>
+          <th style="width: 500px">Action</th>
         </tr>
         @foreach($mills as $data) 
           <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
@@ -52,6 +52,11 @@
             <td id="mid-vert">{!! $data->displayLicensesStatusSpan($global_current_cy->crop_year_id) !!}</td>
             <td id="mid-vert">
               <div class="btn-group">
+                @if(in_array('dashboard.mill.files', $global_user_submenus))
+                  <a type="button" class="btn btn-default" id="files_button" href="{{ route('dashboard.mill.files', $data->slug) }}">
+                    <i class="fa fa-file-text-o"></i>&nbsp; Files
+                  </a>
+                @endif
                 @if(in_array('dashboard.mill.renew_license_post', $global_user_submenus))
                   <a type="button" 
                      class="btn btn-default" 

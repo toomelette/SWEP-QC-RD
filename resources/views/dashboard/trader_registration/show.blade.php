@@ -7,15 +7,13 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">Trader License Details</h2>
+      <h2 class="box-title" style="margin-top: 10px;">Trader License Details</h2>
       <div class="pull-right">
         <a href="{{ route('dashboard.trader_registration.dl_word_file', $trader_reg->slug) }}" 
-           class="btn btn-sm bg-blue"
+           class="btn btn-md bg-blue"
            target="_blank">
            <i class="fa fa-download"></i> Download Word File
         </a>
-        &nbsp;
-        <a href="{{ route('dashboard.trader.index') }}" class="btn btn-sm btn-default">Back to List</a>
         &nbsp;
         {!! __html::back_button(['dashboard.trader.renewal_history']) !!}
       </div> 

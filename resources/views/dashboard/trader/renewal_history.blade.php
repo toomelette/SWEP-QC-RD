@@ -26,10 +26,10 @@
 
         {{-- Table Search --}}        
         <div class="box-header with-border">
-        <h2 class="box-title" style="margin-top: 6px;">Renewal History ({{ $trader->name }})</h2>
+        <h2 class="box-title" style="margin-top: 10px;">Trader Renewal History ({{ $trader->name }})</h2>
           <div class="pull-right">
-            <a href="{{ route('dashboard.trader.index') }}" class="btn btn-sm btn-default">
-              Back to List
+            <a href="{{ route('dashboard.trader.index') }}" class="btn btn-md btn-default">
+              <i class="fa fa-fw fa-arrow-left"></i>&nbsp;Back to List
             </a>
           </div> 
         </div>

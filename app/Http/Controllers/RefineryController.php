@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 
 use App\Core\Interfaces\RefineryInterface;
 use App\Core\Interfaces\RefineryRegistrationInterface;
+use App\Core\Interfaces\RefineryFileInterface;
 use App\Http\Requests\Refinery\RefineryFormRequest;
 use App\Http\Requests\Refinery\RefineryFilterRequest;
 use App\Http\Requests\Refinery\RefineryRenewLicenseFormRequest;
 use App\Http\Requests\Refinery\RefineryRenewalHistoryFilterRequest;
+use App\Http\Requests\RefineryFile\RefineryFileFilterRequest;
 
 
 class RefineryController extends Controller{
@@ -17,12 +19,15 @@ class RefineryController extends Controller{
 
     protected $refinery_repo;
     protected $refinery_reg_repo;
+    protected $refinery_file_repo;
 
 
     public function __construct(RefineryInterface $refinery_repo, 
-                                RefineryRegistrationInterface $refinery_reg_repo){
+                                RefineryRegistrationInterface $refinery_reg_repo,
+                                RefineryFileInterface $refinery_file_repo){
         $this->refinery_repo = $refinery_repo;
         $this->refinery_reg_repo = $refinery_reg_repo;
+        $this->refinery_file_repo = $refinery_file_repo;
         parent::__construct();
     }
 
@@ -123,7 +128,27 @@ class RefineryController extends Controller{
         $refinery_reg_list = $this->refinery_reg_repo->fetchByRefineryId($request, $refinery->refinery_id);
 
         $request->flash();
-        return view('dashboard.refinery.renewal_history')->with('refinery_reg_list', $refinery_reg_list);
+        return view('dashboard.refinery.renewal_history')->with([
+            'refinery_reg_list' => $refinery_reg_list,
+            'refinery' => $refinery,
+        ]);
+
+    }
+
+    
+
+
+    public function files($slug, RefineryFileFilterRequest $request){
+
+        $refinery = $this->refinery_repo->findbySlug($slug);
+        $refinery_file_list = $this->refinery_file_repo->fetchByRefineryId($request, $refinery->refinery_id);
+
+        $request->flash();
+        
+        return view('dashboard.refinery_file.index')->with([
+            'refinery_file_list' => $refinery_file_list,
+            'refinery' => $refinery,
+        ]);
 
     }
 
