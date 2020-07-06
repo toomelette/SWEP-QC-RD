@@ -178,46 +178,38 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
 
 
 
-    // public function getByRegDate_Category($df, $dt, $tc_id){
+    public function getByRegDate($df, $dt){
 
-    //     $mill_reg = $this->mill_reg->newQuery();
+        $mill_reg = $this->mill_reg->newQuery();
 
-    //     if (isset($df) && isset($dt)) {
-    //         $df = $this->__dataType->date_parse($df, 'Y-m-d');
-    //         $dt = $this->__dataType->date_parse($dt, 'Y-m-d');
-    //         $mill_reg->whereBetween('reg_date',[$df, $dt]);
-    //     }
+        if (isset($df) && isset($dt)) {
+            $df = $this->__dataType->date_parse($df, 'Y-m-d');
+            $dt = $this->__dataType->date_parse($dt, 'Y-m-d');
+            $mill_reg->whereBetween('reg_date',[$df, $dt]);
+        }
 
-    //     if (isset($tc_id)) {
-    //         $mill_reg->where('mill_cat_id', $tc_id);
-    //     }
+        return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'milling_fee_words', 'payment_status', 'under_payment', 'under_payment_words', 'excess_payment', 'excess_payment_words', 'balance_fee', 'balance_fee_words', 'rated_capacity', 'start_milling', 'end_milling')
+                        ->with('mill', 'cropYear')
+                        ->get();
 
-    //     return $mill_reg->select('mill_id', 'mill_cat_id', 'crop_year_id', 'mill_officer', 'mill_email', 'control_no', 'reg_date', 'signatory')
-    //                       ->with('mill','mill.region', 'millCategory', 'cropYear')
-    //                       ->get();
-
-    // }
+    }
 
 
 
 
-    // public function getByCropYearId_Category($cy_id, $tc_id){
+    public function getByCropYearId($cy_id){
 
-    //     $mill_reg = $this->mill_reg->newQuery();
+        $mill_reg = $this->mill_reg->newQuery();
 
-    //     if (isset($cy_id)) {
-    //         $mill_reg->where('crop_year_id', $cy_id);
-    //     }
+        if (isset($cy_id)) {
+            $mill_reg->where('crop_year_id', $cy_id);
+        }
 
-    //     if (isset($tc_id)) {
-    //         $mill_reg->where('mill_cat_id', $tc_id);
-    //     }
-
-    //     return $mill_reg->select('mill_id', 'mill_officer', 'mill_email')
-    //                       ->with('mill', 'mill.region')
-    //                       ->get();
+        return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'milling_fee_words', 'payment_status', 'under_payment', 'under_payment_words', 'excess_payment', 'excess_payment_words', 'balance_fee', 'balance_fee_words', 'rated_capacity', 'start_milling', 'end_milling')
+                        ->with('mill', 'cropYear')
+                        ->get();
                           
-    // }
+    }
 
 
 

@@ -72,6 +72,8 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 
 
 	/** TRADERS File **/
+	Route::get('/trader_file/view_file/{slug}', 'TraderFileController@viewFile')
+		->name('trader_file.view_file');
 	Route::resource('trader_file', 'TraderFileController');
 
 
@@ -82,14 +84,20 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 		->name('mill.renewal_history');
 	Route::get('/mill/files/{slug}', 'MillController@files')
 		->name('mill.files');
+	Route::get('/mill/reports', 'MillController@reports')
+		->name('mill.reports');
 	Route::resource('mill', 'MillController');
 
 
 	/** Mill File **/
+	Route::get('/mill_file/view_file/{slug}', 'MillFileController@viewFile')
+		->name('mill_file.view_file');
 	Route::resource('mill_file', 'MillFileController');
 
 
 	/** MILLS Registration **/
+	Route::get('/mill_registration/reports_output', 'MillRegistrationController@reportsOutput')
+		->name('mill_registration.reports_output');
 	Route::get('/mill_registration/dl_cover/{slug}', 'MillRegistrationController@downloadCoverLetter')
 		->name('mill_registration.dl_cover');
 	Route::get('/mill_registration/dl_billing/{slug}', 'MillRegistrationController@downloadBillingStatement')
@@ -106,14 +114,20 @@ Route::group(['prefix'=>'dashboard', 'as' => 'dashboard.', 'middleware' => ['che
 		->name('refinery.renewal_history');
 	Route::get('/refinery/files/{slug}', 'RefineryController@files')
 		->name('refinery.files');
+	Route::get('/refinery/reports', 'RefineryController@reports')
+		->name('refinery.reports');
 	Route::resource('refinery', 'RefineryController');
 
 
 	/** Refinery File **/
+	Route::get('/refinery_file/view_file/{slug}', 'RefineryFileController@viewFile')
+		->name('refinery_file.view_file');
 	Route::resource('refinery_file', 'RefineryFileController');
 
 
 	/** REFINERY Registration **/
+	Route::get('/refinery_registration/reports_output', 'RefineryRegistrationController@reportsOutput')
+		->name('refinery_registration.reports_output');
 	Route::get('/refinery_registration/dl_cover/{slug}', 'RefineryRegistrationController@downloadCoverLetter')
 		->name('refinery_registration.dl_cover');
 	Route::get('/refinery_registration/dl_license/{slug}', 'RefineryRegistrationController@downloadLicense')

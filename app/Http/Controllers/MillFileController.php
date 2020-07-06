@@ -99,6 +99,34 @@ class MillFileController extends Controller{
     }
 
 
+    
+
+    public function viewFile($slug){
+
+        $mill_file = $this->mill_file_repo->findBySlug($slug);
+
+        if(!empty($mill_file->file_location)){
+
+            $path = $this->__static->archive_dir() .'/'. $mill_file->file_location;
+
+            if (!File::exists($path)) { return "Cannot Detect File!"; }
+
+            $file = File::get($path);
+            $type = File::mimeType($path);
+
+            $response = response()->make($file, 200);
+            $response->header("Content-Type", $type);
+
+            return $response;
+
+        }
+
+        return "Cannot Detect File!";;
+        
+
+    }
+
+
 
     
 }

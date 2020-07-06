@@ -155,9 +155,9 @@ class MillController extends Controller{
 
 
 
-    // public function reports(){
-    //     return view('dashboard.mill.reports');
-    // }
+    public function reports(){
+        return view('dashboard.mill.reports');
+    }
 
 
     

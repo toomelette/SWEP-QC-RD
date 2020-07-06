@@ -99,6 +99,34 @@ class TraderFileController extends Controller{
     }
 
 
+    
+
+    public function viewFile($slug){
+
+        $trader_file = $this->trader_file_repo->findBySlug($slug);
+
+        if(!empty($trader_file->file_location)){
+
+            $path = $this->__static->archive_dir() .'/'. $trader_file->file_location;
+
+            if (!File::exists($path)) { return "Cannot Detect File!"; }
+
+            $file = File::get($path);
+            $type = File::mimeType($path);
+
+            $response = response()->make($file, 200);
+            $response->header("Content-Type", $type);
+
+            return $response;
+
+        }
+
+        return "Cannot Detect File!";;
+        
+
+    }
+
+
 
     
 }

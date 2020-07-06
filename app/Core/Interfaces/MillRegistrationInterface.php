@@ -18,8 +18,8 @@ interface MillRegistrationInterface {
 
 	public function isMillExistInCY($crop_year_id, $mill_id);
 
-	// public function getByRegDate_Category($df, $dt, $tc_id);
+	public function getByRegDate($df, $dt);
 
-	// public function getByCropYearId_Category($cy_id, $tc_id);
+	public function getByCropYearId($cy_id);
 		
 }

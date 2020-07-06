@@ -55,7 +55,11 @@
           </tr>
           @foreach($trader_file_list as $data) 
             <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
-              <td id="mid-vert">{{ $data->filename }}</td>
+              <td id="mid-vert">
+                <a href="{{ route('dashboard.trader_file.view_file', $data->slug) }}" target="_blank">
+                  {{ $data->filename }}
+                </a>
+              </td>
               <td id="mid-vert">
                 {{ __dataType::date_parse($data->updated_at, 'F d, Y H:i A') }}
               </td>

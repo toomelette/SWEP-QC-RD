@@ -11,6 +11,10 @@ use App\Exports\MillRegistrationCover;
 use App\Exports\MillRegistrationBilling;
 use App\Exports\MillRegistrationLicense;
 
+use App\Exports\MillRegistrationBD;
+use App\Exports\MillRegistrationBCY;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 
 class MillRegistrationController extends Controller{
@@ -94,53 +98,23 @@ class MillRegistrationController extends Controller{
 
 
 
-    // public function reportsOutput(MillRegistrationReportRequest $request){
+    public function reportsOutput(MillRegistrationReportRequest $request){
 
-    //     if ($request->ft == 'bdc') {
+        if ($request->ft == 'bd') {
+
+            $mill_registrations = $this->mill_reg_repo->getByRegDate($request->bd_df, $request->bd_dt);
+            return Excel::download(new MillRegistrationBD($mill_registrations), 'mills_by_date.xlsx');
+
+        }elseif ($request->ft == 'bcy') {
+
+            $mill_registrations = $this->mill_reg_repo->getByCropYearId($request->bcy_cy);
+            return Excel::download(new MillRegistrationBCY($mill_registrations), 'mills_by_crop_year.xlsx');
             
-    //         $mill_registrations = $this->mill_reg_repo->getByRegDate_Category($request->bdc_df, $request->bdc_dt, $request->bdc_tc);
-            
-    //         if ($request->bdc_t == 'p') {
+        }
 
-    //             return view('printables.mill_registration.list_bdc')->with('mill_registrations', $mill_registrations);
-                
-    //         }elseif ($request->bdc_t == 'e') {
+        return abort(404);
 
-    //             return Excel::download(
-    //                 new MillRegistrationBDC($mill_registrations), 'list_by_date_category.xlsx'
-    //             );
-
-    //         }
-
-    //     }elseif ($request->ft == 'bcyc') {
-
-    //         if ($request->bcyc_rt == 'A') {
-
-    //             $mill_registrations = $this->mill_reg_repo->getByCropYearId_Category($request->bcyc_cy, $request->bcyc_tc);
-    //             $crop_year = $this->cy_repo->findByCropYearId($request->bcyc_cy);
-
-    //             return view('printables.mill_registration.list_bcyc_a')->with([
-    //                 'mill_registrations' => $mill_registrations,
-    //                 'crop_year' => $crop_year
-    //             ]);
-                
-    //         }elseif ($request->bcyc_rt == 'BR') {
-
-    //             $mill_registrations = $this->mill_reg_repo->getByCropYearId_Category($request->bcyc_cy, $request->bcyc_tc);
-    //             $crop_year = $this->cy_repo->findByCropYearId($request->bcyc_cy);
-
-    //             return view('printables.mill_registration.list_bcyc_br')->with([
-    //                 'mill_registrations' => $mill_registrations,
-    //                 'crop_year' => $crop_year
-    //             ]);
-                
-    //         }
-            
-    //     }
-
-    //     return abort(404);
-
-    // }
+    }
 
 
 

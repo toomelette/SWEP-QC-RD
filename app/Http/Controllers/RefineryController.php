@@ -155,9 +155,9 @@ class RefineryController extends Controller{
 
 
 
-    // public function reports(){
-    //     return view('dashboard.refinery.reports');
-    // }
+    public function reports(){
+        return view('dashboard.refinery.reports');
+    }
 
 
     

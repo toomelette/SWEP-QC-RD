@@ -160,46 +160,40 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
 
 
 
-    // public function getByRegDate_Category($df, $dt, $tc_id){
+    
 
-    //     $refinery_reg = $this->refinery_reg->newQuery();
+    public function getByRegDate($df, $dt){
 
-    //     if (isset($df) && isset($dt)) {
-    //         $df = $this->__dataType->date_parse($df, 'Y-m-d');
-    //         $dt = $this->__dataType->date_parse($dt, 'Y-m-d');
-    //         $refinery_reg->whereBetween('reg_date',[$df, $dt]);
-    //     }
+        $refinery_reg = $this->refinery_reg->newQuery();
 
-    //     if (isset($tc_id)) {
-    //         $refinery_reg->where('refinery_cat_id', $tc_id);
-    //     }
+        if (isset($df) && isset($dt)) {
+            $df = $this->__dataType->date_parse($df, 'Y-m-d');
+            $dt = $this->__dataType->date_parse($dt, 'Y-m-d');
+            $refinery_reg->whereBetween('reg_date',[$df, $dt]);
+        }
 
-    //     return $refinery_reg->select('refinery_id', 'refinery_cat_id', 'crop_year_id', 'refinery_officer', 'refinery_email', 'control_no', 'reg_date', 'signatory')
-    //                       ->with('refinery','refinery.region', 'refineryCategory', 'cropYear')
-    //                       ->get();
+        return $refinery_reg->select('refinery_id', 'crop_year_id', 'license_no', 'reg_date')
+                            ->with('refinery', 'cropYear')
+                            ->get();
 
-    // }
+    }
 
 
 
 
-    // public function getByCropYearId_Category($cy_id, $tc_id){
+    public function getByCropYearId($cy_id){
 
-    //     $refinery_reg = $this->refinery_reg->newQuery();
+        $refinery_reg = $this->refinery_reg->newQuery();
 
-    //     if (isset($cy_id)) {
-    //         $refinery_reg->where('crop_year_id', $cy_id);
-    //     }
+        if (isset($cy_id)) {
+            $refinery_reg->where('crop_year_id', $cy_id);
+        }
 
-    //     if (isset($tc_id)) {
-    //         $refinery_reg->where('refinery_cat_id', $tc_id);
-    //     }
-
-    //     return $refinery_reg->select('refinery_id', 'refinery_officer', 'refinery_email')
-    //                       ->with('refinery', 'refinery.region')
-    //                       ->get();
+        return $refinery_reg->select('refinery_id', 'crop_year_id', 'license_no', 'reg_date')
+                            ->with('refinery', 'cropYear')
+                            ->get();
                           
-    // }
+    }
 
 
 

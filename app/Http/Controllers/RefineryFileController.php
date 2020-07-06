@@ -99,6 +99,34 @@ class RefineryFileController extends Controller{
     }
 
 
+    
+
+    public function viewFile($slug){
+
+        $refinery_file = $this->refinery_file_repo->findBySlug($slug);
+
+        if(!empty($refinery_file->file_location)){
+
+            $path = $this->__static->archive_dir() .'/'. $refinery_file->file_location;
+
+            if (!File::exists($path)) { return "Cannot Detect File!"; }
+
+            $file = File::get($path);
+            $type = File::mimeType($path);
+
+            $response = response()->make($file, 200);
+            $response->header("Content-Type", $type);
+
+            return $response;
+
+        }
+
+        return "Cannot Detect File!";;
+        
+
+    }
+
+
 
     
 }

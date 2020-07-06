@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Core\Interfaces\CropYearInterface;
 use App\Core\Interfaces\RefineryRegistrationInterface;
 use App\Http\Requests\Refinery\RefineryRenewLicenseFormRequest;
+use App\Http\Requests\RefineryRegistration\RefineryRegistrationReportRequest;
 
 use App\Exports\RefineryRegistrationCover;
 use App\Exports\RefineryRegistrationLicense;
+
+use App\Exports\RefineryRegistrationBD;
+use App\Exports\RefineryRegistrationBCY;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 
@@ -74,6 +79,27 @@ class RefineryRegistrationController extends Controller{
 
         $this->event->fire('refinery.renew_license', [ $refinery_reg->refinery, $refinery_reg ]);
         return redirect()->back();
+
+    }
+
+
+
+
+    public function reportsOutput(RefineryRegistrationReportRequest $request){
+
+        if ($request->ft == 'bd') {
+
+            $refinery_registrations = $this->refinery_reg_repo->getByRegDate($request->bd_df, $request->bd_dt);
+            return Excel::download(new RefineryRegistrationBD($refinery_registrations), 'refinery_by_date.xlsx');
+
+        }elseif ($request->ft == 'bcy') {
+
+            $refinery_registrations = $this->refinery_reg_repo->getByCropYearId($request->bcy_cy);
+            return Excel::download(new RefineryRegistrationBCY($refinery_registrations), 'refinery_by_crop_year.xlsx');
+            
+        }
+
+        return abort(404);
 
     }
 
