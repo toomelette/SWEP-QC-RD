@@ -135,12 +135,12 @@ class MillRegistrationBilling{
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 
         try {
-            $objWriter->save(storage_path('billing_statement.docx'));
+            $objWriter->save(storage_path('mill_billing_statement.docx'));
         } catch (Exception $e) {
             abort(500);
         }
 
-        return response()->download(storage_path('billing_statement.docx'));
+        return response()->download(storage_path('mill_billing_statement.docx'));
 
     }
 

@@ -135,7 +135,7 @@
             <h4 class="modal-title"><i class="fa fa-fw fa-check"></i> Saved!</h4>
           </div>
           <div class="modal-body">
-            <p><p style="font-size: 17px;">{{ Session::get('MILL_RENEW_LICENSE_SUCCESS') }}</p></p>
+            <p><p style="font-size: 17px;">The License has been successfully updated!</p></p>
           </div>
           <div class="modal-footer">
 
@@ -207,7 +207,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">
-            <i class="fa fa-certificate"></i> &nbsp;Mill License Renewal
+            <i class="fa fa-certificate"></i> &nbsp;Edit License
             <div class="pull-right">
               <code>Fields with asterisks(*) are required</code>
             </div> 

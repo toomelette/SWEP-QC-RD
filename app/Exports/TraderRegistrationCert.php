@@ -220,15 +220,16 @@ class TraderRegistrationCert{
 
 
         // Export
+
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 
         try {
-            $objWriter->save(storage_path('license.docx'));
+            $objWriter->save(storage_path('trader_license.docx'));
         } catch (Exception $e) {
             abort(500);
         }
 
-        return response()->download(storage_path('license.docx'));
+        return response()->download(storage_path('trader_license.docx'));
 
     }
 

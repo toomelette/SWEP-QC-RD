@@ -122,7 +122,7 @@
             <h4 class="modal-title"><i class="fa fa-fw fa-check"></i> Saved!</h4>
           </div>
           <div class="modal-body">
-            <p><p style="font-size: 17px;">{{ Session::get('REFINERY_RENEW_LICENSE_SUCCESS') }}</p></p>
+            <p><p style="font-size: 17px;">The License has been successfully updated!</p></p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

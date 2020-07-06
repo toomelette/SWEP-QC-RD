@@ -119,12 +119,12 @@ class RefineryRegistrationCover{
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 
         try {
-            $objWriter->save(storage_path('cover_letter.docx'));
+            $objWriter->save(storage_path('refinery_cover_letter.docx'));
         } catch (Exception $e) {
             abort(500);
         }
 
-        return response()->download(storage_path('cover_letter.docx'));
+        return response()->download(storage_path('refinery_cover_letter.docx'));
 
     }
 
