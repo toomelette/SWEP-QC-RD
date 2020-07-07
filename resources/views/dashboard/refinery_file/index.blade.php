@@ -49,8 +49,8 @@
       <div class="box-body no-padding">
         <table class="table table-hover">
           <tr>
-            <th>Filename</th>
-            <th>Last Modified</th>
+            <th>@sortablelink('filename', 'Filename')</th>
+            <th>@sortablelink('updated_at', 'Last Modified')</th>
             <th>Action</th>
           </tr>
           @foreach($refinery_file_list as $data) 

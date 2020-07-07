@@ -43,6 +43,7 @@ class RefineryRepository extends BaseRepository implements RefineryInterface {
             }
 
             return $refinery->select('name', 'refinery_id', 'slug')
+                            ->with('refineryRegistration')
                             ->sortable()
                             ->orderBy('updated_at', 'desc')
                             ->paginate($entries);
@@ -131,9 +132,7 @@ class RefineryRepository extends BaseRepository implements RefineryInterface {
             return $this->refinery->where('slug', $slug)->first();
         }); 
         
-        if(empty($refinery)){
-            abort(404);
-        }
+        if(empty($refinery)){ abort(404); }
 
         return $refinery;
 
@@ -142,50 +141,21 @@ class RefineryRepository extends BaseRepository implements RefineryInterface {
 
 
 
-    // public function getByRefineryId($refinery_id){
-
-    //     $refinery = $this->cache->remember('refineries:getByRefineryId:'.$refinery_id, 240, function() use ($refinery_id){
-    //         return $this->refinery->where('refinery_id', $refinery_id)->get();
-    //     });
-        
-    //     return $refinery;
-
-    // }
-
-
-
-
     public function getRefineryIdInc(){
 
         $id = 'R1001';
-
         $refinery = $this->refinery->select('refinery_id')->orderBy('refinery_id', 'desc')->first();
 
         if($refinery != null){
-
             if($refinery->refinery_id != null){
                 $num = str_replace('R', '', $refinery->refinery_id) + 1;
                 $id = 'R' . $num;
             }
-        
         }
         
         return $id;
         
     }
-
-
-
-
-    // public function getAll(){
-
-    //     $refineries = $this->cache->remember('refineries:getAll', 240, function(){
-    //         return $this->refinery->select('refinery_id', 'name')->get();
-    //     });
-        
-    //     return $refineries;
-
-    // }
 
 
 

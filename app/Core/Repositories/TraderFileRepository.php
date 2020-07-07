@@ -39,7 +39,7 @@ class TraderFileRepository extends BaseRepository implements TraderFileInterface
                     $trader_file->where('filename', 'LIKE', '%'. $request->q .'%');
                 }
 
-                return $trader_file->select('filename', 'file_location', 'updated_at', 'slug')
+                return $trader_file->select('filename', 'updated_at', 'slug')
                                    ->where('trader_id', $trader_id)
                                    ->sortable()
                                    ->orderBy('updated_at', 'desc')
@@ -106,9 +106,11 @@ class TraderFileRepository extends BaseRepository implements TraderFileInterface
 
     public function findBySlug($slug){
 
-        $trader_file = $this->cache->remember('trader_files:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->trader_file->where('slug', $slug)->with('trader')->first();
-        }); 
+        $trader_file = $this->cache->remember('trader_files:findBySlug:' . $slug, 240, 
+            function() use ($slug){
+                return $this->trader_file->where('slug', $slug)->with('trader')->first();
+            }
+        ); 
         
         if(empty($trader_file)){abort(404);}
 

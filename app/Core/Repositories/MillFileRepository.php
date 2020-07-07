@@ -39,11 +39,11 @@ class MillFileRepository extends BaseRepository implements MillFileInterface {
                     $mill_file->where('filename', 'LIKE', '%'. $request->q .'%');
                 }
 
-                return $mill_file->select('filename', 'file_location', 'updated_at', 'slug')
-                                   ->where('mill_id', $mill_id)
-                                   ->sortable()
-                                   ->orderBy('updated_at', 'desc')
-                                   ->paginate($entries);
+                return $mill_file->select('filename', 'updated_at', 'slug')
+                                 ->where('mill_id', $mill_id)
+                                 ->sortable()
+                                 ->orderBy('updated_at', 'desc')
+                                 ->paginate($entries);
 
         });
 
@@ -106,9 +106,11 @@ class MillFileRepository extends BaseRepository implements MillFileInterface {
 
     public function findBySlug($slug){
 
-        $mill_file = $this->cache->remember('mill_files:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->mill_file->where('slug', $slug)->with('mill')->first();
-        }); 
+        $mill_file = $this->cache->remember('mill_files:findBySlug:' . $slug, 240, 
+            function() use ($slug){
+                return $this->mill_file->where('slug', $slug)->with('mill')->first();
+            }
+        ); 
         
         if(empty($mill_file)){abort(404);}
 
@@ -122,7 +124,9 @@ class MillFileRepository extends BaseRepository implements MillFileInterface {
     public function getMillRegIdInc(){
 
         $id = 'MF10001';
-        $mill_file = $this->mill_file->select('mill_file_id')->orderBy('mill_file_id', 'desc')->first();
+        $mill_file = $this->mill_file->select('mill_file_id')
+                                     ->orderBy('mill_file_id', 'desc')
+                                     ->first();
 
         if($mill_file != null){
             if($mill_file->mill_file_id != null){

@@ -62,6 +62,7 @@
                     <a type="button" 
                        class="btn btn-default" 
                        id="update_button" 
+                       data-crop_year_name="{{ optional($data->cropYear)->name }}"
                        data-license_no="{{ $data->license_no }}"
                        data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
                        data-action="update" 
@@ -192,7 +193,7 @@
           </h4>
         </div>
         <div class="modal-body" id="update_refinery_reg_body">
-          <p>Crop Year: {{ $global_current_cy->name }}</p>
+          <p>Crop Year: <span id="crop_year_name"></span></p>
           <form method="POST" id="update_refinery_reg_form" autocomplete="off">
             
             @csrf
@@ -253,6 +254,7 @@
         $("#update_refinery_reg").modal("show");
         $("#update_refinery_reg_body #update_refinery_reg_form").attr("action", $(this).data("url"));
 
+        $('#crop_year_name').text($(this).data("crop_year_name"));
         $("#update_refinery_reg_form #license_no").val($(this).data("license_no"));
         $("#update_refinery_reg_form #reg_date").val($(this).data("reg_date"));
         

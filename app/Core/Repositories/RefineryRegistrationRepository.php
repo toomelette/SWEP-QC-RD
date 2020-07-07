@@ -36,11 +36,11 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
                 $refinery_reg = $this->refinery_reg->newQuery();
 
                 return $refinery_reg->select('crop_year_id', 'license_no', 'reg_date', 'slug')
-                                  ->with('cropYear')
-                                  ->where('refinery_id', $refinery_id)
-                                  ->sortable()
-                                  ->orderBy('reg_date', 'desc')
-                                  ->paginate($entries);
+                                    ->with('cropYear')
+                                    ->where('refinery_id', $refinery_id)
+                                    ->sortable()
+                                    ->orderBy('reg_date', 'desc')
+                                    ->paginate($entries);
 
         });
 
@@ -106,14 +106,13 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
     public function findBySlug($slug){
 
         $refinery_reg = $this->cache->remember('refinery_registrations:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->refinery_reg->where('slug', $slug)
+                return $this->refinery_reg->where('slug', $slug)
                                       ->with('refinery', 'cropYear')
                                       ->first();
-        }); 
+            }
+        ); 
         
-        if(empty($refinery_reg)){
-            abort(404);
-        }
+        if(empty($refinery_reg)){ abort(404); }
 
         return $refinery_reg;
 

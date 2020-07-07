@@ -43,6 +43,7 @@ class MillRepository extends BaseRepository implements MillInterface {
             }
 
             return $mill->select('name', 'mill_id', 'slug')
+                        ->with('millRegistration')
                         ->sortable()
                         ->orderBy('updated_at', 'desc')
                         ->paginate($entries);
@@ -131,9 +132,7 @@ class MillRepository extends BaseRepository implements MillInterface {
             return $this->mill->where('slug', $slug)->first();
         }); 
         
-        if(empty($mill)){
-            abort(404);
-        }
+        if(empty($mill)){ abort(404); }
 
         return $mill;
 
@@ -142,50 +141,21 @@ class MillRepository extends BaseRepository implements MillInterface {
 
 
 
-    // public function getByMillId($mill_id){
-
-    //     $mill = $this->cache->remember('mills:getByMillId:'.$mill_id, 240, function() use ($mill_id){
-    //         return $this->mill->where('mill_id', $mill_id)->get();
-    //     });
-        
-    //     return $mill;
-
-    // }
-
-
-
-
     public function getMillIdInc(){
 
         $id = 'M1001';
-
         $mill = $this->mill->select('mill_id')->orderBy('mill_id', 'desc')->first();
 
         if($mill != null){
-
             if($mill->mill_id != null){
                 $num = str_replace('M', '', $mill->mill_id) + 1;
                 $id = 'M' . $num;
             }
-        
         }
         
         return $id;
         
     }
-
-
-
-
-    // public function getAll(){
-
-    //     $mills = $this->cache->remember('mills:getAll', 240, function(){
-    //         return $this->mill->select('mill_id', 'name')->get();
-    //     });
-        
-    //     return $mills;
-
-    // }
 
 
 

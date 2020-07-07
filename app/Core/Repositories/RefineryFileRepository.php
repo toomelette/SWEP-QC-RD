@@ -39,7 +39,7 @@ class RefineryFileRepository extends BaseRepository implements RefineryFileInter
                     $refinery_file->where('filename', 'LIKE', '%'. $request->q .'%');
                 }
 
-                return $refinery_file->select('filename', 'file_location', 'updated_at', 'slug')
+                return $refinery_file->select('filename', 'updated_at', 'slug')
                                    ->where('refinery_id', $refinery_id)
                                    ->sortable()
                                    ->orderBy('updated_at', 'desc')
@@ -106,9 +106,11 @@ class RefineryFileRepository extends BaseRepository implements RefineryFileInter
 
     public function findBySlug($slug){
 
-        $refinery_file = $this->cache->remember('refinery_files:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->refinery_file->where('slug', $slug)->with('refinery')->first();
-        }); 
+        $refinery_file = $this->cache->remember('refinery_files:findBySlug:' . $slug, 240, 
+            function() use ($slug){
+                return $this->refinery_file->where('slug', $slug)->with('refinery')->first();
+            }
+        ); 
         
         if(empty($refinery_file)){abort(404);}
 
@@ -122,7 +124,9 @@ class RefineryFileRepository extends BaseRepository implements RefineryFileInter
     public function getRefineryRegIdInc(){
 
         $id = 'RF10001';
-        $refinery_file = $this->refinery_file->select('refinery_file_id')->orderBy('refinery_file_id', 'desc')->first();
+        $refinery_file = $this->refinery_file->select('refinery_file_id')
+                                             ->orderBy('refinery_file_id', 'desc')
+                                             ->first();
 
         if($refinery_file != null){
             if($refinery_file->refinery_file_id != null){
@@ -134,7 +138,6 @@ class RefineryFileRepository extends BaseRepository implements RefineryFileInter
         return $id;
         
     }
-
 
 
 

@@ -125,15 +125,15 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
 
     public function findBySlug($slug){
 
-        $mill_reg = $this->cache->remember('mill_registrations:findBySlug:' . $slug, 240, function() use ($slug){
-            return $this->mill_reg->where('slug', $slug)
-                                  ->with('mill', 'cropYear')
-                                  ->first();
-        }); 
+        $mill_reg = $this->cache->remember('mill_registrations:findBySlug:' . $slug, 240, 
+            function() use ($slug){
+                return $this->mill_reg->where('slug', $slug)
+                                      ->with('mill', 'cropYear')
+                                      ->first();
+            }
+        ); 
         
-        if(empty($mill_reg)){
-            abort(404);
-        }
+        if(empty($mill_reg)){ abort(404); }
 
         return $mill_reg;
 
@@ -157,7 +157,6 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
         return $id;
         
     }
-
 
 
 
