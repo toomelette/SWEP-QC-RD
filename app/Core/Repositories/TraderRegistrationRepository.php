@@ -4,6 +4,7 @@ namespace App\Core\Repositories;
  
 use App\Core\BaseClasses\BaseRepository;
 use App\Core\Interfaces\TraderRegistrationInterface;
+use App\Core\Interfaces\CropYearInterface;
 
 use App\Models\TraderRegistration;
 
@@ -12,13 +13,13 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
 	
 
     protected $trader_reg;
+    protected $crop_year_repo;
 
 
-	public function __construct(TraderRegistration $trader_reg){
-
+	public function __construct(TraderRegistration $trader_reg, CropYearInterface $crop_year_repo){
         $this->trader_reg = $trader_reg;
+        $this->crop_year_repo = $crop_year_repo;
         parent::__construct();
-
     }
 
 
@@ -34,6 +35,10 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
             function() use ($request, $trader_id, $entries){
 
                 $trader_reg = $this->trader_reg->newQuery();
+            
+                if(isset($request->q)){
+                    $trader_reg->where('control_no', 'LIKE', '%'. $request->q .'%');
+                }
 
                 return $trader_reg->select('crop_year_id', 'trader_cat_id', 'control_no', 'reg_date', 'slug')
                                   ->with('cropYear', 'traderCategory')
@@ -56,7 +61,7 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
         $trader_reg = new TraderRegistration;
         $trader_reg->trader_reg_id = $this->getTraderRegIdInc();
         $trader_reg->slug = $this->str->random(16);
-        $trader_reg->control_no = $request->control_no;
+        $trader_reg->control_no = $this->getControlNoInc($request);
         $trader_reg->trader_cat_id = $request->trader_cat_id;
         $trader_reg->crop_year_id = $request->crop_year_id;
         $trader_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
@@ -82,7 +87,6 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
     public function update($request, $slug){
 
         $trader_reg = $this->findBySlug($slug);
-        $trader_reg->control_no = $request->control_no;
         $trader_reg->trader_cat_id = $request->trader_cat_id;
         $trader_reg->crop_year_id = $request->crop_year_id;
         $trader_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
@@ -129,22 +133,141 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
     public function getTraderRegIdInc(){
 
         $id = 'TR10001';
-
         $trader_reg = $this->trader_reg->select('trader_reg_id')->orderBy('trader_reg_id', 'desc')->first();
 
         if($trader_reg != null){
-
             if($trader_reg->trader_reg_id != null){
                 $num = str_replace('TR', '', $trader_reg->trader_reg_id) + 1;
                 $id = 'TR' . $num;
             }
-        
         }
         
         return $id;
         
     }
 
+
+
+
+    public function getControlNoInc($request){
+
+        $crop_year = $this->crop_year_repo->findByCropYearId($request->crop_year_id);
+
+        $crop_year_text = substr($crop_year->name, -4);
+
+        $trader_reg = $this->trader_reg->select('control_no')
+                                       ->where('crop_year_id', $request->crop_year_id)
+                                       ->where('trader_cat_id', $request->trader_cat_id)
+                                       ->orderBy('control_no', 'desc')
+                                       ->first();
+                                       
+
+        if ($request->trader_cat_id == 'TC1001') {
+            $sugar_dom_cn = 'ST-'.$crop_year_text.'-001';
+             if($trader_reg != null){
+                if($trader_reg->control_no != null){
+                    $num = str_replace('ST-'.$crop_year_text.'-', '', $trader_reg->control_no) + 001;
+                    if ($num < 100) {
+                        $num = str_pad($num, 3, '0', STR_PAD_LEFT);
+                    }elseif ($num >= 100) {
+                        $num = str_pad($num, 1, '0', STR_PAD_LEFT);
+                    }
+                    $sugar_dom_cn = 'ST-'.$crop_year_text.'-' . $num; 
+                }
+            }
+            return $sugar_dom_cn;
+        }
+
+                
+        if ($request->trader_cat_id == 'TC1002') {
+            $sugar_int_cn = 'ST-'.$crop_year_text.'-001-I';
+            if($trader_reg != null){
+                if($trader_reg->control_no != null){
+                    $num = str_replace('ST-'.$crop_year_text.'-', '', $trader_reg->control_no);
+                    $num = str_replace('-I', '', $num) + 001;
+                    if ($num < 100) {
+                        $num = str_pad($num, 3, '0', STR_PAD_LEFT);
+                    }elseif ($num >= 100) {
+                        $num = str_pad($num, 1, '0', STR_PAD_LEFT);
+                    }
+                    $sugar_int_cn = 'ST-'. $crop_year_text .'-'. $num .'-I'; 
+                }
+            }
+            return $sugar_int_cn;
+        }
+
+
+        if ($request->trader_cat_id == 'TC1003') {
+            $molasses_dom_cn = 'MT-'.$crop_year_text.'-001';
+             if($trader_reg != null){
+                if($trader_reg->control_no != null){
+                    $num = str_replace('MT-'.$crop_year_text.'-', '', $trader_reg->control_no) + 001;
+                    if ($num < 100) {
+                        $num = str_pad($num, 3, '0', STR_PAD_LEFT);
+                    }elseif ($num >= 100) {
+                        $num = str_pad($num, 1, '0', STR_PAD_LEFT);
+                    }
+                    $molasses_dom_cn = 'MT-'.$crop_year_text.'-' . $num; 
+                }
+            }
+            return $molasses_dom_cn;
+        }
+
+                
+        if ($request->trader_cat_id == 'TC1004') {
+            $molasses_int_cn = 'MT-'.$crop_year_text.'-001-I';
+            if($trader_reg != null){
+                if($trader_reg->control_no != null){
+                    $num = str_replace('MT-'.$crop_year_text.'-', '', $trader_reg->control_no);
+                    $num = str_replace('-I', '', $num) + 001;
+                    if ($num < 100) {
+                        $num = str_pad($num, 3, '0', STR_PAD_LEFT);
+                    }elseif ($num >= 100) {
+                        $num = str_pad($num, 1, '0', STR_PAD_LEFT);
+                    }
+                    $molasses_int_cn = 'MT-'. $crop_year_text .'-'. $num .'-I'; 
+                }
+            }
+            return $molasses_int_cn;
+        }
+
+
+        if ($request->trader_cat_id == 'TC1005') {
+            $molasses_dom_cn = 'MusT-'.$crop_year_text.'-001';
+             if($trader_reg != null){
+                if($trader_reg->control_no != null){
+                    $num = str_replace('MusT-'.$crop_year_text.'-', '', $trader_reg->control_no) + 001;
+                    if ($num < 100) {
+                        $num = str_pad($num, 3, '0', STR_PAD_LEFT);
+                    }elseif ($num >= 100) {
+                        $num = str_pad($num, 1, '0', STR_PAD_LEFT);
+                    }
+                    $molasses_dom_cn = 'MusT-'.$crop_year_text.'-' . $num; 
+                }
+            }
+            return $molasses_dom_cn;
+        }
+
+                
+        if ($request->trader_cat_id == 'TC1006') {
+            $molasses_int_cn = 'ST-'.$crop_year_text.'-001-F';
+            if($trader_reg != null){
+                if($trader_reg->control_no != null){
+                    $num = str_replace('ST-'.$crop_year_text.'-', '', $trader_reg->control_no);
+                    $num = str_replace('-F', '', $num) + 001;
+                    if ($num < 100) {
+                        $num = str_pad($num, 3, '0', STR_PAD_LEFT);
+                    }elseif ($num >= 100) {
+                        $num = str_pad($num, 1, '0', STR_PAD_LEFT);
+                    }
+                    $molasses_int_cn = 'ST-'. $crop_year_text .'-'. $num .'-F'; 
+                }
+            }
+            return $molasses_int_cn;
+        }
+        
+
+    }
 
 
 
@@ -206,7 +329,6 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
                           ->get();
                           
     }
-
 
 
 

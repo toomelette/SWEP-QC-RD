@@ -16,23 +16,32 @@
 @extends('layouts.admin-master')
 
 @section('content')
+    
+  <section class="content-header">
+      <h1>Trader Renewal History ({{ $trader->name }})</h1>
+      <div class="pull-right">
+        <a href="{{ route('dashboard.trader.index') }}" class="btn btn-md btn-default" style="margin-top: -45px;">
+          <i class="fa fa-fw fa-arrow-left"></i>&nbsp;Back to List
+        </a>
+      </div> 
+  </section>
 
   <section class="content">
 
       {{-- Form Start --}}
-      <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.trader.index') }}">
+      <form data-pjax 
+            class="form" 
+            id="filter_form" 
+            method="GET" 
+            autocomplete="off" 
+            action="{{ route('dashboard.trader.renewal_history' , $trader->slug) }}">
 
       <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
-        {{-- Table Search --}}        
-        <div class="box-header with-border">
-        <h2 class="box-title" style="margin-top: 10px;">Trader Renewal History ({{ $trader->name }})</h2>
-          <div class="pull-right">
-            <a href="{{ route('dashboard.trader.index') }}" class="btn btn-md btn-default">
-              <i class="fa fa-fw fa-arrow-left"></i>&nbsp;Back to List
-            </a>
-          </div> 
-        </div>
+      {{-- Table Search --}}        
+      <div class="box-header with-border">
+        {!! __html::table_search(route('dashboard.trader.renewal_history', $trader->slug)) !!}
+      </div>
 
       {{-- Form End --}}  
       </form>
@@ -66,7 +75,6 @@
                        id="update_button" 
                        data-crop_year_id="{{ $data->crop_year_id }}" 
                        data-trader_cat_id="{{ $data->trader_cat_id }}"
-                       data-control_no="{{ $data->control_no }}"
                        data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
                        data-action="update" 
                        data-url="{{ route('dashboard.trader_registration.update', $data->slug) }}">
@@ -186,7 +194,7 @@
           </h4>
         </div>
         <div class="modal-body" id="update_trader_reg_body">
-          <p>Crop Year: {{ $global_current_cy->name }}</p>
+
           <form method="POST" id="update_trader_reg_form" autocomplete="off">
             
             @csrf
@@ -195,18 +203,16 @@
 
             <div class="row">
 
-              <input type="hidden" name="crop_year_id" id="crop_year_id">
-
               {!! __form::select_dynamic(
-                '12', 'trader_cat_id', 'Category', old('trader_cat_id'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('trader_cat_id'), $errors->first('trader_cat_id'), 'select2', 'style="width:100%; "required'
+                '12', 'crop_year_id', 'Crop Year', '', $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%;" required'
               ) !!}
 
-              {!! __form::textbox(
-                '12', 'control_no', 'text', 'Control No.', 'Control No.', old('control_no'), $errors->has('control_no'), $errors->first('control_no'), 'data-transform="uppercase" required'
+              {!! __form::select_dynamic(
+                '12', 'trader_cat_id', 'Category', '', $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('trader_cat_id'), $errors->first('trader_cat_id'), 'select2', 'style="width:100%;" required'
               ) !!}
 
               {!! __form::datepicker(
-                '12', 'reg_date',  'Date of Registration', old('reg_date') ? old('reg_date') : Carbon::now()->format('m/d/Y'), $errors->has('reg_date'), $errors->first('reg_date')
+                '12', 'reg_date',  'Date of Registration', '', $errors->has('reg_date'), $errors->first('reg_date')
               ) !!}
 
             </div>
@@ -255,9 +261,8 @@
         $("#update_trader_reg").modal("show");
         $("#update_trader_reg_body #update_trader_reg_form").attr("action", $(this).data("url"));
 
-        $("#update_trader_reg_form #crop_year_id").val($(this).data("crop_year_id"));
+        $("#update_trader_reg_form #crop_year_id").val($(this).data("crop_year_id")).change();
         $("#update_trader_reg_form #trader_cat_id").val($(this).data("trader_cat_id")).change();
-        $("#update_trader_reg_form #control_no").val($(this).data("control_no"));
         $("#update_trader_reg_form #reg_date").val($(this).data("reg_date"));
         
       }

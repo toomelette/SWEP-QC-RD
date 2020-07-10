@@ -49,10 +49,10 @@ class Mill extends Model{
 
     public function displayLicensesStatusSpan($cy_id){
 
-        $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id);
+        $mill_reg = $this->millRegistration->where('crop_year_id', $cy_id)->first();
 
-        if (!$mill_reg->isEmpty()) {
-            return '<span class="badge bg-green">Registered</span>';
+        if (!empty($mill_reg)) {
+            return '<span class="badge bg-green">Registered - '. $mill_reg->license_no .'</span>';
         }
 
         return '<span class="badge bg-red">Not Registered</span>';

@@ -16,25 +16,27 @@
 @extends('layouts.admin-master')
 
 @section('content')
+    
+  <section class="content-header">
+      <h1>Mill Renewal History ({{ $mill->name }})</h1>
+      <div class="pull-right">
+        <a href="{{ route('dashboard.mill.index') }}" class="btn btn-md btn-default" style="margin-top: -45px;">
+          <i class="fa fa-fw fa-arrow-left"></i>&nbsp;Back to List
+        </a>
+      </div> 
+  </section>
 
   <section class="content">
 
       {{-- Form Start --}}
-      <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.mill.index') }}">
+      <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.mill.renewal_history', $mill->slug) }}">
 
       <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
-        {{-- Table Search --}}        
-        <div class="box-header with-border">
-          <h2 class="box-title"  style="margin-top: 10px;">
-            Mill Renewal History ({{ $mill->name }})
-          </h2>
-          <div class="pull-right">
-            <a href="{{ route('dashboard.mill.index') }}" class="btn btn-md btn-default">
-              <i class="fa fa-fw fa-arrow-left"></i>&nbsp;Back to List
-            </a>
-          </div> 
-        </div>
+      {{-- Table Search --}}        
+      <div class="box-header with-border">
+        {!! __html::table_search(route('dashboard.mill.renewal_history', $mill->slug)) !!}
+      </div>
 
       {{-- Form End --}}  
       </form>
@@ -64,8 +66,7 @@
                     <a type="button" 
                        class="btn btn-default" 
                        id="update_button"  
-                       data-crop_year_name="{{ optional($data->cropYear)->name }}"
-                       data-license_no="{{ $data->license_no }}"
+                       data-crop_year_id="{{ $data->crop_year_id }}"
                        data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
                        data-mt="{{ $data->mt }}"
                        data-lkg="{{ $data->lkg }}"
@@ -214,7 +215,7 @@
           </h4>
         </div>
         <div class="modal-body" id="mill_rl_body">
-          <p>Crop Year: <span id="crop_year_name"></span></p>
+
           <form method="POST" id="mill_rl_form" autocomplete="off">
             
             @csrf
@@ -223,8 +224,8 @@
 
               <input type="hidden" name="_method" value="PUT">
 
-              {!! __form::textbox(
-                '6', 'license_no', 'text', 'License No. *', 'License No.', '', $errors->has('license_no'), $errors->first('license_no'), 'data-transform="uppercase" required'
+              {!! __form::select_dynamic(
+                '6', 'crop_year_id', 'Crop Year', '', $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
               ) !!}
 
               {!! __form::datepicker(
@@ -329,8 +330,7 @@
         $("#mill_rl").modal("show");
         $("#mill_rl_body #mill_rl_form").attr("action", $(this).data("url"));
 
-        $('#crop_year_name').text($(this).data("crop_year_name"));
-        $("#mill_rl_form #license_no").val($(this).data("license_no"));
+        $("#mill_rl_form #crop_year_id").val($(this).data("crop_year_id")).change();
         $("#mill_rl_form #reg_date").val($(this).data("reg_date"));
         $("#mill_rl_form #mt").val($(this).data("mt"));
         $("#mill_rl_form #lkg").val($(this).data("lkg"));

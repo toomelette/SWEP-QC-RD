@@ -49,10 +49,10 @@ class Refinery extends Model{
 
     public function displayLicensesStatusSpan($cy_id){
 
-        $refinery_reg = $this->refineryRegistration->where('crop_year_id', $cy_id);
+        $refinery_reg = $this->refineryRegistration->where('crop_year_id', $cy_id)->first();
 
-        if (!$refinery_reg->isEmpty()) {
-            return '<span class="badge bg-green">Registered</span>';
+        if (!empty($refinery_reg)) {
+            return '<span class="badge bg-green">Registered - '.$refinery_reg->license_no.'</span>';
         }
 
         return '<span class="badge bg-red">Not Registered</span>';

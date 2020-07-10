@@ -16,23 +16,27 @@
 @extends('layouts.admin-master')
 
 @section('content')
+    
+  <section class="content-header">
+      <h1>Refinery Renewal History ({{ $refinery->name }})</h1>
+      <div class="pull-right">
+        <a href="{{ route('dashboard.refinery.index') }}" class="btn btn-md btn-default" style="margin-top: -45px;">
+          <i class="fa fa-fw fa-arrow-left"></i>&nbsp;Back to List
+        </a>
+      </div> 
+  </section>
 
   <section class="content">
 
       {{-- Form Start --}}
-      <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.refinery.index') }}">
+      <form data-pjax class="form" id="filter_form" method="GET" autocomplete="off" action="{{ route('dashboard.refinery.renewal_history', $refinery->slug) }}">
 
       <div class="box box-solid" id="pjax-container" style="overflow-x:auto;">
 
-        {{-- Table Search --}}        
-        <div class="box-header with-border">
-          <h2 class="box-title" style="margin-top: 10px;">Refinery Renewal History ({{ $refinery->name }})</h2>
-          <div class="pull-right">
-            <a href="{{ route('dashboard.refinery.index') }}" class="btn btn-md btn-default">
-              <i class="fa fa-fw fa-arrow-left"></i>&nbsp;Back to List
-            </a>
-          </div> 
-        </div>
+      {{-- Table Search --}}        
+      <div class="box-header with-border">
+        {!! __html::table_search(route('dashboard.refinery.renewal_history', $refinery->slug)) !!}
+      </div>
 
       {{-- Form End --}}  
       </form>
@@ -61,9 +65,8 @@
                   @if(in_array('dashboard.refinery_registration.update', $global_user_submenus))
                     <a type="button" 
                        class="btn btn-default" 
-                       id="update_button" 
-                       data-crop_year_name="{{ optional($data->cropYear)->name }}"
-                       data-license_no="{{ $data->license_no }}"
+                       id="update_button"
+                       data-crop_year_id="{{ $data->crop_year_id }}"
                        data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
                        data-action="update" 
                        data-url="{{ route('dashboard.refinery_registration.update', $data->slug) }}">
@@ -193,7 +196,6 @@
           </h4>
         </div>
         <div class="modal-body" id="update_refinery_reg_body">
-          <p>Crop Year: <span id="crop_year_name"></span></p>
           <form method="POST" id="update_refinery_reg_form" autocomplete="off">
             
             @csrf
@@ -202,12 +204,12 @@
 
             <div class="row">
 
-              {!! __form::textbox(
-                '12', 'license_no', 'text', 'License No.', 'License No.', old('license_no'), $errors->has('license_no'), $errors->first('license_no'), 'data-transform="uppercase" required'
+              {!! __form::select_dynamic(
+                '12', 'crop_year_id', 'Crop Year', '', $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
               ) !!}
 
               {!! __form::datepicker(
-                '12', 'reg_date',  'Date of Registration', old('reg_date') ? old('reg_date') : Carbon::now()->format('m/d/Y'), $errors->has('reg_date'), $errors->first('reg_date')
+                '12', 'reg_date',  'Date of Registration', '', $errors->has('reg_date'), $errors->first('reg_date')
               ) !!}
 
             </div>
@@ -240,7 +242,8 @@
 
     $(document).on("click", "#update_button", function () {
 
-      // Date Picker
+      $('.select2').select2();
+
       $('.datepicker').each(function(){
           $(this).datepicker({
               autoclose: true,
@@ -254,8 +257,7 @@
         $("#update_refinery_reg").modal("show");
         $("#update_refinery_reg_body #update_refinery_reg_form").attr("action", $(this).data("url"));
 
-        $('#crop_year_name').text($(this).data("crop_year_name"));
-        $("#update_refinery_reg_form #license_no").val($(this).data("license_no"));
+        $("#update_refinery_reg_form #crop_year_id").val($(this).data("crop_year_id")).change();
         $("#update_refinery_reg_form #reg_date").val($(this).data("reg_date"));
         
       }

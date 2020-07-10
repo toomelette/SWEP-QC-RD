@@ -43,7 +43,7 @@
       <table class="table table-hover">
         <tr>
           <th>@sortablelink('name', 'Name')</th>
-          <th>@sortablelink('', 'Status')</th>
+          <th>Current Crop Year License</th>
           <th style="width: 500px">Action</th>
         </tr>
         @foreach($refineries as $data) 
@@ -204,17 +204,15 @@
           </h4>
         </div>
         <div class="modal-body" id="rl_body">
-          <p>Crop Year: {{ $global_current_cy->name }}</p>
+
           <form method="POST" id="form" autocomplete="off">
             
             @csrf
 
             <div class="row">
 
-              <input type="hidden" name="crop_year_id" value="{{ $global_current_cy->crop_year_id }}">
-
-              {!! __form::textbox(
-                '12', 'license_no', 'text', 'License No.', 'License No.', old('license_no'), $errors->has('license_no'), $errors->first('license_no'), 'data-transform="uppercase" required'
+              {!! __form::select_dynamic(
+                '12', 'crop_year_id', 'Crop Year', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
               ) !!}
 
               {!! __form::datepicker(
