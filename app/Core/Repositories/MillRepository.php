@@ -62,6 +62,7 @@ class MillRepository extends BaseRepository implements MillInterface {
         $mill = new Mill;
         $mill->slug = $this->str->random(16);
         $mill->mill_id = $this->getMillIdInc();
+        $mill->region_id = $request->region_id;
         $mill->name = $request->name;
         $mill->address = $request->address;
         $mill->address_second = $request->address_second;
@@ -70,6 +71,7 @@ class MillRepository extends BaseRepository implements MillInterface {
         $mill->tel_no_second = $request->tel_no_second;
         $mill->fax_no = $request->fax_no;
         $mill->fax_no_second = $request->fax_no_second;
+        $mill->email = $request->email;
         $mill->officer = $request->officer;
         $mill->position = $request->position;
         $mill->salutation = $request->salutation;
@@ -91,6 +93,7 @@ class MillRepository extends BaseRepository implements MillInterface {
     public function update($request, $slug){
 
         $mill = $this->findBySlug($slug);
+        $mill->region_id = $request->region_id;
         $mill->name = $request->name;
         $mill->address = $request->address;
         $mill->address_second = $request->address_second;
@@ -99,6 +102,7 @@ class MillRepository extends BaseRepository implements MillInterface {
         $mill->tel_no_second = $request->tel_no_second;
         $mill->fax_no = $request->fax_no;
         $mill->fax_no_second = $request->fax_no_second;
+        $mill->email = $request->email;
         $mill->officer = $request->officer;
         $mill->position = $request->position;
         $mill->salutation = $request->salutation;

@@ -20,6 +20,8 @@ class MillRegistrationReportRequest extends FormRequest{
 
             'ft'=>'required|string|max:5',
 
+            'md_cy'=>'sometimes|required|string|max:11',
+
             'bd_df'=>'sometimes|required|date_format:"m/d/Y"',
             'bd_dt'=>'sometimes|required|date_format:"m/d/Y"',
 

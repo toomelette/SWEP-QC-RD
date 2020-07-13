@@ -20,6 +20,7 @@ class Mill extends Model{
 
         'slug' => '',
         'mill_id' => '',
+        'region_id' => '',
         'name' => '',
         'address' => '',
         'address_second' => '',
@@ -28,6 +29,7 @@ class Mill extends Model{
         'tel_no_second' => '',
         'fax_no' => '',
         'fax_no_second' => '',
+        'email' => '',
         'officer' => '',
         'position' => '',
         'salutation' => '',
@@ -40,8 +42,16 @@ class Mill extends Model{
 
     ];
 
+
+
     public function millRegistration() {
         return $this->hasMany('App\Models\MillRegistration','mill_id','mill_id');
+    }
+
+
+
+    public function region() {
+        return $this->belongsTo('App\Models\Region','region_id','region_id');
     }
 
 

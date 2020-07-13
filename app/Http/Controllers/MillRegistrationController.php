@@ -100,11 +100,21 @@ class MillRegistrationController extends Controller{
 
     public function reportsOutput(MillRegistrationReportRequest $request){
 
-        if ($request->ft == 'bd') {
+        if ($request->ft == 'md') {
+
+            $mill_registrations = $this->mill_reg_repo->getByCropYearId($request->bcy_cy);
+            $crop_year = $this->cy_repo->findByCropYearId($request->md_cy);
+
+            return view('printables.mill_registration.mill_directory')->with([
+                'mill_registrations' => $mill_registrations,
+                'crop_year' => $crop_year 
+            ]);
+
+        }elseif ($request->ft == 'bd') {
 
             $mill_registrations = $this->mill_reg_repo->getByRegDate($request->bd_df, $request->bd_dt);
             return Excel::download(new MillRegistrationBD($mill_registrations), 'mills_by_date.xlsx');
-
+            
         }elseif ($request->ft == 'bcy') {
 
             $mill_registrations = $this->mill_reg_repo->getByCropYearId($request->bcy_cy);
