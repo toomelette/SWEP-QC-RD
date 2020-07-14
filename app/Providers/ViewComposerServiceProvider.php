@@ -39,7 +39,9 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.trader_registration.edit',
                         'printables.trader_registration.list_bcyc_br',
                         'dashboard.mill.create', 
-                        'dashboard.mill.edit',], 'App\Core\ViewComposers\RegionComposer');
+                        'dashboard.mill.edit',
+                        'dashboard.refinery.create', 
+                        'dashboard.refinery.edit',], 'App\Core\ViewComposers\RegionComposer');
         
 
         // TRADER

@@ -21,11 +21,13 @@ class RefineryRegistrationController extends Controller{
 
 
     protected $cy_repo;
+    protected $refinery_reg_repo;
 
 
 
-    public function __construct(RefineryRegistrationInterface $refinery_reg_repo){
+    public function __construct(CropYearInterface $cy_repo, RefineryRegistrationInterface $refinery_reg_repo){
         $this->refinery_reg_repo = $refinery_reg_repo;
+        $this->cy_repo = $cy_repo;
         parent::__construct();
     }
  
@@ -87,7 +89,17 @@ class RefineryRegistrationController extends Controller{
 
     public function reportsOutput(RefineryRegistrationReportRequest $request){
 
-        if ($request->ft == 'bd') {
+        if ($request->ft == 'fd') {
+
+            $refinery_registrations = $this->refinery_reg_repo->getByCropYearId($request->fd_cy);
+            $crop_year = $this->cy_repo->findByCropYearId($request->fd_cy);
+
+            return view('printables.refinery_registration.refinery_directory')->with([
+                'refinery_registrations' => $refinery_registrations,
+                'crop_year' => $crop_year 
+            ]);
+
+        }elseif ($request->ft == 'bd') {
 
             $refinery_registrations = $this->refinery_reg_repo->getByRegDate($request->bd_df, $request->bd_dt);
             return Excel::download(new RefineryRegistrationBD($refinery_registrations), 'refinery_by_date.xlsx');

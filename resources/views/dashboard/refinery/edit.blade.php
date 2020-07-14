@@ -63,6 +63,16 @@
             <div class="col-md-12"></div>
 
             {!! __form::textbox(
+              '6', 'email', 'text', 'Email', 'Email', old('email') ? old('email') : $refinery->email, $errors->has('email'), $errors->first('email'), ''
+            ) !!}
+
+            {!! __form::select_dynamic(
+              '6', 'region_id', 'Region', old('region_id') ? old('region_id') : $refinery->region_id, $global_regions_all, 'region_id', 'name', $errors->has('region_id'), $errors->first('region_id'), 'select2', ''
+            ) !!}
+
+            <div class="col-md-12"></div>
+
+            {!! __form::textbox(
               '4', 'officer', 'text', 'Officer', 'Officer', old('officer') ? old('officer') : $refinery->officer, $errors->has('officer'), $errors->first('officer'), ''
             ) !!}
 

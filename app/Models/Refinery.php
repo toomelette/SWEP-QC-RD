@@ -20,6 +20,7 @@ class Refinery extends Model{
 
         'slug' => '',
         'refinery_id' => '',
+        'region_id' => '',
         'name' => '',
         'address' => '',
         'address_second' => '',
@@ -30,6 +31,7 @@ class Refinery extends Model{
         'fax_no_second' => '',
         'officer' => '',
         'position' => '',
+        'email' => '',
         'salutation' => '',
         'created_at' => null,
         'updated_at' => null,

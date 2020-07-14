@@ -5,6 +5,44 @@
 <section class="content">
        
 
+  {{-- Refinery Directory --}}
+  <div class="box box-solid">
+      
+    <div class="box-header with-border">
+      <h2 class="box-title">Directory of Sugar Refineries</h2>
+      <div class="pull-right">
+          <code>Fields with asterisks(*) are required</code>
+      </div> 
+    </div>
+    
+    <form method="GET" 
+          id="form_bd" 
+          action="{{ route('dashboard.refinery_registration.reports_output') }}"
+          target="_blank">
+
+      <div class="box-body">
+        <div class="col-md-12">
+
+          <input type="hidden" id="ft" name="ft" value="fd">
+
+          {!! __form::select_dynamic(
+            '3', 'fd_cy', 'Crop Year *', old('fd_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('fd_cy'), $errors->first('fd_cy'), 'select2', ''
+          ) !!}
+
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button type="submit" class="btn btn-default">
+          Print <i class="fa fa-fw fa-print"></i>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+       
+
   {{-- List of Registered Refinery by Date --}}
   <div class="box box-solid">
       

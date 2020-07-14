@@ -55,6 +55,7 @@
               <td id="mid-vert">{{ optional($data->cropYear)->name }}</td>
               <td id="mid-vert">{{ $data->license_no }}</td>
               <td id="mid-vert">{{ __dataType::date_parse($data->reg_date, 'F d,Y') }}</td>
+              <td id="mid-vert">{{ number_format($data->rated_capacity, 2) }}</td>
               <td id="mid-vert">
                 <div class="btn-group">
                   @if(in_array('dashboard.refinery_registration.show', $global_user_submenus))
@@ -68,6 +69,7 @@
                        id="update_button"
                        data-crop_year_id="{{ $data->crop_year_id }}"
                        data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
+                       data-rated_capacity="{{ $data->rated_capacity }}"
                        data-action="update" 
                        data-url="{{ route('dashboard.refinery_registration.update', $data->slug) }}">
                       <i class="fa fa-pencil"></i>
@@ -212,6 +214,10 @@
                 '12', 'reg_date',  'Date of Registration', '', $errors->has('reg_date'), $errors->first('reg_date')
               ) !!}
 
+              {!! __form::textbox_numeric(
+                '12', 'rated_capacity', 'text', 'Rated Capacity', 'Rated Capacity', '', $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
+              ) !!}
+
             </div>
 
           </div>
@@ -259,6 +265,14 @@
 
         $("#update_refinery_reg_form #crop_year_id").val($(this).data("crop_year_id")).change();
         $("#update_refinery_reg_form #reg_date").val($(this).data("reg_date"));
+        $("#update_refinery_reg_form #rated_capacity").val($(this).data("rated_capacity"));
+
+        $(".priceformat").priceFormat({
+            prefix: "",
+            thousandsSeparator: ",",
+            clearOnEmpty: true,
+            allowNegative: true
+        });
         
       }
 

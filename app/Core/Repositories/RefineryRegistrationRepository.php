@@ -40,7 +40,7 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
                     $refinery_reg->where('license_no', 'LIKE', '%'. $request->q .'%');
                 }
 
-                return $refinery_reg->select('crop_year_id', 'license_no', 'reg_date', 'slug')
+                return $refinery_reg->select('crop_year_id', 'license_no', 'reg_date', 'rated_capacity', 'slug')
                                     ->with('cropYear')
                                     ->where('refinery_id', $refinery_id)
                                     ->sortable()
@@ -65,6 +65,7 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
         $refinery_reg->crop_year_id = $request->crop_year_id;
         $refinery_reg->license_no = $this->getLicenseNoInc($request);
         $refinery_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
+        $refinery_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
         $refinery_reg->created_at = $this->carbon->now();
         $refinery_reg->updated_at = $this->carbon->now();
         $refinery_reg->ip_created = request()->ip();
@@ -85,6 +86,7 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
         $refinery_reg = $this->findBySlug($slug);
         $refinery_reg->crop_year_id = $request->crop_year_id;
         $refinery_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
+        $refinery_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
         $refinery_reg->updated_at = $this->carbon->now();
         $refinery_reg->ip_updated = request()->ip();
         $refinery_reg->user_updated = $this->auth->user()->user_id;
@@ -219,7 +221,7 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
             $refinery_reg->where('crop_year_id', $cy_id);
         }
 
-        return $refinery_reg->select('refinery_id', 'crop_year_id', 'license_no', 'reg_date')
+        return $refinery_reg->select('refinery_id', 'crop_year_id', 'license_no', 'reg_date', 'rated_capacity')
                             ->with('refinery', 'cropYear')
                             ->get();
                           

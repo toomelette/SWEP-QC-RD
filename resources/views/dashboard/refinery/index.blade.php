@@ -219,6 +219,10 @@
                 '12', 'reg_date',  'Date of Registration', old('reg_date') ? old('reg_date') : Carbon::now()->format('m/d/Y'), $errors->has('reg_date'), $errors->first('reg_date')
               ) !!}
 
+              {!! __form::textbox_numeric(
+                '12', 'rated_capacity', 'text', 'Rated Capacity', 'Rated Capacity', old('rated_capacity') , $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
+              ) !!}
+
             </div>
 
           </div>
@@ -255,11 +259,11 @@
       if($(this).data("action") == "rl"){
         $('.select2').select2();
         $('.datepicker').each(function(){
-            $(this).datepicker({
-                autoclose: true,
-                dateFormat: "mm/dd/yy",
-                orientation: "bottom"
-            });
+          $(this).datepicker({
+            autoclose: true,
+            dateFormat: "mm/dd/yy",
+            orientation: "bottom"
+          });
         });
         $(".priceformat").priceFormat({
             prefix: "",
