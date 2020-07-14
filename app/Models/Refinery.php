@@ -42,11 +42,15 @@ class Refinery extends Model{
 
     ];
 
+
     public function refineryRegistration() {
         return $this->hasMany('App\Models\RefineryRegistration','refinery_id','refinery_id');
     }
 
 
+    public function region() {
+        return $this->belongsTo('App\Models\Region','region_id','region_id');
+    }
 
 
     public function displayLicensesStatusSpan($cy_id){

@@ -38,6 +38,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'dashboard.trader_registration.create',
                         'dashboard.trader_registration.edit',
                         'printables.trader_registration.list_bcyc_br',
+                        'printables.trader_registration.count_by_cropyear',
                         'dashboard.mill.create', 
                         'dashboard.mill.edit',
                         'dashboard.refinery.create', 

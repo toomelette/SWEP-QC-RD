@@ -132,6 +132,16 @@ class TraderRegistrationController extends Controller{
                 
             }
             
+        }elseif ($request->ft == 'cbcy') {
+
+            $trader_registrations = $this->trader_reg_repo->getByCropYearId($request->cbcy_cy);
+            $crop_year = $this->cy_repo->findByCropYearId($request->cbcy_cy);
+
+            return view('printables.trader_registration.count_by_cropyear')->with([
+                'trader_registrations' => $trader_registrations,
+                'crop_year' => $crop_year
+            ]);
+            
         }
 
         return abort(404);

@@ -43,18 +43,14 @@ class Mill extends Model{
     ];
 
 
-
     public function millRegistration() {
         return $this->hasMany('App\Models\MillRegistration','mill_id','mill_id');
     }
 
 
-
     public function region() {
         return $this->belongsTo('App\Models\Region','region_id','region_id');
     }
-
-
 
 
     public function displayLicensesStatusSpan($cy_id){

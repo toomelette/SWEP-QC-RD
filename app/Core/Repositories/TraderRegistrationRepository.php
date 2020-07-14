@@ -333,4 +333,21 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
 
 
 
+    public function getByCropYearId($cy_id){
+
+        $trader_reg = $this->trader_reg->newQuery();
+
+        if (isset($cy_id)) {
+            $trader_reg->where('crop_year_id', $cy_id);
+        }
+
+        return $trader_reg->select('trader_id', 'trader_cat_id')
+                          ->with('trader')
+                          ->get();
+                          
+    }
+
+
+
+
 }
