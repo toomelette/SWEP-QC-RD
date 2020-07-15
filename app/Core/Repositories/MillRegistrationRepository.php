@@ -220,7 +220,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
             $mill_reg->whereBetween('reg_date',[$df, $dt]);
         }
 
-        return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'milling_fee_words', 'payment_status', 'under_payment', 'under_payment_words', 'excess_payment', 'excess_payment_words', 'balance_fee', 'balance_fee_words', 'rated_capacity', 'start_milling', 'end_milling')
+        return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling')
                         ->with('mill', 'cropYear')
                         ->get();
 
@@ -237,7 +237,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
             $mill_reg->where('crop_year_id', $cy_id);
         }
 
-        return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'milling_fee_words', 'payment_status', 'under_payment', 'under_payment_words', 'excess_payment', 'excess_payment_words', 'balance_fee', 'balance_fee_words', 'rated_capacity', 'start_milling', 'end_milling')
+        return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling')
                         ->with('mill', 'cropYear')
                         ->get();
                           
