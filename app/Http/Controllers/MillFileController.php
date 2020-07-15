@@ -38,8 +38,10 @@ class MillFileController extends Controller{
             $file_ext = File::extension($data->getClientOriginalName());
             $trimmed_file_name = trim($data->getClientOriginalName(), '.'. $file_ext);
             $file_name = $this->__dataType::fileFilterReservedChar($trimmed_file_name .'-'. $this->str->random(8), '.'. $file_ext);
-            $file_location = 'MILL/'.$mill->name.'/'.$file_name;
-            $dir = 'MILL/'.$mill->name;
+            $folder_name = $this->__dataType::fileFilterReservedChar($mill->name, '');
+
+            $file_location = 'MILL/'.$folder_name.'/'.$file_name;
+            $dir = 'MILL/'.$folder_name;
             $data->storeAs($dir, $file_name);
 
             $this->mill_file_repo->store($mill->mill_id, $data->getClientOriginalName(), $file_location);
@@ -62,9 +64,9 @@ class MillFileController extends Controller{
         $file_ext = File::extension($mill_file->filename);
         $new_trimmed_file_name = trim($request->filename, '.'. $file_ext);
         $new_file_name = $this->__dataType::fileFilterReservedChar($new_trimmed_file_name .'-'. $this->str->random(8), '.'. $file_ext);
+        $folder_name = $this->__dataType::fileFilterReservedChar(optional($mill_file->mill)->name, '');
 
-        $dir = 'MILL/'.optional($mill_file->mill)->name;
-        $new_file_location = $dir.'/'.$new_file_name;
+        $new_file_location = 'MILL/'.$folder_name.'/'.$new_file_name;
 
         if(!is_null($mill_file->file_location)){
             if ($this->storage->disk('local')->exists($mill_file->file_location)) {

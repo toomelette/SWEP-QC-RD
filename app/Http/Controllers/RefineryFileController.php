@@ -38,8 +38,10 @@ class RefineryFileController extends Controller{
             $file_ext = File::extension($data->getClientOriginalName());
             $trimmed_file_name = trim($data->getClientOriginalName(), '.'. $file_ext);
             $file_name = $this->__dataType::fileFilterReservedChar($trimmed_file_name .'-'. $this->str->random(8), '.'. $file_ext);
-            $file_location = 'REFINERY/'.$refinery->name.'/'.$file_name;
-            $dir = 'REFINERY/'.$refinery->name;
+            $folder_name = $this->__dataType::fileFilterReservedChar($refinery->name, '');
+            
+            $file_location = 'REFINERY/'.$folder_name.'/'.$file_name;
+            $dir = 'REFINERY/'.$folder_name;
             $data->storeAs($dir, $file_name);
 
             $this->refinery_file_repo->store($refinery->refinery_id, $data->getClientOriginalName(), $file_location);
@@ -62,9 +64,9 @@ class RefineryFileController extends Controller{
         $file_ext = File::extension($refinery_file->filename);
         $new_trimmed_file_name = trim($request->filename, '.'. $file_ext);
         $new_file_name = $this->__dataType::fileFilterReservedChar($new_trimmed_file_name .'-'. $this->str->random(8), '.'. $file_ext);
+        $folder_name = $this->__dataType::fileFilterReservedChar(optional($refinery_file->refinery)->name, '');
 
-        $dir = 'REFINERY/'.optional($refinery_file->refinery)->name;
-        $new_file_location = $dir.'/'.$new_file_name;
+        $new_file_location = 'REFINERY/'.$folder_name.'/'.$new_file_name;
 
         if(!is_null($refinery_file->file_location)){
             if ($this->storage->disk('local')->exists($refinery_file->file_location)) {
