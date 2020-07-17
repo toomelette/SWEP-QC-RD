@@ -42,7 +42,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
                     $mill_reg->where('license_no', 'LIKE', '%'. $request->q .'%');
                 }
 
-                return $mill_reg->select('crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling', 'slug')
+                return $mill_reg->select('crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling', 'planter_share', 'mill_share', 'other_share', 'slug')
                                   ->with('cropYear')
                                   ->where('mill_id', $mill_id)
                                   ->sortable()
@@ -77,6 +77,9 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
         $mill_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
         $mill_reg->start_milling = $this->__dataType->date_parse($request->start_milling);
         $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
+        $mill_reg->planter_share = $this->__dataType->string_to_num($request->planter_share);
+        $mill_reg->mill_share = $this->__dataType->string_to_num($request->mill_share);
+        $mill_reg->other_share = $request->other_share;
         $mill_reg->created_at = $this->carbon->now();
         $mill_reg->updated_at = $this->carbon->now();
         $mill_reg->ip_created = request()->ip();
@@ -107,6 +110,9 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
         $mill_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
         $mill_reg->start_milling = $this->__dataType->date_parse($request->start_milling);
         $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
+        $mill_reg->planter_share = $this->__dataType->string_to_num($request->planter_share);
+        $mill_reg->mill_share = $this->__dataType->string_to_num($request->mill_share);
+        $mill_reg->other_share = $request->other_share;
         $mill_reg->updated_at = $this->carbon->now();
         $mill_reg->ip_updated = request()->ip();
         $mill_reg->user_updated = $this->auth->user()->user_id;
@@ -237,7 +243,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
             $mill_reg->where('crop_year_id', $cy_id);
         }
 
-        return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling')
+        return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling', 'planter_share', 'mill_share', 'other_share')
                         ->with('mill', 'cropYear')
                         ->get();
                           

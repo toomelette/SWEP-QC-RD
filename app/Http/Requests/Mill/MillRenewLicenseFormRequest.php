@@ -13,6 +13,7 @@ class MillRenewLicenseFormRequest extends FormRequest{
 
     
     public function rules(){
+
         return [
             
             'crop_year_id'=>'required|string|max:11',
@@ -27,7 +28,12 @@ class MillRenewLicenseFormRequest extends FormRequest{
             'rated_capacity'=>'nullable|string|max:21',
             'start_milling' => 'nullable|date_format:"m/d/Y"',
             'end_milling' => 'nullable|date_format:"m/d/Y"',
+            'mill_share'=>'nullable|string|max:6',
+            'planter_share'=>'nullable|string|max:6',
+            'other_share'=>'nullable|string|max:90',
+
         ];
+
     }
 
 

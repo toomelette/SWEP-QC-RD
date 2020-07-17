@@ -26,7 +26,7 @@ class RegionRepository extends BaseRepository implements RegionInterface {
     public function getAll(){
 
         $regions = $this->cache->remember('regions:getAll', 240, function(){
-            return $this->region->select('region_id', 'name')->get();
+            return $this->region->select('island_group', 'region_id', 'name')->get();
         });
         
         return $regions;

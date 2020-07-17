@@ -350,4 +350,23 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
 
 
 
+    public function getByRegDate($df, $dt){
+
+        $trader_reg = $this->trader_reg->newQuery();
+
+        if (isset($df) && isset($dt)) {
+            $df = $this->__dataType->date_parse($df, 'Y-m-d');
+            $dt = $this->__dataType->date_parse($dt, 'Y-m-d');
+            $trader_reg->whereBetween('reg_date',[$df, $dt]);
+        }
+
+        return $trader_reg->select('trader_id', 'trader_cat_id')
+                          ->with('trader')
+                          ->get();
+
+    }
+
+
+
+
 }

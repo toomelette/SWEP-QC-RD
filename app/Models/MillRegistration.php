@@ -34,6 +34,8 @@ class MillRegistration extends Model{
         'rated_capacity' => 0.00,
         'start_milling' => null,
         'end_milling' => null,
+        'mill_share' => 0.00,
+        'planter_share' => 0.00,
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',

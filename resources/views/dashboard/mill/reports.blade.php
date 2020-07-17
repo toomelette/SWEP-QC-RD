@@ -43,6 +43,82 @@
   </div>
        
 
+  {{-- RATED CAPACITY --}}
+  <div class="box box-solid">
+      
+    <div class="box-header with-border">
+      <h2 class="box-title">Rated Capacity</h2>
+      <div class="pull-right">
+          <code>Fields with asterisks(*) are required</code>
+      </div> 
+    </div>
+    
+    <form method="GET" 
+          id="form_bd" 
+          action="{{ route('dashboard.mill_registration.reports_output') }}"
+          target="_blank">
+
+      <div class="box-body">
+        <div class="col-md-12">
+
+          <input type="hidden" id="ft" name="ft" value="rc">
+
+          {!! __form::select_dynamic(
+            '3', 'rc_cy', 'Crop Year *', old('rc_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('rc_cy'), $errors->first('rc_cy'), 'select2', ''
+          ) !!}
+
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button type="submit" class="btn btn-default">
+          Print <i class="fa fa-fw fa-print"></i>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+       
+
+  {{-- MILL PARTICIPATION --}}
+  <div class="box box-solid">
+      
+    <div class="box-header with-border">
+      <h2 class="box-title">Mill Participation</h2>
+      <div class="pull-right">
+          <code>Fields with asterisks(*) are required</code>
+      </div> 
+    </div>
+    
+    <form method="GET" 
+          id="form_bd" 
+          action="{{ route('dashboard.mill_registration.reports_output') }}"
+          target="_blank">
+
+      <div class="box-body">
+        <div class="col-md-12">
+
+          <input type="hidden" id="ft" name="ft" value="mp">
+
+          {!! __form::select_dynamic(
+            '3', 'mp_cy', 'Crop Year *', old('mp_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('mp_cy'), $errors->first('mp_cy'), 'select2', ''
+          ) !!}
+
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button type="submit" class="btn btn-default">
+          Print <i class="fa fa-fw fa-print"></i>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+       
+
   {{-- List of Registered Mills by Date --}}
   <div class="box box-solid">
       

@@ -21,5 +21,9 @@ interface TraderRegistrationInterface {
 	public function getByRegDate_Category($df, $dt, $tc_id);
 
 	public function getByCropYearId_Category($cy_id, $tc_id);
+
+	public function getByCropYearId($cy_id);
+
+	public function getByRegDate($df, $dt);
 		
 }

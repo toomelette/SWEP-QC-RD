@@ -102,7 +102,7 @@ class MillRegistrationController extends Controller{
 
         if ($request->ft == 'md') {
 
-            $mill_registrations = $this->mill_reg_repo->getByCropYearId($request->bcy_cy);
+            $mill_registrations = $this->mill_reg_repo->getByCropYearId($request->md_cy);
             $crop_year = $this->cy_repo->findByCropYearId($request->md_cy);
 
             return view('printables.mill_registration.mill_directory')->with([
@@ -110,6 +110,26 @@ class MillRegistrationController extends Controller{
                 'crop_year' => $crop_year 
             ]);
 
+        }elseif ($request->ft == 'rc') {
+
+            $mill_registrations = $this->mill_reg_repo->getByCropYearId($request->rc_cy);
+            $crop_year = $this->cy_repo->findByCropYearId($request->rc_cy);
+
+            return view('printables.mill_registration.mill_rated_capacity')->with([
+                'mill_registrations' => $mill_registrations,
+                'crop_year' => $crop_year 
+            ]);
+            
+        }elseif ($request->ft == 'mp') {
+
+            $mill_registrations = $this->mill_reg_repo->getByCropYearId($request->mp_cy);
+            $crop_year = $this->cy_repo->findByCropYearId($request->mp_cy);
+
+            return view('printables.mill_registration.mill_participation')->with([
+                'mill_registrations' => $mill_registrations,
+                'crop_year' => $crop_year 
+            ]);
+            
         }elseif ($request->ft == 'bd') {
 
             $mill_registrations = $this->mill_reg_repo->getByRegDate($request->bd_df, $request->bd_dt);

@@ -94,7 +94,9 @@
         </div>
       </div> 
 
+
       <div class="col-md-12"></div>
+
 
       <div class="col-md-6">
         <div class="box">
@@ -129,6 +131,25 @@
               <dd>{{ number_format($mill_reg->balance_fee, 2) }}</dd>
               <dt>Crop Year:</dt>
               <dd>{{ optional($mill_reg->cropYear)->name }}</dd>
+            </dl>
+          </div>
+        </div>
+      </div> 
+
+
+      <div class="col-md-6">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">Mill Share</h3>
+          </div>
+          <div class="box-body">
+            <dl class="dl-horizontal">
+              <dt>Planter Share:</dt>
+              <dd>{{ number_format($mill_reg->planter_share, 2) }}</dd>
+              <dt>Mill Share:</dt>
+              <dd>{{ number_format($mill_reg->mill_share, 2) }}</dd>
+              <dt>Others:</dt>
+              <dd>{{ $mill_reg->other_share }}</dd>
             </dl>
           </div>
         </div>

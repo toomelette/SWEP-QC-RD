@@ -78,6 +78,9 @@
                        data-rated_capacity="{{ $data->rated_capacity }}"
                        data-start_milling="{{ __dataType::date_parse($data->start_milling, 'm/d/Y') }}"
                        data-end_milling="{{ __dataType::date_parse($data->end_milling, 'm/d/Y') }}"
+                       data-planter_share="{{ $data->planter_share }}"
+                       data-mill_share="{{ $data->mill_share }}"
+                       data-other_share="{{ $data->other_share }}"
                        data-action="update" 
                        data-url="{{ route('dashboard.mill_registration.update', $data->slug) }}">
                       <i class="fa fa-pencil"></i>
@@ -282,6 +285,33 @@
                 '6', 'end_milling',  'End of Milling', '', $errors->has('end_milling'), $errors->first('end_milling')
               ) !!}
 
+
+              <div class="col-md-12 no-padding">
+
+                <div class="col-md-12">
+                  <h4>Mill Share</h4>
+                </div>
+
+                <div class="col-md-12">
+
+                  {!! __form::textbox_numeric(
+                    '6', 'planter_share', 'text', 'Planter (%)', 'Planter (%)', '' , $errors->has('planter_share'), $errors->first('planter_share'), ''
+                  ) !!}
+
+                  {!! __form::textbox_numeric(
+                    '6', 'mill_share', 'text', 'Mill (%)', 'Mill (%)', '' , $errors->has('mill_share'), $errors->first('mill_share'), ''
+                  ) !!}
+                  
+                  <div class="col-md-12"></div>
+
+                  {!! __form::textbox(
+                    '12', 'other_share', 'text', 'Others (%)', 'Others (%)', '' , $errors->has('other_share'), $errors->first('other_share'), ''
+                  ) !!}
+                  
+                </div>
+                
+              </div>
+
             </div>
 
           </div>
@@ -340,9 +370,11 @@
         $("#mill_rl_form #excess_payment").val($(this).data("excess_payment"));
         $("#mill_rl_form #balance_fee").val($(this).data("balance_fee"));
         $("#mill_rl_form #rated_capacity").val($(this).data("rated_capacity"));
-        $("#mill_rl_form #rated_capacity").val($(this).data("rated_capacity"));
         $("#mill_rl_form #start_milling").val($(this).data("start_milling"));
         $("#mill_rl_form #end_milling").val($(this).data("end_milling"));
+        $("#mill_rl_form #planter_share").val($(this).data("planter_share"));
+        $("#mill_rl_form #mill_share").val($(this).data("mill_share"));
+        $("#mill_rl_form #other_share").val($(this).data("other_share"));
 
         if($(this).data("payment_status") == "E"){
           $("#excess_payment").attr('disabled','disabled');

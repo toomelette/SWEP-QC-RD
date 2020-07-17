@@ -278,6 +278,34 @@
                 '6', 'end_milling',  'End of Milling', old('end_milling'), $errors->has('end_milling'), $errors->first('end_milling')
               ) !!}
 
+
+              <div class="col-md-12 no-padding">
+
+                <div class="col-md-12">
+                  <h4>Mill Share</h4>
+                </div>
+
+                <div class="col-md-12">
+
+                  {!! __form::textbox_numeric(
+                    '6', 'planter_share', 'text', 'Planter (%)', 'Planter (%)', old('planter_share') , $errors->has('planter_share'), $errors->first('planter_share'), ''
+                  ) !!}
+
+                  {!! __form::textbox_numeric(
+                    '6', 'mill_share', 'text', 'Mill (%)', 'Mill (%)', old('mill_share') , $errors->has('mill_share'), $errors->first('mill_share'), ''
+                  ) !!}
+                  
+                  <div class="col-md-12"></div>
+
+                  {!! __form::textbox(
+                    '12', 'other_share', 'text', 'Others (%)', 'Others (%)', old('other_share'), $errors->has('other_share'), $errors->first('other_share'), ''
+                  ) !!}
+                  
+                </div>
+                
+              </div>
+
+
             </div>
 
           </div>
