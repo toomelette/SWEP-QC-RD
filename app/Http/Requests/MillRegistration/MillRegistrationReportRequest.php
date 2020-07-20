@@ -20,15 +20,23 @@ class MillRegistrationReportRequest extends FormRequest{
 
             'ft'=>'required|string|max:5',
 
-            'fd_cy'=>'sometimes|required|string|max:11',
+            // Mill Directory
+            'md_cy'=>'sometimes|required|string|max:11',
 
+            // Rated Capacity
             'rc_cy'=>'sometimes|required|string|max:11',
 
+            // Mill Participition
             'mp_cy'=>'sometimes|required|string|max:11',
 
+            // Count By Crop Year
+            'cbcy_cy'=>'sometimes|required|string|max:11',
+
+            // List of Registered Mills by Date
             'bd_df'=>'sometimes|required|date_format:"m/d/Y"',
             'bd_dt'=>'sometimes|required|date_format:"m/d/Y"',
 
+            // List of Registered Mills by Crop Year
             'bcy_cy'=>'sometimes|required|string|max:11',
 
         ];

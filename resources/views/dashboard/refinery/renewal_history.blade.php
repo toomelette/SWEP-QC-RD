@@ -48,6 +48,7 @@
             <th>@sortablelink('cropYear.name', 'Crop Year')</th>
             <th>@sortablelink('license_no', 'License No.')</th>
             <th>@sortablelink('reg_date', 'Date of Registration')</th>
+            <th>@sortablelink('rated_capacity', 'Rated Capacity')</th>
             <th>Action</th>
           </tr>
           @foreach($refinery_reg_list as $data) 

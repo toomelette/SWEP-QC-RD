@@ -23,10 +23,10 @@
       <div class="box-body">
         <div class="col-md-12">
 
-          <input type="hidden" id="ft" name="ft" value="fd">
+          <input type="hidden" id="ft" name="ft" value="rd">
 
           {!! __form::select_dynamic(
-            '3', 'fd_cy', 'Crop Year *', old('fd_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('fd_cy'), $errors->first('fd_cy'), 'select2', ''
+            '3', 'rd_cy', 'Crop Year *', old('rd_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('rd_cy'), $errors->first('rd_cy'), 'select2', ''
           ) !!}
 
         </div>
@@ -42,6 +42,85 @@
 
   </div>
        
+
+
+  {{-- RATED CAPACITY --}}
+  <div class="box box-solid">
+      
+    <div class="box-header with-border">
+      <h2 class="box-title">Rated Capacity</h2>
+      <div class="pull-right">
+          <code>Fields with asterisks(*) are required</code>
+      </div> 
+    </div>
+    
+    <form method="GET" 
+          id="form_bd" 
+          action="{{ route('dashboard.refinery_registration.reports_output') }}"
+          target="_blank">
+
+      <div class="box-body">
+        <div class="col-md-12">
+
+          <input type="hidden" id="ft" name="ft" value="rc">
+
+          {!! __form::select_dynamic(
+            '3', 'rc_cy', 'Crop Year *', old('rc_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('rc_cy'), $errors->first('rc_cy'), 'select2', ''
+          ) !!}
+
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button type="submit" class="btn btn-default">
+          Print <i class="fa fa-fw fa-print"></i>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+           
+
+
+  {{-- Count By Crop Year --}}
+  <div class="box box-solid">
+      
+    <div class="box-header with-border">
+      <h2 class="box-title">Number of Registered Refineries by Month</h2>
+      <div class="pull-right">
+          <code>Fields with asterisks(*) are required</code>
+      </div> 
+    </div>
+    
+    <form method="GET" 
+          id="form_cbcy"
+          action="{{ route('dashboard.refinery_registration.reports_output') }}"
+          target="_blank">
+
+      <div class="box-body">
+        <div class="col-md-12">
+
+          <input type="hidden" id="ft" name="ft" value="cbcy">
+          
+          {!! __form::select_dynamic(
+            '3', 'cbcy_cy', 'Crop Year *', old('cbcy_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('cbcy_cy'), $errors->first('cbcy_cy'), 'select2', ''
+          ) !!}
+
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button class="btn btn-default">
+          Print <i class="fa fa-fw fa-print"></i>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+       
+
 
   {{-- List of Registered Refinery by Date --}}
   <div class="box box-solid">

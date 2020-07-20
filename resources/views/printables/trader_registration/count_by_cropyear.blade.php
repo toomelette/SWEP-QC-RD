@@ -1,14 +1,19 @@
 <?php
   
-  function countByRegionAndCat($trader_registrations, $region_id, $cat_id){
+  $date_from = substr($crop_year->name, 0, 4) .'-08-01';
+  $date_to = substr($crop_year->name, -4) .'-08-31';
+
+  $months = __dynamic::months_between_dates($date_from, $date_to);
+
+
+
+  function countByMonthYearAndCat($trader_registrations, $my, $cat_id){
 
     $count = 0;
-
     foreach ($trader_registrations as $data) {
-      if (!empty($data->trader)) {
-        if ($data->trader->region_id == $region_id && $data->trader_cat_id == $cat_id) {
-          $count++;
-        }
+      $data_my = __dataType::date_parse($data->reg_date, 'm-Y');
+      if ($data_my == $my && $data->trader_cat_id == $cat_id) {
+        $count++;
       }
     }
 
@@ -18,15 +23,14 @@
   
 
 
-  function countByRegion($trader_registrations, $region_id){
+  function countByMonthYear($trader_registrations, $my){
 
     $count = 0;
 
     foreach ($trader_registrations as $data) {
-      if (!empty($data->trader)) {
-        if ($data->trader->region_id == $region_id) {
-          $count++;
-        }
+      $data_my = __dataType::date_parse($data->reg_date, 'm-Y');
+      if ($data_my == $my) {
+        $count++;
       }
     }
 
@@ -59,7 +63,7 @@
 <html>
 
 <head>
-	<title>Count Traders by Crop Year</title>
+	<title>Number of Registered Traders per Month and Category</title>
 	<link rel="stylesheet" href="{{ asset('template/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('template/bower_components/font-awesome/css/font-awesome.min.css') }}">
 	<link rel="stylesheet" href="{{ asset('template/dist/css/AdminLTE.min.css') }}">
@@ -81,7 +85,7 @@
   {{-- HEADER --}}
   <div class="row" style="padding:10px; margin-bottom:10px;">
     <div class="col-xs-12" style="text-align: center;">
-      <span style="font-size: 14px;">Number of Registered Traders per Region and Category</span><br>
+      <span style="font-size: 14px;">Number of Registered Traders per Month and Category</span><br>
       <span style="font-size: 14px;">CROP YEAR {{ $crop_year->name }}</span>
     </div>
   </div>
@@ -93,7 +97,7 @@
 
         <thead>
           <tr>
-            <th style="width:100px;">Region</td>
+            <th style="width:100px;">Month</td>
             <th style="text-align:center;">Sugar Trader (Domestic)</td>
             <th style="text-align:center;">Sugar Trader (International)</td>
             <th style="text-align:center;">Molasses (Domestic)</td>
@@ -115,32 +119,32 @@
             $subtotal_hfcs = 0;
           ?>
 
-          @foreach($global_regions_all as $region_data)
+          @foreach($months as $key => $data)
 
             <tr>
               <td>
-                {{ $region_data->name }}
+                {{ $data }}
               </td>
               <td style="text-align:center;">
-                {{ countByRegionAndCat($trader_registrations, $region_data->region_id, 'TC1001') }}
+                {{ countByMonthYearAndCat($trader_registrations, $key, 'TC1001') }}
               </td>
               <td style="text-align:center;">
-                {{ countByRegionAndCat($trader_registrations, $region_data->region_id, 'TC1002') }}
+                {{ countByMonthYearAndCat($trader_registrations, $key, 'TC1002') }}
               </td>
               <td style="text-align:center;">
-                {{ countByRegionAndCat($trader_registrations, $region_data->region_id, 'TC1003') }}
+                {{ countByMonthYearAndCat($trader_registrations, $key, 'TC1003') }}
               </td>
               <td style="text-align:center;">
-                {{ countByRegionAndCat($trader_registrations, $region_data->region_id, 'TC1004') }}
+                {{ countByMonthYearAndCat($trader_registrations, $key, 'TC1004') }}
               </td>
               <td style="text-align:center;">
-                {{ countByRegionAndCat($trader_registrations, $region_data->region_id, 'TC1005') }}
+                {{ countByMonthYearAndCat($trader_registrations, $key, 'TC1005') }}
               </td>
               <td style="text-align:center;">
-                {{ countByRegionAndCat($trader_registrations, $region_data->region_id, 'TC1006') }}
+                {{ countByMonthYearAndCat($trader_registrations, $key, 'TC1006') }}
               </td>
               <td style="text-align:center; font-weight: bold;">
-                {{ countByRegion($trader_registrations, $region_data->region_id) }}
+                {{ countByMonthYear($trader_registrations, $key) }}
               </td>
             </tr>
 

@@ -89,16 +89,36 @@ class RefineryRegistrationController extends Controller{
 
     public function reportsOutput(RefineryRegistrationReportRequest $request){
 
-        if ($request->ft == 'fd') {
+        if ($request->ft == 'rd') {
 
-            $refinery_registrations = $this->refinery_reg_repo->getByCropYearId($request->fd_cy);
-            $crop_year = $this->cy_repo->findByCropYearId($request->fd_cy);
+            $refinery_registrations = $this->refinery_reg_repo->getByCropYearId($request->rd_cy);
+            $crop_year = $this->cy_repo->findByCropYearId($request->rd_cy);
 
             return view('printables.refinery_registration.refinery_directory')->with([
                 'refinery_registrations' => $refinery_registrations,
                 'crop_year' => $crop_year 
             ]);
 
+        }elseif ($request->ft == 'rc') {
+
+            $refinery_registrations = $this->refinery_reg_repo->getByCropYearId($request->rc_cy);
+            $crop_year = $this->cy_repo->findByCropYearId($request->rc_cy);
+
+            return view('printables.refinery_registration.refinery_rated_capacity')->with([
+                'refinery_registrations' => $refinery_registrations,
+                'crop_year' => $crop_year 
+            ]);
+            
+        }elseif ($request->ft == 'cbcy') {
+
+            $refinery_registrations = $this->refinery_reg_repo->getByCropYearId($request->cbcy_cy);
+            $crop_year = $this->cy_repo->findByCropYearId($request->cbcy_cy);
+
+            return view('printables.refinery_registration.count_by_cropyear')->with([
+                'refinery_registrations' => $refinery_registrations,
+                'crop_year' => $crop_year
+            ]);
+            
         }elseif ($request->ft == 'bd') {
 
             $refinery_registrations = $this->refinery_reg_repo->getByRegDate($request->bd_df, $request->bd_dt);

@@ -107,7 +107,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">Number of Registered Traders per Region and Category</h2>
+      <h2 class="box-title">Number of Registered Traders by Month and Category</h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
