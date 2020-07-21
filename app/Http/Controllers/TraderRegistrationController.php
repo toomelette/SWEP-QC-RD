@@ -97,15 +97,13 @@ class TraderRegistrationController extends Controller{
             $trader_registrations = $this->trader_reg_repo->getByRegDate_Category($request->bdc_df, $request->bdc_dt, $request->bdc_tc);
             
             if ($request->bdc_t == 'p') {
-
-                return view('printables.trader_registration.list_bdc')->with('trader_registrations', $trader_registrations);
-                
+                return view('printables.trader_registration.list_bdc')->with(
+                    'trader_registrations', $trader_registrations
+                );
             }elseif ($request->bdc_t == 'e') {
-
                 return Excel::download(
                     new TraderRegistrationBDC($trader_registrations), 'list_by_date_category.xlsx'
                 );
-
             }
 
         }elseif ($request->ft == 'bcyc') {

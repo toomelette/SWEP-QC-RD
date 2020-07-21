@@ -50,6 +50,8 @@
               <dd>{{ optional($refinery_reg->refinery)->address }}</dd>
               <dt>Date of Registration:</dt>
               <dd>{{ __dataType::date_parse($refinery_reg->reg_date, 'F d,Y') }}</dd>
+              <dt>Rated Capacity:</dt>
+              <dd>{{ number_format($refinery_reg->rated_capacity, 2) }}</dd>
             </dl>
           </div>
         </div>

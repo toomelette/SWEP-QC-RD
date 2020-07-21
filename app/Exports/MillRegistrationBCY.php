@@ -52,6 +52,10 @@ class MillRegistrationBCY implements FromArray, WithHeadings{
                 'Start of Milling' => optional($data->start_milling)->format('m/d/Y'),
                 'End of Milling' => optional($data->end_milling)->format('m/d/Y'),
 
+                'Mill Share' => $data->mill_share,
+                'Planter Share' => $data->planter_share,
+                'Other Shares' => $data->other_share,
+
             ];
 
         }
@@ -91,6 +95,10 @@ class MillRegistrationBCY implements FromArray, WithHeadings{
                 'Rated Capacity',
                 'Start of Milling',
                 'End of Milling',
+
+                'Mill Share',
+                'Planter Share',
+                'Other Shares',
 
         ];
         

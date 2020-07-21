@@ -49,6 +49,10 @@ class CropYearRepository extends BaseRepository implements CropYearInterface {
             }
         );
         
+        if(empty($crop_year)){
+            abort(404);
+        }
+        
         return $crop_year;
 
     }
@@ -62,6 +66,10 @@ class CropYearRepository extends BaseRepository implements CropYearInterface {
                 return $this->crop_year->select('name')->where('crop_year_id', $cy_id)->first();
             }
         );
+        
+        if(empty($crop_year)){
+            abort(404);
+        }
         
         return $crop_year;
 

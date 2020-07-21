@@ -40,6 +40,7 @@ class RefineryRegistrationBD implements FromArray, WithHeadings{
                 'Officer' => optional($data->refinery)->officer,
                 'Position' => optional($data->refinery)->position,
                 'Salutation' => optional($data->refinery)->salutation,
+                'Rated Capacity' => $data->rated_capacity,
 
             ];
 
@@ -69,7 +70,8 @@ class RefineryRegistrationBD implements FromArray, WithHeadings{
             'Officer',
             'Position',
             'Salutation',
-
+            'Rated Capacity',
+            
         ];
         
     }

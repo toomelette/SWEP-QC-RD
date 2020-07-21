@@ -198,13 +198,13 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
 
         $refinery_reg = $this->refinery_reg->newQuery();
 
-        if (isset($df) && isset($dt)) {
+        if (isset($df) && isset($dt)){
             $df = $this->__dataType->date_parse($df, 'Y-m-d');
             $dt = $this->__dataType->date_parse($dt, 'Y-m-d');
             $refinery_reg->whereBetween('reg_date',[$df, $dt]);
         }
 
-        return $refinery_reg->select('refinery_id', 'crop_year_id', 'license_no', 'reg_date')
+        return $refinery_reg->select('refinery_id', 'crop_year_id', 'license_no', 'reg_date', 'rated_capacity')
                             ->with('refinery', 'cropYear')
                             ->get();
 
@@ -217,7 +217,7 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
 
         $refinery_reg = $this->refinery_reg->newQuery();
 
-        if (isset($cy_id)) {
+        if (isset($cy_id)){
             $refinery_reg->where('crop_year_id', $cy_id);
         }
 

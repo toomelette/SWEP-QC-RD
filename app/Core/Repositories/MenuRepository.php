@@ -152,12 +152,10 @@ class MenuRepository extends BaseRepository implements MenuInterface {
         $menu = $this->menu->select('menu_id')->orderBy('menu_id', 'desc')->first();
 
         if($menu != null){
-
             if($menu->menu_id != null){
                 $num = str_replace('M', '', $menu->menu_id) + 1;
                 $id = 'M' . $num;
             }
-        
         }
         
         return $id;

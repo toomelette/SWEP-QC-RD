@@ -226,7 +226,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
             $mill_reg->whereBetween('reg_date',[$df, $dt]);
         }
 
-        return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling')
+        return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling', 'mill_share', 'planter_share', 'other_share')
                         ->with('mill', 'cropYear')
                         ->get();
 
