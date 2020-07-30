@@ -72,7 +72,7 @@
       <div class="col-md-5" style="padding-left:80px;">
 
         <img src="{{ asset('images/flag.png') }}"
-             style="width:210px; position:relative;">
+             style="width:210px; height:80px; position:relative;">
 
         <span style="position: absolute; 
                      margin-top: 25px;
