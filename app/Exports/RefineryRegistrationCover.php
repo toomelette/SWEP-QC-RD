@@ -15,104 +15,94 @@ class RefineryRegistrationCover{
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-        $phpWord->addParagraphStyle('p2Style', array('align'=>'both', 'spaceAfter'=>100));
-
         // Page Format
-        $section = $phpWord->addSection(['paperSize' => 'A4', 'marginTop' => 3000, 'marginLeft' => 2200, 'marginRight' => 2200 ]);
+        $section = $phpWord->addSection([
+            'paperSize' => 'A4', 
+            'marginTop' => 3000, 
+            'marginLeft' => 2200, 
+            'marginRight' => 2200 
+        ]);
 
-        $section = $section->addTextRun();
+        $textrun = $section->addTextRun();
 
         // Tracking No.
         $tracking_no = "MEMO-REG-LMD-".Carbon::now()->format('Y')."-".Carbon::now()->format('M')."-";
-        $section->addText($tracking_no, ['name' => 'Cambria', 'size' => 10]);
+        $textrun->addText($tracking_no, ['name' => 'Cambria', 'size' => 10]);
 
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addTextBreak(5);
 
         // Date
         $date = Carbon::now()->format('F d, Y');
-        $section->addText($date, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addText($date, ['name' => 'Cambria', 'size' => 12]);
 
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addTextBreak(3);
 
         // Header
         $officer = optional($refinery_reg->refinery)->officer;
-        $section->addText($officer, ['name' => 'Cambria', 'size' => 12, 'bold' => true,]);
-        $section->addTextBreak();
+        $textrun->addText($officer, ['name' => 'Cambria', 'size' => 12, 'bold' => true,]);
+        $textrun->addTextBreak();
 
-        $position = optional($refinery_reg->refinery)->position;
-        $section->addText($position, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
+        $position = htmlentities(optional($refinery_reg->refinery)->position);
+        $textrun->addText($position, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addTextBreak();
 
         $name = optional($refinery_reg->refinery)->name;
-        $section->addText($name, ['name' => 'Cambria', 'size' => 12, 'bold' => true,]);
-        $section->addTextBreak();
+        $textrun->addText($name, ['name' => 'Cambria', 'size' => 12, 'bold' => true,]);
+        $textrun->addTextBreak();
 
         $address = optional($refinery_reg->refinery)->address;
-        $section->addText($address, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addTextBreak(2);
 
         // Salutation
+        $textrun = $section->addTextRun();
+
         $salutation = optional($refinery_reg->refinery)->salutation .':';
-        $section->addText($salutation, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($salutation, ['name' => 'Cambria', 'size' => 12]);
 
         // Txt
+        $textrun = $section->addTextRun();
+
         $txt = 'Enclosed is your ';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
 
         $license = 'Refining License No. ' . $refinery_reg->license_no . ' for CY ' . optional($refinery_reg->cropYear)->name;
-        $section->addText($license, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
+        $textrun->addText($license, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
 
         $txt = ' duly approved by this Office.';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
-
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
 
         // TXT
+        $textrun = $section->addTextRun();
         $txt = 'As provided for in Section 7, of SRA Circular Letter No. 4, dated 03 September 1991, you are required at the start of each crop year to register with this Office the certificate of authority and official signature of your warehouse receipt agent or warehouseman, and shall report to the SRA any replacement thereof.';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12], ['align'=>'both', 'spaceAfter'=>100]);
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+
+        $textrun->setParagraphStyle(array('align' => 'both'));
 
         // TXT
+        $textrun = $section->addTextRun();
+
         $txt = 'Thank you.';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addTextBreak(3);
 
         // TXT
         $txt = 'Very truly yours,';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addTextBreak(4);
 
 
         // Administrator
         $txt = self::ADMINISTRATOR;
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
+        $textrun->addTextBreak();
         $txt = 'Administrator';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addTextBreak(5);
 
-        // 
+        // ENCL
         $txt = 'Encl: as stated';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
         
 
         // Export

@@ -14,213 +14,221 @@ class TraderRegistrationCert{
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-        $phpWord->setDefaultParagraphStyle(
-            array(
-                'align' => 'both',
-                'spacing' => 0,
-            )
-        );
+        $par_bold = ['name' => 'Arial', 'size' => 12, 'bold' => true];
+        $par = ['name' => 'Arial','size' => 12];
+        $title_bold = ['name' => 'Arial','size' => 14, 'bold' => true];
+        $title_bold_u = ['name' => 'Arial','size' => 14, 'bold' => true, 'underline' => 'single'];
 
         // page format
-        $section = $phpWord->addSection(['paperSize' => 'Legal','marginTop' => 5000,'marginRight' => 1700,'marginLeft' => 1700 ]);
+        $section = $phpWord->addSection([
+            'paperSize' => 'Legal',
+            'marginTop' => 4500,
+            'marginRight' => 1700,
+            'marginLeft' => 1700 
+        ]);
+
+
 
         // 1st Paragraph
-        $section = $section->addTextRun();
+        $textrun = $section->addTextRun();
 
         // txt
         $txt = '               ';
-        $section->addText($txt);
+        $textrun->addText($txt);
 
         // trader name
-        $trader_name = ''.optional($trader_reg->trader)->name;
-        $section->addText($trader_name, ['name' => 'Arial', 'size' => 14, 'underline' => 'single','bold' => true,]);
+        $trader_name = ''.self::stringFilter(optional($trader_reg->trader)->name);
+        $textrun->addText($trader_name, ['name' => 'Arial', 'size' => 14, 'underline' => 'single','bold' => true,]);
 
         // txt
         $txt = ' of';
-        $section->addText($txt, ['name' => 'Arial','size' => 12,]);
+        $textrun->addText($txt, $par);
 
         // trader address
-        $trader_address = ' '.optional($trader_reg->trader)->address;
-        $section->addText($trader_address, ['name' => 'Arial', 'size' => 12, 'bold' => true,]);
+        $trader_address = ' '.self::stringFilter(optional($trader_reg->trader)->address);
+        $textrun->addText($trader_address, $par_bold);
 
         // txt
         if ($trader_reg->trader_cat_id == "TC1001") {
 
             $txt = ', is hereby licensed with this Office to operate as a DOMESTIC SUGAR TRADER during the ';
-            $section->addText($txt, ['name' => 'Arial','size' => 12,]);
+            $textrun->addText($txt, $par);
 
         }elseif ($trader_reg->trader_cat_id == "TC1002") {
 
             $txt = ', is hereby licensed with this Office to operate as INTERNATIONAL (EXPORT/IMPORT) SUGAR TRADER during the ';
-            $section->addText($txt, ['name' => 'Arial','size' => 12,]);
+            $textrun->addText($txt, $par);
 
         }elseif ($trader_reg->trader_cat_id == "TC1003") {
 
             $txt = ', is hereby licensed with this Office to operate as DOMESTIC MOLASSES TRADER during the ';
-            $section->addText($txt, ['name' => 'Arial','size' => 12,]);
+            $textrun->addText($txt, $par);
 
         }elseif ($trader_reg->trader_cat_id == "TC1004") {
 
             $txt = ', is hereby licensed with this Office to operate as INTERNATIONAL MOLASSES TRADER during the ';
-            $section->addText($txt, ['name' => 'Arial','size' => 12,]);
+            $textrun->addText($txt, $par);
 
         }elseif ($trader_reg->trader_cat_id == "TC1005") {
 
             $txt = ', is hereby licensed with this Office to operate as MUSCOVADO TRADER during the ';
-            $section->addText($txt, ['name' => 'Arial','size' => 12,]);
+            $textrun->addText($txt, $par);
 
         }elseif ($trader_reg->trader_cat_id == "TC1006") {
 
             $txt = ', is hereby licensed with this Office to operate as INTERNATIONAL SUGAR TRADER for Chemically Pure Fructose and High Fructose Corn Syrup during the ';
-            $section->addText($txt, ['name' => 'Arial','size' => 12,]);
+            $textrun->addText($txt, $par);
 
         }
 
         // crop year
         $cy = ' '.optional($trader_reg->cropYear)->name;
-        $section->addText($cy, ['name' => 'Arial','size' => 12,'bold' => true]);
+        $textrun->addText($cy, $par_bold);
 
         // txt
         if ($trader_reg->trader_cat_id == "TC1001" || $trader_reg->trader_cat_id == "TC1002") {
 
             $txt = ' Crop Year. Said Trader is hereby authorized to';
-            $section->addText($txt, ['name' => 'Arial','size' => 12]);
+            $textrun->addText($txt, $par);
 
             $txt = ' withdraw purchased';
-            $section->addText($txt, ['name' => 'Arial','size' => 12,'bold' => true]);
+            $textrun->addText($txt, $par_bold);
 
             $txt = ' sugar from the warehouse of any mill or refinery subject to rules and regulations issued by this Office pursuant thereto.';
-            $section->addText($txt, ['name' => 'Arial','size' => 12]);
+            $textrun->addText($txt, $par);
             
         }elseif ($trader_reg->trader_cat_id == "TC1003" || $trader_reg->trader_cat_id == "TC1004") {
 
             $txt = ' Crop Year. Said Trader is hereby authorized to';
-            $section->addText($txt, ['name' => 'Arial','size' => 12]);
+            $textrun->addText($txt, $par);
 
             $txt = ' withdraw purchased';
-            $section->addText($txt, ['name' => 'Arial','size' => 12,'bold' => true]);
+            $textrun->addText($txt, $par_bold);
 
             $txt = ' molasses from the warehouse of any mill or refinery subject to rules and regulations issued by this Office pursuant thereto.';
-            $section->addText($txt, ['name' => 'Arial','size' => 12]);
+            $textrun->addText($txt, $par);
             
         }elseif($trader_reg->trader_cat_id == "TC1005"){
 
             $txt = ' Crop Year. Said Trader is hereby authorized to';
-            $section->addText($txt, ['name' => 'Arial','size' => 12]);
+            $textrun->addText($txt, $par);
             
             $txt = ' withdraw purchased';
-            $section->addText($txt, ['name' => 'Arial','size' => 12,'bold' => true]);
+            $textrun->addText($txt, $par_bold);
 
             $txt = ' muscovado from the warehouse of any muscovado mill.';
-            $section->addText($txt, ['name' => 'Arial','size' => 12]);
+            $textrun->addText($txt, $par);
 
         }elseif($trader_reg->trader_cat_id == "TC1006"){
 
             $txt = ' Crop Year.';
-            $section->addText($txt, ['name' => 'Arial','size' => 12]);
+            $textrun->addText($txt, $par);
 
         }
 
+        $textrun->setParagraphStyle(array('align' => 'both'));
+
+
 
         // 2nd Paragraph
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun = $section->addTextRun();
 
         $txt = '               ';
-        $section->addText($txt);
+        $textrun->addText($txt);
 
         // txt
         $txt = 'The licensed/registered trader is required to submit a semi-annual report of its trading activities ';
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+        $textrun->addText($txt, $par);
 
         // txt
         $txt = 'and such other report/s as maybe required by SRA. For its failure to submit the same, the trader shall be subject to the provision ';
-        $section->addText($txt, ['name' => 'Arial','size' => 12, 'bold' => true]);
+        $textrun->addText($txt, $par_bold);
 
         // txt
         $txt = 'of SRA Sugar Order No.10, Series of 2009-2010, dated February 26, 2010 ';
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+        $textrun->addText($txt, $par);
 
         // txt
         $txt = 'and other pertinent SRA rules and regulations.';
-        $section->addText($txt, ['name' => 'Arial','size' => 12, 'bold' => true]);
+        $textrun->addText($txt, $par_bold);
+
+        $textrun->setParagraphStyle(array('align' => 'both'));
+
 
 
         // 3rd Paragraph
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun = $section->addTextRun();
 
         $txt = '               ';
-        $section->addText($txt);
+        $textrun->addText($txt);
 
         // txt
         $txt = 'This license shall be posted conspicuously at the place where business/warehouse is located and shall be presented and/or   surrendered to concerned authorities upon demand. In case of closure of business, this License to Operate must be surrendered to this Office for official retirement.';
-        $section->addText($txt, ['name' => 'Arial','size' => 12], ['align' => 'both']);
+        $textrun->addText($txt, $par);
+
+        $textrun->setParagraphStyle(array('align' => 'both'));
+
 
 
         // 4th Paragraph
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun = $section->addTextRun();
         
         $txt = '               ';
-        $section->addText($txt);
+        $textrun->addText($txt);
 
         // txt
         $txt = 'Any erasure/alteration on this certificate/license will invalidate same. NOT TRANSFERABLE AND NOT VALID WITHOUT OFFICIAL SEAL OF THIS OFFICE.';
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+        $textrun->addText($txt, $par);
+
+        $textrun->setParagraphStyle(array('align' => 'both'));
+
 
 
         // 5th Paragraph
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun = $section->addTextRun();
         
         $txt = '               ';
-        $section->addText($txt);
+        $textrun->addText($txt);
 
         // txt
         $txt = 'Given this ' . __dataType::date_parse($trader_reg->reg_date, "jS") .' day of '. __dataType::date_parse($trader_reg->reg_date, "F Y") .'.';
-        $section->addText($txt, ['name' => 'Arial','size' => 12]);
+        $textrun->addText($txt, $par);
 
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addTextBreak(4);
         
 
+
         // Signatory
+        $textrun = $section->addTextRun();
+
         $txt = '                                                       '.self::ADMINISTRATOR;
-        $section->addText($txt, ['name' => 'Arial','size' => 14, 'bold' => true]);
+        $textrun->addText($txt, $title_bold);
             
-        $section->addTextBreak();
+        $textrun->addTextBreak();
 
         $txt = '                                                                      Administrator';
-        $section->addText($txt, ['name' => 'Arial','size' => 14]);
+        $textrun->addText($txt, ['name' => 'Arial','size' => 14]);
 
-        $section->addTextBreak();  
-        $section->addTextBreak();      
+        $textrun->addTextBreak(2);       
 
 
         // Image & Control No.
-        $section->addImage('images/flag.png', ['width' => 130,'height' => 40,'wrappingStyle' => 'behind','positioning' => 'absolute','posHorizontalRel' => 'margin','posVerticalRel' => 'line',]);
+        $textrun->addImage('images/flag.png', ['width' => 130,'height' => 40,'wrappingStyle' => 'behind','positioning' => 'absolute','posHorizontalRel' => 'margin','posVerticalRel' => 'line',]);
 
-        $section->addTextBreak(); 
+        $textrun->addTextBreak(); 
 
         $control_no = '   '. $trader_reg->control_no;
-        $section->addText($control_no, ['name' => 'Arial','size' => 14, 'bold' => true]);
+        $textrun->addText($control_no, $title_bold);
 
-        $section->addTextBreak(); 
-        $section->addTextBreak();  
-        $section->addTextBreak();  
-        $section->addTextBreak();          
+        $textrun->addTextBreak(4);          
 
 
         // TIN
         $txt = 'TIN: ';
-        $section->addText($txt, ['name' => 'Arial','size' => 14, 'bold' => true]);
+        $textrun->addText($txt, $title_bold);
 
         $tin = optional($trader_reg->trader)->tin;
-        $section->addText($tin, ['name' => 'Arial','size' => 14, 'bold' => true, 'underline' => 'single',]);
+        $textrun->addText($tin, $title_bold_u);
 
 
         // Export
@@ -239,6 +247,15 @@ class TraderRegistrationCert{
 
 
 
+    private static function stringFilter($string){
+
+        if(strpos($string, '&') == true){
+            $string = htmlentities($string);
+        }
+
+        return $string;
+
+    }
 
 
 

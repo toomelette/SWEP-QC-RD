@@ -15,120 +15,109 @@ class MillRegistrationBilling{
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-        $phpWord->addParagraphStyle('p2Style', array('align'=>'both', 'spaceAfter'=>100));
-
         // Page Format
-        $section = $phpWord->addSection(['paperSize' => 'A4', 'marginTop' => 3000, 'marginLeft' => 2200, 'marginRight' => 2200 ]);
+        $section = $phpWord->addSection([
+            'paperSize' => 'A4', 
+            'marginTop' => 3000, 
+            'marginLeft' => 2200, 
+            'marginRight' => 2200 
+        ]);
 
-        $section = $section->addTextRun();
+
+
+        $textrun = $section->addTextRun();
 
         // Tracking No.
         $tracking_no = "MEMO-REG-LMD-".Carbon::now()->format('Y')."-".Carbon::now()->format('M')."-";
-        $section->addText($tracking_no, ['name' => 'Cambria', 'size' => 10]);
+        $textrun->addText($tracking_no, ['name' => 'Cambria', 'size' => 10]);
 
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addTextBreak(5);
 
         // Date
         $date = Carbon::now()->format('F d, Y');
-        $section->addText($date, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addText($date, ['name' => 'Cambria', 'size' => 12]);
 
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addTextBreak(3);
 
         // Header
         $officer = optional($mill_reg->mill)->officer;
-        $section->addText($officer, ['name' => 'Cambria', 'size' => 12, 'bold' => true,]);
-        $section->addTextBreak();
+        $textrun->addText($officer, ['name' => 'Cambria', 'size' => 12, 'bold' => true,]);
+        $textrun->addTextBreak();
 
         $position = optional($mill_reg->mill)->position;
-        $section->addText($position, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
+        $textrun->addText($position, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addTextBreak();
 
         $name = optional($mill_reg->mill)->name;
-        $section->addText($name, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
-        $section->addTextBreak();
+        $textrun->addText($name, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
+        $textrun->addTextBreak();
 
         $address = optional($mill_reg->mill)->address;
-        $section->addText($address, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addTextBreak(1);
 
         // Salutation
+        $textrun = $section->addTextRun();
         $salutation = optional($mill_reg->mill)->salutation .':';
-        $section->addText($salutation, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($salutation, ['name' => 'Cambria', 'size' => 12]);
 
         // Paragraph 1
+        $textrun = $section->addTextRun();
         $status = $mill_reg->payment_status == "UP" ? "underpayment" : "excess payment";
         $payment_amount = $mill_reg->payment_status == "UP" ? $mill_reg->under_payment : $mill_reg->excess_payment;
         $txt = "Please be informed that based on your submitted production estimate of ". number_format($mill_reg->mt, 2) ." Metric Tons or ". number_format($mill_reg->lkg, 2) ." Lkg., your Milling License Fee for Crop Year ". optional($mill_reg->cropYear)->name ." is ". __dataType::num_to_words($mill_reg->milling_fee) ." (PHP ". number_format($mill_reg->milling_fee, 2) .") PESOS.  However, you have an ". $status ." in your Milling License Fee for CY ". optional($mill_reg->cropYear)->name ." in the amount of ". __dataType::num_to_words($payment_amount) ." PESOS (PHP ". number_format($payment_amount, 2) .").";
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->setParagraphStyle(array('align' => 'both'));
 
         // Paragraph 2
+        $textrun = $section->addTextRun();
         $txt = "In view thereof, please settle the amount of ";
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
 
         $txt = __dataType::num_to_words($mill_reg->balance_fee) ." PESOS (PHP ". number_format($mill_reg->balance_fee, 2) .")";
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
 
         $txt = " to facilitate the renewal of your ";
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
 
         $txt = "MILLING LICENSE";
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
 
         $txt = " for";
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
 
         $txt = " CROP YEAR ";
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
 
         $txt = optional($mill_reg->cropYear)->name.".";
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
+        $textrun->setParagraphStyle(array('align' => 'both'));
 
         // Paragraph 3
+        $textrun = $section->addTextRun();
         $txt = "Please be guided by the provisions of SRA Sugar Order No. 8, dated 23 July 1992. ";
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
 
 
         // TXT
+        $textrun = $section->addTextRun();
         $txt = 'Thank you.';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addTextBreak(3);
 
         // TXT
         $txt = 'Very truly yours,';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addTextBreak(2);
 
 
         // Administrator
+        $textrun = $section->addTextRun();
         $txt = self::ADMINISTRATOR;
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
+        $textrun->addTextBreak();
         $txt = 'Administrator';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
         
 
         // Export

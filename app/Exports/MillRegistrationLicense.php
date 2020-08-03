@@ -14,122 +14,125 @@ class MillRegistrationLicense{
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-        $phpWord->addParagraphStyle('p2Style', array('align'=>'both', 'spaceAfter'=>100));
+        $par_bold = ['name' => 'Arial', 'size' => 12, 'bold' => true];
+        $par = ['name' => 'Arial','size' => 12];
+        $title_bold = ['name' => 'Arial','size' => 14, 'bold' => true];
+        $title_bold_u = ['name' => 'Arial','size' => 14, 'bold' => true, 'underline' => 'single'];
 
         // page format
-        $section = $phpWord->addSection(['paperSize' => 'Legal','marginTop' => 6000,'marginRight' => 1700,'marginLeft' => 1700 ]);
+        $section = $phpWord->addSection([
+            'paperSize' => 'Legal',
+            'marginTop' => 4500,
+            'marginRight' => 1700,
+            'marginLeft' => 1700 
+        ]);
 
 
         // 1st Paragraph
-        $section = $section->addTextRun();
+        $textrun = $section->addTextRun();
 
         // txt
         $txt = '               ';
-        $section->addText($txt);
+        $textrun->addText($txt);
 
         // mill name
         $mill_name = optional($mill_reg->mill)->name;
-        $section->addText($mill_name, 
-            [
-                'name' => 'Cambria', 
-                'size' => 15, 
-                'underline' => 'single',
-                'bold' => true,
-                'bold' => true,
-            ]
-        );
+        $textrun->addText($mill_name, $title_bold_u);
 
         // mill address
         $mill_address = ' of '.optional($mill_reg->mill)->address;
-        $section->addText($mill_address, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addText($mill_address, $par);
 
         // crop year
         $crop_year = ' is hereby granted this license to operate a sugar mill for CY '.optional($mill_reg->cropYear)->name;
-        $section->addText($crop_year, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addText($crop_year, $par);
 
         // txt
         $txt = ', and to have the centrifugal sugar manufactured store in its millsite/subsidiary warehouses.  The withdrawal of sugar from the millsite/subsidiary warehouse shall be in accordance with SRA Sugar Order No. 8, dated 23 July 1992, and related rules and regulations issued by this office.';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
-        
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, $par);
+
+        $textrun->setParagraphStyle(array('align' => 'both'));
 
 
         // 2nd Paragraph
+        $textrun = $section->addTextRun();
+
         $txt = '               ';
-        $section->addText($txt);
+        $textrun->addText($txt);
 
         // txt
         $txt = 'The SRA reserves the right to suspend/cancel/revoke this license or impose a penalty in lieu thereof  for non-observance or violation of any SRA rules and regulations, sugar order, circular letter, memorandum, etc., pertinent to the manufacture and withdrawal of sugar.';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addText($txt, $par);
 
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->setParagraphStyle(array('align' => 'both'));
 
 
         // 3rd Paragraph
+        $textrun = $section->addTextRun();
+
         $txt = '               ';
-        $section->addText($txt);
+        $textrun->addText($txt);
 
         // txt
         $txt = 'This MILLING LICENSE shall be posted conspicuously at the mill/warehouse and shall be presented and/or surrendered to competent authorities upon demand.';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
-        
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, $par);
+
+        $textrun->setParagraphStyle(array('align' => 'both'));
 
 
         // 4th Paragraph
+        $textrun = $section->addTextRun();
+
         $txt = '               ';
-        $section->addText($txt);
+        $textrun->addText($txt);
 
         // txt
         $txt = 'NOT VALID WITHOUT OFFICIAL SEAL OF THIS OFFICE.';
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
-        
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->addText($txt, $par);
+
+        $textrun->setParagraphStyle(array('align' => 'both'));
 
 
         // 5th Paragraph
+        $textrun = $section->addTextRun();
+
         $txt = '               ';
-        $section->addText($txt);
+        $textrun->addText($txt);
 
         // txt
         $txt = 'Given this ' . __dataType::date_parse($mill_reg->reg_date, "jS") .' day of '. __dataType::date_parse($mill_reg->reg_date, "F Y") .'.';;
-        $section->addText($txt, ['name' => 'Cambria', 'size' => 12]);
+        $textrun->addText($txt, $par);
 
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
-        $section->addTextBreak();
+        $textrun->setParagraphStyle(array('align' => 'both'));
+
+        $section->addTextBreak(3);
         
 
         // Signatory
-        $txt = '                                                                                            '.self::ADMINISTRATOR;
-        $section->addText($txt, ['name' => 'Cambria','size' => 12,'bold' => true]);
+        $textrun = $section->addTextRun();
+
+        $txt = '                                                       '.self::ADMINISTRATOR;
+        $textrun->addText($txt, $title_bold);
             
-        $section->addTextBreak();
+        $textrun->addTextBreak();
 
-        $txt = '                                                                                                           Administrator';
-        $section->addText($txt, ['name' => 'Cambria','size' => 12]);
+        $txt = '                                                                      Administrator';
+        $textrun->addText($txt, ['name' => 'Arial','size' => 14]);
 
-        $section->addTextBreak();  
-        $section->addTextBreak(); 
+        $textrun->addTextBreak(3);  
 
 
         // License
         $txt = 'MILLING LICENSE';
-        $section->addText($txt, ['name' => 'Cambria','size' => 12, 'bold' => true]);
+        $textrun->addText($txt, $title_bold);
 
-        $section->addTextBreak(); 
+        $textrun->addTextBreak(); 
 
         $txt = 'No. ';
-        $section->addText($txt, ['name' => 'Cambria','size' => 12, 'bold' => true]);
+        $textrun->addText($txt, $title_bold);
 
         $txt = $mill_reg->license_no;
-        $section->addText($txt, ['name' => 'Cambria','size' => 12, 'bold' => true, 'underline' => 'single',]);
+        $textrun->addText($txt, $title_bold);
 
 
 
