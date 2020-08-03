@@ -188,7 +188,7 @@ class TraderRegistrationCert{
         $textrun->addText($txt);
 
         // txt
-        $txt = 'Given this ' . __dataType::date_parse($trader_reg->reg_date, "jS") .' day of '. __dataType::date_parse($trader_reg->reg_date, "F Y") .'. Valid Until August 31, 2022.';
+        $txt = 'Given this ' . __dataType::date_parse($trader_reg->reg_date, "jS") .' day of '. __dataType::date_parse($trader_reg->reg_date, "F Y") .'. Valid Until August 31, 2021.';
         $textrun->addText($txt, $par);
 
         $textrun->addTextBreak(2);
