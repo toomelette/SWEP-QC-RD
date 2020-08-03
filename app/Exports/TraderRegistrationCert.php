@@ -22,7 +22,7 @@ class TraderRegistrationCert{
         // page format
         $section = $phpWord->addSection([
             'paperSize' => 'Legal',
-            'marginTop' => 5500,
+            'marginTop' => 6500,
             'marginRight' => 1700,
             'marginLeft' => 1700 
         ]);
