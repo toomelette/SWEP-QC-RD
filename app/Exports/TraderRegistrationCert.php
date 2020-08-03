@@ -22,7 +22,7 @@ class TraderRegistrationCert{
         // page format
         $section = $phpWord->addSection([
             'paperSize' => 'Legal',
-            'marginTop' => 4500,
+            'marginTop' => 5500,
             'marginRight' => 1700,
             'marginLeft' => 1700 
         ]);
@@ -188,10 +188,10 @@ class TraderRegistrationCert{
         $textrun->addText($txt);
 
         // txt
-        $txt = 'Given this ' . __dataType::date_parse($trader_reg->reg_date, "jS") .' day of '. __dataType::date_parse($trader_reg->reg_date, "F Y") .'.';
+        $txt = 'Given this ' . __dataType::date_parse($trader_reg->reg_date, "jS") .' day of '. __dataType::date_parse($trader_reg->reg_date, "F Y") .'. Valid Until August 31, 2022.';
         $textrun->addText($txt, $par);
 
-        $textrun->addTextBreak(4);
+        $textrun->addTextBreak(2);
         
 
 
@@ -217,7 +217,7 @@ class TraderRegistrationCert{
         $control_no = '   '. $trader_reg->control_no;
         $textrun->addText($control_no, $title_bold);
 
-        $textrun->addTextBreak(4);          
+        $textrun->addTextBreak(3);          
 
 
         // TIN
