@@ -29,18 +29,15 @@ class TraderRegistrationCert{
 
 
 
-        // 1st Paragraph
+        // Trader Name
         $textrun = $section->addTextRun();
 
-        // txt
-        $txt = '               ';
-        $textrun->addText($txt);
-
-        // trader name
         $trader_name = ''.self::stringFilter(optional($trader_reg->trader)->name);
         $textrun->addText($trader_name, ['name' => 'Arial', 'size' => 14, 'underline' => 'single','bold' => true,]);
+        $textrun->setParagraphStyle(array('align' => 'center'));
 
-        // txt
+        // 1st Paragraph
+        $textrun = $section->addTextRun();
         $txt = ' of';
         $textrun->addText($txt, $par);
 
