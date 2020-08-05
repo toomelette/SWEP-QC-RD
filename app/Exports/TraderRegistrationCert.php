@@ -34,7 +34,7 @@ class TraderRegistrationCert{
 
         $trader_name = ''.self::stringFilter(optional($trader_reg->trader)->name);
         $textrun->addText($trader_name, ['name' => 'Arial', 'size' => 14, 'underline' => 'single','bold' => true,]);
-        $textrun->setParagraphStyle(array('align' => 'center'));
+        $textrun->setParagraphStyle(array('align' => 'center', 'lineHeight' => 1.3));
 
         // 1st Paragraph
         $textrun = $section->addTextRun();
@@ -191,7 +191,7 @@ class TraderRegistrationCert{
         $txt = 'Given this ' . __dataType::date_parse($trader_reg->reg_date, "jS") .' day of '. __dataType::date_parse($trader_reg->reg_date, "F Y") .'. Valid Until August 31, 2021.';
         $textrun->addText($txt, $par);
 
-        $textrun->addTextBreak(2);
+        $textrun->addTextBreak(3);
         
 
 
