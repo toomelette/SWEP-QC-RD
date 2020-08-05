@@ -22,42 +22,40 @@ class MillRegistrationLicense{
         // page format
         $section = $phpWord->addSection([
             'paperSize' => 'Legal',
-            'marginTop' => 6300,
-            'marginRight' => 1700,
-            'marginLeft' => 1700 
+            'marginTop' => 5800,
+            'marginRight' => 2000,
+            'marginLeft' => 2000 
         ]);
 
 
         // mill name
         $textrun = $section->addTextRun();
         $mill_name = self::stringFilter(optional($mill_reg->mill)->name);
-        $textrun->addText($mill_name, $title_bold_u);
+        $textrun->addText($mill_name, ['name' => 'Cambria','size' => 20, 'bold' => true, 'underline' => 'single']);
         $textrun->setParagraphStyle(array('align' => 'center', 'lineHeight' => 1.3));
 
 
         // mill address
+        $textrun = $section->addTextRun();
+        $txt = ' of ';
+        $textrun->addText($txt, $par);
+
         if (isset($mill_reg->license_address)) {
             
             if ($mill_reg->license_address == 1) {
-                $textrun = $section->addTextRun();
-                $mill_address = ' of '.self::stringFilter(optional($mill_reg->mill)->address);
-                $textrun->addText($mill_address, $par);               
+                $mill_address = self::stringFilter(optional($mill_reg->mill)->address);
+                $textrun->addText($mill_address, ['name' => 'Cambria','size' => 12, 'italic' => true]);               
             }elseif ($mill_reg->license_address == 2) {
-                $textrun = $section->addTextRun();
                 $mill_address = ' of '.self::stringFilter(optional($mill_reg->mill)->address_second);
-                $textrun->addText($mill_address, $par); 
+                $textrun->addText($mill_address, ['name' => 'Cambria','size' => 12, 'italic' => true]); 
             }elseif ($mill_reg->license_address == 3) {
-                $textrun = $section->addTextRun();
                 $mill_address = ' of '.self::stringFilter(optional($mill_reg->mill)->address_third);
-                $textrun->addText($mill_address, $par);
+                $textrun->addText($mill_address, ['name' => 'Cambria','size' => 12, 'italic' => true]);
             }
             
         }else{
-
-            $textrun = $section->addTextRun();
             $mill_address = ' of '.self::stringFilter(optional($mill_reg->mill)->address);
-            $textrun->addText($mill_address, $par);  
-
+            $textrun->addText($mill_address, ['name' => 'Cambria','size' => 12, 'italic' => true]);  
         }
 
 
@@ -118,23 +116,31 @@ class MillRegistrationLicense{
         $textrun->addText($txt);
 
         // txt
-        $txt = 'Given this ' . __dataType::date_parse($mill_reg->reg_date, "jS") .' day of '. __dataType::date_parse($mill_reg->reg_date, "F Y") .'.';;
+        $txt = 'Given this ' . __dataType::date_parse($mill_reg->reg_date, "j");
+        $textrun->addText($txt, $par);
+
+        // txt
+        $txt = __dataType::date_parse($mill_reg->reg_date, "S");
+        $textrun->addText($txt, ['name' => 'Cambria','size' => 12, 'superScript' => true]);
+
+        // txt
+        $txt = ' day of '. __dataType::date_parse($mill_reg->reg_date, "F Y") .'.';
         $textrun->addText($txt, $par);
 
         $textrun->setParagraphStyle(array('align' => 'both'));
 
-        $section->addTextBreak(3);
+        $section->addTextBreak(2);
         
 
         // Signatory
         $textrun = $section->addTextRun();
 
-        $txt = '                                                       '.self::ADMINISTRATOR;
+        $txt = '                                                                   '.self::ADMINISTRATOR;
         $textrun->addText($txt, $title_bold);
             
         $textrun->addTextBreak();
 
-        $txt = '                                                                      Administrator';
+        $txt = '                                                                                  Administrator';
         $textrun->addText($txt, ['name' => 'Cambria','size' => 14]);
 
         $textrun->addTextBreak(3);  

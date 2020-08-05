@@ -22,41 +22,41 @@ class RefineryRegistrationLicense{
         // page format
         $section = $phpWord->addSection([
             'paperSize' => 'Legal',
-            'marginTop' => 6300,
-            'marginRight' => 1700,
-            'marginLeft' => 1700 
+            'marginTop' => 5800,
+            'marginRight' => 2000,
+            'marginLeft' => 2000 
         ]);
 
 
         // refinery name
         $textrun = $section->addTextRun();
         $refinery_name = self::stringFilter(optional($refinery_reg->refinery)->name);
-        $textrun->addText($refinery_name, $title_bold_u);
+        $textrun->addText($refinery_name, ['name' => 'Cambria','size' => 20, 'bold' => true, 'underline' => 'single']);
         $textrun->setParagraphStyle(array('align' => 'center', 'lineHeight' => 1.3));
 
 
         // refinery address
+        $textrun = $section->addTextRun();
+        $txt = ' of ';
+        $textrun->addText($txt, $par);
+
         if (isset($refinery_reg->license_address)) {
             
             if ($refinery_reg->license_address == 1) {
-                $textrun = $section->addTextRun();
-                $refinery_address = ' of '.self::stringFilter(optional($refinery_reg->refinery)->address);
-                $textrun->addText($refinery_address, $par);           
+                $refinery_address = self::stringFilter(optional($refinery_reg->refinery)->address);
+                $textrun->addText($refinery_address, ['name' => 'Cambria','size' => 12, 'italic'=> true ]);           
             }elseif ($refinery_reg->license_address == 2) {
-                $textrun = $section->addTextRun();
-                $refinery_address = ' of '.self::stringFilter(optional($refinery_reg->refinery)->address_second);
-                $textrun->addText($refinery_address, $par);  
+                $refinery_address = self::stringFilter(optional($refinery_reg->refinery)->address_second);
+                $textrun->addText($refinery_address, ['name' => 'Cambria','size' => 12, 'italic'=> true ]);  
             }elseif ($refinery_reg->license_address == 3) {
-                $textrun = $section->addTextRun();
-                $refinery_address = ' of '.self::stringFilter(optional($refinery_reg->refinery)->address_third);
-                $textrun->addText($refinery_address, $par);  
+                $refinery_address = self::stringFilter(optional($refinery_reg->refinery)->address_third);
+                $textrun->addText($refinery_address, ['name' => 'Cambria','size' => 12, 'italic'=> true ]);  
             }
 
         }else{
 
-            $textrun = $section->addTextRun();
-            $refinery_address = ' of '.self::stringFilter(optional($refinery_reg->refinery)->address);
-            $textrun->addText($refinery_address, $par);  
+            $refinery_address = self::stringFilter(optional($refinery_reg->refinery)->address);
+            $textrun->addText($refinery_address, ['name' => 'Cambria','size' => 12, 'italic'=> true ]);  
 
         }
 
@@ -121,22 +121,32 @@ class RefineryRegistrationLicense{
         $textrun->addText($txt);
 
         // txt
-        $txt = 'Given this ' . __dataType::date_parse($refinery_reg->reg_date, "jS") .' day of '. __dataType::date_parse($refinery_reg->reg_date, "F Y") .'.';;
+        $txt = 'Given this ' . __dataType::date_parse($refinery_reg->reg_date, "j");
         $textrun->addText($txt, $par);
 
-        $section->addTextBreak(3);
+        // txt
+        $txt = __dataType::date_parse($refinery_reg->reg_date, "S");
+        $textrun->addText($txt, ['name' => 'Cambria','size' => 12, 'superScript' => true]);
+
+        // txt
+        $txt = ' day of '. __dataType::date_parse($refinery_reg->reg_date, "F Y") .'.';
+        $textrun->addText($txt, $par);
+
+        $textrun->setParagraphStyle(array('align' => 'both'));
+
+        $section->addTextBreak(2);
         
 
 
         // Signatory
         $textrun = $section->addTextRun();
 
-        $txt = '                                                       '.self::ADMINISTRATOR;
+        $txt = '                                                                   '.self::ADMINISTRATOR;
         $textrun->addText($txt, $title_bold);
             
         $textrun->addTextBreak();
 
-        $txt = '                                                                      Administrator';
+        $txt = '                                                                                  Administrator';
         $textrun->addText($txt, ['name' => 'Cambria','size' => 14]);
 
         $textrun->addTextBreak(3);  
