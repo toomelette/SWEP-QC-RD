@@ -448,7 +448,7 @@
         underpayment = $('#under_payment').val().replace(/,/g, "");
         mf_float = parseFloat(milling_fee);
         up_float = parseFloat(underpayment);
-        balance_fee = mf_float - up_float;
+        balance_fee = mf_float + up_float;
       }
       $('#balance_fee').val(balance_fee.toFixed(2)); 
       pf('#balance_fee');
@@ -461,7 +461,7 @@
         underpayment = $('#under_payment').val().replace(/,/g, "");
         mf_float = parseFloat(milling_fee);
         up_float = parseFloat(underpayment);
-        balance_fee = mf_float - up_float;
+        balance_fee = mf_float + up_float;
       }
       $('#balance_fee').val(balance_fee.toFixed(2)); 
       pf('#balance_fee');
@@ -476,7 +476,7 @@
         excess_payment = $('#excess_payment').val().replace(/,/g, "");
         mf_float = parseFloat(milling_fee);
         ep_float = parseFloat(excess_payment);
-        balance_fee = mf_float + ep_float;
+        balance_fee = mf_float - ep_float;
       }
       $('#balance_fee').val(balance_fee.toFixed(2)); 
       pf('#balance_fee');
@@ -489,7 +489,7 @@
         excess_payment = $('#excess_payment').val().replace(/,/g, "");
         mf_float = parseFloat(milling_fee);
         ep_float = parseFloat(excess_payment);
-        balance_fee = mf_float + ep_float;
+        balance_fee = mf_float - ep_float;
       }
       $('#balance_fee').val(balance_fee.toFixed(2)); 
       pf('#balance_fee');
@@ -504,13 +504,13 @@
         under_payment = $('#under_payment').val().replace(/,/g, "");
         mf_float = parseFloat(milling_fee);
         up_float = parseFloat(under_payment);
-        balance_fee = mf_float - up_float;
+        balance_fee = mf_float + up_float;
       }else if($('#payment_status').val() == "EP"){
         milling_fee = $('#milling_fee').val().replace(/,/g, "");
         excess_payment = $('#excess_payment').val().replace(/,/g, "");
         mf_float = parseFloat(milling_fee);
         ep_float = parseFloat(excess_payment);
-        balance_fee = mf_float + ep_float;
+        balance_fee = mf_float - ep_float;
       }else{
         milling_fee = $('#milling_fee').val().replace(/,/g, "");
         mf_float = parseFloat(milling_fee);
@@ -527,13 +527,13 @@
         under_payment = $('#under_payment').val().replace(/,/g, "");
         mf_float = parseFloat(milling_fee);
         up_float = parseFloat(under_payment);
-        balance_fee = mf_float - up_float;
+        balance_fee = mf_float + up_float;
       }else if($('#payment_status').val() == "EP"){
         milling_fee = $('#milling_fee').val().replace(/,/g, "");
         excess_payment = $('#excess_payment').val().replace(/,/g, "");
         mf_float = parseFloat(milling_fee);
         ep_float = parseFloat(excess_payment);
-        balance_fee = mf_float + ep_float;
+        balance_fee = mf_float - ep_float;
       }else{
         milling_fee = $('#milling_fee').val().replace(/,/g, "");
         mf_float = parseFloat(milling_fee);
