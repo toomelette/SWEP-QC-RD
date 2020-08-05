@@ -22,27 +22,44 @@ class RefineryRegistrationLicense{
         // page format
         $section = $phpWord->addSection([
             'paperSize' => 'Legal',
-            'marginTop' => 4500,
+            'marginTop' => 6300,
             'marginRight' => 1700,
             'marginLeft' => 1700 
         ]);
 
 
-
-        // 1st Paragraph
-        $textrun = $section->addTextRun();
-
-        // txt
-        $txt = '               ';
-        $textrun->addText($txt);
-
         // refinery name
-        $refinery_name = optional($refinery_reg->refinery)->name;
+        $textrun = $section->addTextRun();
+        $refinery_name = self::stringFilter(optional($refinery_reg->refinery)->name);
         $textrun->addText($refinery_name, $title_bold_u);
+        $textrun->setParagraphStyle(array('align' => 'center', 'lineHeight' => 1.3));
+
 
         // refinery address
-        $refinery_address = ' of '.optional($refinery_reg->refinery)->address;
-        $textrun->addText($refinery_address, $par);
+        if (isset($refinery_reg->license_address)) {
+            
+            if ($refinery_reg->license_address == 1) {
+                $textrun = $section->addTextRun();
+                $refinery_address = ' of '.self::stringFilter(optional($refinery_reg->refinery)->address);
+                $textrun->addText($refinery_address, $par);           
+            }elseif ($refinery_reg->license_address == 2) {
+                $textrun = $section->addTextRun();
+                $refinery_address = ' of '.self::stringFilter(optional($refinery_reg->refinery)->address_second);
+                $textrun->addText($refinery_address, $par);  
+            }elseif ($refinery_reg->license_address == 3) {
+                $textrun = $section->addTextRun();
+                $refinery_address = ' of '.self::stringFilter(optional($refinery_reg->refinery)->address_third);
+                $textrun->addText($refinery_address, $par);  
+            }
+
+        }else{
+
+            $textrun = $section->addTextRun();
+            $refinery_address = ' of '.self::stringFilter(optional($refinery_reg->refinery)->address);
+            $textrun->addText($refinery_address, $par);  
+
+        }
+
 
         // crop year
         $crop_year = ' is hereby granted this license to operate a refinery for CY '.optional($refinery_reg->cropYear)->name;
@@ -154,6 +171,17 @@ class RefineryRegistrationLicense{
     }
 
 
+
+
+    private static function stringFilter($string){
+
+        if(strpos($string, '&') == true){
+            $string = htmlentities($string);
+        }
+
+        return $string;
+
+    }
 
 
 

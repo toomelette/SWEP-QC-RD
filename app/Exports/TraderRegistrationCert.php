@@ -33,7 +33,7 @@ class TraderRegistrationCert{
         $textrun = $section->addTextRun();
 
         $trader_name = ''.self::stringFilter(optional($trader_reg->trader)->name);
-        $textrun->addText($trader_name, ['name' => 'Arial', 'size' => 14, 'underline' => 'single','bold' => true,]);
+        $textrun->addText($trader_name, $title_bold_u);
         $textrun->setParagraphStyle(array('align' => 'center', 'lineHeight' => 1.3));
 
         // 1st Paragraph

@@ -33,8 +33,11 @@ class MillFormRequest extends FormRequest{
             'email'=>'nullable|string|max:90',
             'region_id'=>'nullable|string|max:11',
             'officer'=>'nullable|string|max:90',
-            'salutation'=>'nullable|string|max:90',
             'position'=>'nullable|string|max:90',
+            'salutation'=>'nullable|string|max:90',
+            'cover_letter_address'=>'nullable|string|max:1',
+            'billing_address'=>'nullable|string|max:1',
+            'license_address'=>'nullable|string|max:1',
 
         ];
 

@@ -22,26 +22,44 @@ class MillRegistrationLicense{
         // page format
         $section = $phpWord->addSection([
             'paperSize' => 'Legal',
-            'marginTop' => 4500,
+            'marginTop' => 6300,
             'marginRight' => 1700,
             'marginLeft' => 1700 
         ]);
 
 
-        // 1st Paragraph
-        $textrun = $section->addTextRun();
-
-        // txt
-        $txt = '               ';
-        $textrun->addText($txt);
-
         // mill name
-        $mill_name = optional($mill_reg->mill)->name;
+        $textrun = $section->addTextRun();
+        $mill_name = self::stringFilter(optional($mill_reg->mill)->name);
         $textrun->addText($mill_name, $title_bold_u);
+        $textrun->setParagraphStyle(array('align' => 'center', 'lineHeight' => 1.3));
+
 
         // mill address
-        $mill_address = ' of '.optional($mill_reg->mill)->address;
-        $textrun->addText($mill_address, $par);
+        if (isset($mill_reg->license_address)) {
+            
+            if ($mill_reg->license_address == 1) {
+                $textrun = $section->addTextRun();
+                $mill_address = ' of '.self::stringFilter(optional($mill_reg->mill)->address);
+                $textrun->addText($mill_address, $par);               
+            }elseif ($mill_reg->license_address == 2) {
+                $textrun = $section->addTextRun();
+                $mill_address = ' of '.self::stringFilter(optional($mill_reg->mill)->address_second);
+                $textrun->addText($mill_address, $par); 
+            }elseif ($mill_reg->license_address == 3) {
+                $textrun = $section->addTextRun();
+                $mill_address = ' of '.self::stringFilter(optional($mill_reg->mill)->address_third);
+                $textrun->addText($mill_address, $par);
+            }
+            
+        }else{
+
+            $textrun = $section->addTextRun();
+            $mill_address = ' of '.self::stringFilter(optional($mill_reg->mill)->address);
+            $textrun->addText($mill_address, $par);  
+
+        }
+
 
         // crop year
         $crop_year = ' is hereby granted this license to operate a sugar mill for CY '.optional($mill_reg->cropYear)->name;
@@ -136,7 +154,6 @@ class MillRegistrationLicense{
 
 
 
-
         // Export
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
 
@@ -147,6 +164,18 @@ class MillRegistrationLicense{
         }
 
         return response()->download(storage_path('mill_license.docx'));
+
+    }
+
+
+
+    private static function stringFilter($string){
+
+        if(strpos($string, '&') == true){
+            $string = htmlentities($string);
+        }
+
+        return $string;
 
     }
 

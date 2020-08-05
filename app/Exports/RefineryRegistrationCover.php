@@ -42,22 +42,43 @@ class RefineryRegistrationCover{
         $textrun->addText($officer, ['name' => 'Cambria', 'size' => 12, 'bold' => true,]);
         $textrun->addTextBreak();
 
-        $position = htmlentities(optional($refinery_reg->refinery)->position);
+        $position = self::stringFilter(optional($refinery_reg->refinery)->position);
         $textrun->addText($position, ['name' => 'Cambria', 'size' => 12]);
         $textrun->addTextBreak();
 
-        $name = optional($refinery_reg->refinery)->name;
+        $name = self::stringFilter(optional($refinery_reg->refinery)->name);
         $textrun->addText($name, ['name' => 'Cambria', 'size' => 12, 'bold' => true,]);
         $textrun->addTextBreak();
 
-        $address = optional($refinery_reg->refinery)->address;
-        $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
-        $textrun->addTextBreak(2);
+        if (isset($refinery_reg->cover_letter_address)) {
+            
+            if ($refinery_reg->cover_letter_address == 1) {
+                $address = self::stringFilter(optional($refinery_reg->refinery)->address);
+                $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
+                $textrun->addTextBreak(2);           
+            }elseif ($refinery_reg->cover_letter_address == 2) {
+                $address = self::stringFilter(optional($refinery_reg->refinery)->address_second);
+                $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
+                $textrun->addTextBreak(2);
+            }elseif ($refinery_reg->cover_letter_address == 3) {
+                $address = self::stringFilter(optional($refinery_reg->refinery)->address_third);
+                $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
+                $textrun->addTextBreak(2);   
+            }
+
+        }else{
+
+            $address = self::stringFilter(optional($refinery_reg->refinery)->address);
+            $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
+            $textrun->addTextBreak(2);
+
+        }
+
 
         // Salutation
         $textrun = $section->addTextRun();
 
-        $salutation = optional($refinery_reg->refinery)->salutation .':';
+        $salutation = self::stringFilter(optional($refinery_reg->refinery)->salutation) .':';
         $textrun->addText($salutation, ['name' => 'Cambria', 'size' => 12]);
 
         // Txt
@@ -115,6 +136,18 @@ class RefineryRegistrationCover{
         }
 
         return response()->download(storage_path('refinery_cover_letter.docx'));
+
+    }
+
+
+
+    private static function stringFilter($string){
+
+        if(strpos($string, '&') == true){
+            $string = htmlentities($string);
+        }
+
+        return $string;
 
     }
 

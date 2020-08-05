@@ -44,21 +44,42 @@ class MillRegistrationBilling{
         $textrun->addText($officer, ['name' => 'Cambria', 'size' => 12, 'bold' => true,]);
         $textrun->addTextBreak();
 
-        $position = optional($mill_reg->mill)->position;
+        $position = self::stringFilter(optional($mill_reg->mill)->position);
         $textrun->addText($position, ['name' => 'Cambria', 'size' => 12]);
         $textrun->addTextBreak();
 
-        $name = optional($mill_reg->mill)->name;
+        $name = self::stringFilter(optional($mill_reg->mill)->name);
         $textrun->addText($name, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
         $textrun->addTextBreak();
 
-        $address = optional($mill_reg->mill)->address;
-        $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
-        $textrun->addTextBreak(1);
+        if (isset($mill_reg->billing_address)) {
+            
+            if ($mill_reg->billing_address == 1) {
+                $address = self::stringFilter(optional($mill_reg->mill)->address);
+                $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
+                $textrun->addTextBreak(1);              
+            }elseif ($mill_reg->billing_address == 2) {
+                $address = self::stringFilter(optional($mill_reg->mill)->address_second);
+                $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
+                $textrun->addTextBreak(1);
+            }elseif ($mill_reg->billing_address == 3) {
+                $address = self::stringFilter(optional($mill_reg->mill)->address_third);
+                $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
+                $textrun->addTextBreak(1);  
+            }
+
+        }else{  
+
+            $address = self::stringFilter(optional($mill_reg->mill)->address);
+            $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
+            $textrun->addTextBreak(1);  
+            
+        }
+
 
         // Salutation
         $textrun = $section->addTextRun();
-        $salutation = optional($mill_reg->mill)->salutation .':';
+        $salutation = self::stringFilter(optional($mill_reg->mill)->salutation) .':';
         $textrun->addText($salutation, ['name' => 'Cambria', 'size' => 12]);
 
         // Paragraph 1
@@ -130,6 +151,18 @@ class MillRegistrationBilling{
         }
 
         return response()->download(storage_path('mill_billing_statement.docx'));
+
+    }
+
+
+
+    private static function stringFilter($string){
+
+        if(strpos($string, '&') == true){
+            $string = htmlentities($string);
+        }
+
+        return $string;
 
     }
 

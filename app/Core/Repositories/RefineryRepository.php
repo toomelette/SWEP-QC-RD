@@ -75,6 +75,8 @@ class RefineryRepository extends BaseRepository implements RefineryInterface {
         $refinery->officer = $request->officer;
         $refinery->position = $request->position;
         $refinery->salutation = $request->salutation;
+        $refinery->cover_letter_address = $request->cover_letter_address;
+        $refinery->license_address = $request->license_address;
         $refinery->created_at = $this->carbon->now();
         $refinery->updated_at = $this->carbon->now();
         $refinery->ip_created = request()->ip();
@@ -106,6 +108,8 @@ class RefineryRepository extends BaseRepository implements RefineryInterface {
         $refinery->officer = $request->officer;
         $refinery->position = $request->position;
         $refinery->salutation = $request->salutation;
+        $refinery->cover_letter_address = $request->cover_letter_address;
+        $refinery->license_address = $request->license_address;
         $refinery->updated_at = $this->carbon->now();
         $refinery->ip_updated = request()->ip();
         $refinery->user_updated = $this->auth->user()->user_id;

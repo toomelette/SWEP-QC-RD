@@ -66,6 +66,8 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
         $refinery_reg->license_no = $this->getLicenseNoInc($request);
         $refinery_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
         $refinery_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
+        $refinery_reg->cover_letter_address = $refinery->cover_letter_address;
+        $refinery_reg->license_address = $refinery->license_address;
         $refinery_reg->created_at = $this->carbon->now();
         $refinery_reg->updated_at = $this->carbon->now();
         $refinery_reg->ip_created = request()->ip();

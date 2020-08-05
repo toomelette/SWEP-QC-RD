@@ -1,3 +1,25 @@
+<?php
+
+  function checkboxVal($old_value, $bool_string, $value, $bool){
+
+    $txt = '';
+
+    if (isset($old_value)) {
+      if ($old_value == $bool_string) {
+        $txt = 'checked';
+      }
+    }else{
+      if ($value == $bool) {
+        $txt = 'checked';
+      }
+    }
+
+    return $txt;
+
+  }
+
+?>
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -84,6 +106,108 @@
               '4', 'salutation', 'text', 'Salutation', 'Salutation', old('salutation') ? old('salutation') : $mill->salutation, $errors->has('salutation'), $errors->first('salutation'), ''
             ) !!}
 
+            <div class="col-md-12"></div>
+
+            {{-- Cover Letter Address --}}
+            <div class="form-group col-md-12">
+              <div class="checkbox">
+                <span>Cover Letter Address:</span><br><br>
+                <label>
+                  <input type="checkbox" 
+                         class="minimal cover_letter_address" 
+                         name="cover_letter_address" 
+                         value="1" {{ checkboxVal(old('cover_letter_address'), '1', $mill->cover_letter_address, 1) }}>
+                  First Address (Office Address)
+                </label>
+                &nbsp;
+                <label>
+                  <input type="checkbox" 
+                         class="minimal cover_letter_address" 
+                         name="cover_letter_address" 
+                         value="2" {{ checkboxVal(old('cover_letter_address'), '2', $mill->cover_letter_address, 2) }}>
+                  Second Address (Mill Site Address)
+                </label>
+                &nbsp;
+                <label>
+                  <input type="checkbox" 
+                         class="minimal cover_letter_address" 
+                         name="cover_letter_address" 
+                         value="3" {{ checkboxVal(old('cover_letter_address'), '3', $mill->cover_letter_address, 3) }}>
+                  Third Address
+                </label>
+                &nbsp;
+                <small class="text-danger">{{ $errors->first('cover_letter_address') }}</small>
+              </div>
+            </div>
+
+            <div class="col-md-12"></div>
+
+            {{-- Billing Address --}}
+            <div class="form-group col-md-12">
+              <div class="checkbox">
+                <span>Billing Statement Address:</span><br><br>
+                <label>
+                  <input type="checkbox" 
+                         class="minimal billing_address" 
+                         name="billing_address" 
+                         value="1" {{ checkboxVal(old('billing_address'), '1', $mill->billing_address, 1) }}>
+                  First Address (Office Address)
+                </label>
+                &nbsp;
+                <label>
+                  <input type="checkbox" 
+                         class="minimal billing_address" 
+                         name="billing_address" 
+                         value="2" {{ checkboxVal(old('billing_address'), '2', $mill->billing_address, 2) }}>
+                  Second Address (Mill Site Address)
+                </label>
+                &nbsp;
+                <label>
+                  <input type="checkbox" 
+                         class="minimal billing_address" 
+                         name="billing_address" 
+                         value="3" {{ checkboxVal(old('billing_address'), '3', $mill->billing_address, 3) }}>
+                  Third Address
+                </label>
+                &nbsp;
+                <small class="text-danger">{{ $errors->first('billing_address') }}</small>
+              </div>
+            </div>
+
+            <div class="col-md-12"></div>
+
+            {{-- License Address --}}
+            <div class="form-group col-md-12">
+              <div class="checkbox">
+                <span>License Address:</span><br><br>
+                <label>
+                  <input type="checkbox" 
+                         class="minimal license_address" 
+                         name="license_address" 
+                         value="1" {{ checkboxVal(old('license_address'), '1', $mill->license_address, 1) }}>
+                  First Address (Office Address)
+                </label>
+                &nbsp;
+                <label>
+                  <input type="checkbox" 
+                         class="minimal license_address" 
+                         name="license_address" 
+                         value="2" {{ checkboxVal(old('license_address'), '2', $mill->license_address, 2) }}>
+                  Second Address (Mill Site Address)
+                </label>
+                &nbsp;
+                <label>
+                  <input type="checkbox" 
+                         class="minimal license_address" 
+                         name="license_address" 
+                         value="3" {{ checkboxVal(old('license_address'), '3', $mill->license_address, 3) }}>
+                  Third Address
+                </label>
+                &nbsp;
+                <small class="text-danger">{{ $errors->first('license_address') }}</small>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -97,4 +221,24 @@
 
 </section>
 
+@endsection
+
+@section('scripts')
+
+  <script type="text/javascript">
+
+    $('.cover_letter_address').on('ifChecked', function(event){
+      $('.cover_letter_address').not(this).iCheck('uncheck');
+    });
+
+    $('.billing_address').on('ifChecked', function(event){
+      $('.billing_address').not(this).iCheck('uncheck');
+    });
+
+    $('.license_address').on('ifChecked', function(event){
+      $('.license_address').not(this).iCheck('uncheck');
+    });
+  
+  </script>
+    
 @endsection

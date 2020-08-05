@@ -75,6 +75,9 @@ class MillRepository extends BaseRepository implements MillInterface {
         $mill->officer = $request->officer;
         $mill->position = $request->position;
         $mill->salutation = $request->salutation;
+        $mill->cover_letter_address = $request->cover_letter_address;
+        $mill->billing_address = $request->billing_address;
+        $mill->license_address = $request->license_address;
         $mill->created_at = $this->carbon->now();
         $mill->updated_at = $this->carbon->now();
         $mill->ip_created = request()->ip();
@@ -106,6 +109,9 @@ class MillRepository extends BaseRepository implements MillInterface {
         $mill->officer = $request->officer;
         $mill->position = $request->position;
         $mill->salutation = $request->salutation;
+        $mill->cover_letter_address = $request->cover_letter_address;
+        $mill->billing_address = $request->billing_address;
+        $mill->license_address = $request->license_address;
         $mill->updated_at = $this->carbon->now();
         $mill->ip_updated = request()->ip();
         $mill->user_updated = $this->auth->user()->user_id;

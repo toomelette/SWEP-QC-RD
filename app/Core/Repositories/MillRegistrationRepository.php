@@ -80,6 +80,9 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
         $mill_reg->planter_share = $this->__dataType->string_to_num($request->planter_share);
         $mill_reg->mill_share = $this->__dataType->string_to_num($request->mill_share);
         $mill_reg->other_share = $request->other_share;
+        $mill_reg->cover_letter_address = $mill->cover_letter_address;
+        $mill_reg->billing_address = $mill->billing_address;
+        $mill_reg->license_address = $mill->license_address;
         $mill_reg->created_at = $this->carbon->now();
         $mill_reg->updated_at = $this->carbon->now();
         $mill_reg->ip_created = request()->ip();

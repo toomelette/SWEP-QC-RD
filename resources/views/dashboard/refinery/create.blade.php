@@ -80,6 +80,74 @@
               '4', 'salutation', 'text', 'Salutation', 'Salutation', old('salutation'), $errors->has('salutation'), $errors->first('salutation'), ''
             ) !!}
 
+            <div class="col-md-12"></div>
+
+            {{-- Cover Letter Address --}}
+            <div class="form-group col-md-12">
+              <div class="checkbox">
+                <span>Cover Letter Address:</span><br><br>
+                <label>
+                  <input type="checkbox" 
+                         class="minimal cover_letter_address" 
+                         name="cover_letter_address" 
+                         value="1" {{ old('cover_letter_address') == "1" ? 'checked' : '' }}>
+                  First Address (Office Address)
+                </label>
+                &nbsp;
+                <label>
+                  <input type="checkbox" 
+                         class="minimal cover_letter_address" 
+                         name="cover_letter_address" 
+                         value="2" {{ old('cover_letter_address') == "2" ? 'checked' : '' }}>
+                  Second Address (Mill Site Address)
+                </label>
+                &nbsp;
+                <label>
+                  <input type="checkbox" 
+                         class="minimal cover_letter_address" 
+                         name="cover_letter_address" 
+                         value="3" {{ old('cover_letter_address') == "3" ? 'checked' : '' }}>
+                  Third Address
+                </label>
+                &nbsp;
+                <small class="text-danger">{{ $errors->first('cover_letter_address') }}</small>
+              </div>
+            </div>
+
+            <div class="col-md-12"></div>
+
+            {{-- License Address --}}
+            <div class="form-group col-md-12">
+              <div class="checkbox">
+                <span>License Address:</span><br><br>
+                <label>
+                  <input type="checkbox" 
+                         class="minimal license_address" 
+                         name="license_address" 
+                         value="1" {{ old('license_address') == "1" ? 'checked' : '' }}>
+                  First Address (Office Address)
+                </label>
+                &nbsp;
+                <label>
+                  <input type="checkbox" 
+                         class="minimal license_address" 
+                         name="license_address" 
+                         value="2" {{ old('license_address') == "2" ? 'checked' : '' }}>
+                  Second Address (Mill Site Address)
+                </label>
+                &nbsp;
+                <label>
+                  <input type="checkbox" 
+                         class="minimal license_address" 
+                         name="license_address" 
+                         value="3" {{ old('license_address') == "3" ? 'checked' : '' }}>
+                  Third Address
+                </label>
+                &nbsp;
+                <small class="text-danger">{{ $errors->first('license_address') }}</small>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -105,6 +173,14 @@
     @if(Session::has('REFINERY_CREATE_SUCCESS'))
       {!! __js::toast(Session::get('REFINERY_CREATE_SUCCESS')) !!}
     @endif
+
+    $('.cover_letter_address').on('ifChecked', function(event){
+      $('.cover_letter_address').not(this).iCheck('uncheck');
+    });
+
+    $('.license_address').on('ifChecked', function(event){
+      $('.license_address').not(this).iCheck('uncheck');
+    });
 
   </script>
     
