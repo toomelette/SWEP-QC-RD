@@ -14,10 +14,10 @@ class MillRegistrationLicense{
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
-        $par_bold = ['name' => 'Arial', 'size' => 12, 'bold' => true];
-        $par = ['name' => 'Arial','size' => 12];
-        $title_bold = ['name' => 'Arial','size' => 14, 'bold' => true];
-        $title_bold_u = ['name' => 'Arial','size' => 14, 'bold' => true, 'underline' => 'single'];
+        $par_bold = ['name' => 'Cambria', 'size' => 12, 'bold' => true];
+        $par = ['name' => 'Cambria','size' => 12];
+        $title_bold = ['name' => 'Cambria','size' => 14, 'bold' => true];
+        $title_bold_u = ['name' => 'Cambria','size' => 14, 'bold' => true, 'underline' => 'single'];
 
         // page format
         $section = $phpWord->addSection([
@@ -135,7 +135,7 @@ class MillRegistrationLicense{
         $textrun->addTextBreak();
 
         $txt = '                                                                      Administrator';
-        $textrun->addText($txt, ['name' => 'Arial','size' => 14]);
+        $textrun->addText($txt, ['name' => 'Cambria','size' => 14]);
 
         $textrun->addTextBreak(3);  
 
