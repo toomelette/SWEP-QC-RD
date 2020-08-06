@@ -431,6 +431,30 @@
     }, 50));
 
 
+    // ON FILL MT
+    $('#mt').keyup(delay(function() { 
+      lkg = 0;
+      if ($('#mt').val() != ""){
+        mt = $('#mt').val().replace(/,/g, "");
+        mt_float = parseFloat(mt);
+        lkg = mt_float * 20;
+      }
+      $('#lkg').val(lkg.toFixed(2)); 
+      pf('#lkg');
+    }, 50));
+
+    $('#mt').keydown(delay(function() { 
+      lkg = 0;
+      if ($('#mt').val() != ""){
+        mt = $('#mt').val().replace(/,/g, "");
+        mt_float = parseFloat(mt);
+        lkg = mt_float * 20;
+      }
+      $('#lkg').val(lkg.toFixed(2)); 
+      pf('#lkg');
+    }, 50));
+
+
     // ON FILL EXCESS PAYMENT
     $('#excess_payment').keyup(delay(function() { 
       balance_fee = 0;
