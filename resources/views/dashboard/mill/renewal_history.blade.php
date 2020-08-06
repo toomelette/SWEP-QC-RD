@@ -228,7 +228,7 @@
               <input type="hidden" name="_method" value="PUT">
 
               {!! __form::select_dynamic(
-                '6', 'crop_year_id', 'Crop Year', '', $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
+                '6', 'crop_year_id', 'Crop Year *', '', $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
               ) !!}
 
               {!! __form::datepicker(
@@ -238,21 +238,21 @@
               <div class="col-md-12"></div>
 
               {!! __form::textbox_numeric(
-                '6', 'mt', 'text', 'MT *', 'MT', '', $errors->has('mt'), $errors->first('mt'), 'required'
+                '6', 'mt', 'text', 'MT', 'MT', '', $errors->has('mt'), $errors->first('mt'), ''
               ) !!}
 
               {!! __form::textbox_numeric(
-                '6', 'lkg', 'text', 'LKG *', 'LKG', '', $errors->has('lkg'), $errors->first('lkg'), 'required'
+                '6', 'lkg', 'text', 'LKG', 'LKG', '', $errors->has('lkg'), $errors->first('lkg'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
               {!! __form::textbox_numeric(
-                '6', 'milling_fee', 'text', 'Milling Fee *', 'Milling Fee', '', $errors->has('milling_fee'), $errors->first('milling_fee'), 'required'
+                '6', 'milling_fee', 'text', 'Milling Fee', 'Milling Fee', '', $errors->has('milling_fee'), $errors->first('milling_fee'), ''
               ) !!}
 
               {!! __form::select_static(
-                '6', 'payment_status', 'Payment Status *', '', ['Underpayment' => 'UP', 'Excess Payment ' => 'EP'], $errors->has('payment_status'), $errors->first('payment_status'), 'select2', 'style="width:100%;" required'
+                '6', 'payment_status', 'Payment Status', '', ['None' => 'N','Underpayment' => 'UP', 'Excess Payment ' => 'EP'], $errors->has('payment_status'), $errors->first('payment_status'), 'select2', 'style="width:100%;"'
               ) !!}
 
               <div class="col-md-12"></div>
