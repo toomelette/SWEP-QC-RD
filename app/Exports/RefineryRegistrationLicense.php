@@ -6,7 +6,7 @@ use App\Core\Helpers\__dataType;
 class RefineryRegistrationLicense{
     
 
-    const ADMINISTRATOR = 'HERMENEGILDO R. SERAFICA';
+    const ADMINISTRATOR = 'ENGR. HERMENEGILDO R. SERAFICA';
 
 
     // Mill License
@@ -141,12 +141,12 @@ class RefineryRegistrationLicense{
         // Signatory
         $textrun = $section->addTextRun();
 
-        $txt = '                                                                   '.self::ADMINISTRATOR;
+        $txt = '                                                         '.self::ADMINISTRATOR;
         $textrun->addText($txt, $title_bold);
             
         $textrun->addTextBreak();
 
-        $txt = '                                                                                  Administrator';
+        $txt = '                                                                               Administrator';
         $textrun->addText($txt, ['name' => 'Cambria','size' => 14]);
 
         $textrun->addTextBreak(3);  
