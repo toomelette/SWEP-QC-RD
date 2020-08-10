@@ -63,26 +63,40 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
         $mill_reg = new MillRegistration;
         $mill_reg->slug = $this->str->random(16);
         $mill_reg->mill_reg_id = $this->getMillRegIdInc();
-        $mill_reg->mill_id = $mill->mill_id;
+        $mill_reg->mill_id = $mill->mill_id;    
         $mill_reg->crop_year_id = $request->crop_year_id;
-        $mill_reg->license_no = $this->getLicenseNoInc($request);
-        $mill_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
-        $mill_reg->mt = $this->__dataType->string_to_num($request->mt);
-        $mill_reg->lkg = $this->__dataType->string_to_num($request->lkg);  
-        $mill_reg->milling_fee = $this->__dataType->string_to_num($request->milling_fee);   
-        $mill_reg->payment_status = $request->payment_status;    
-        $mill_reg->under_payment = $this->__dataType->string_to_num($request->under_payment); 
-        $mill_reg->excess_payment = $this->__dataType->string_to_num($request->excess_payment); 
-        $mill_reg->balance_fee = $this->__dataType->string_to_num($request->balance_fee); 
-        $mill_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
-        $mill_reg->start_milling = $this->__dataType->date_parse($request->start_milling);
-        $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
-        $mill_reg->planter_share = $this->__dataType->string_to_num($request->planter_share);
-        $mill_reg->mill_share = $this->__dataType->string_to_num($request->mill_share);
-        $mill_reg->other_share = $request->other_share;
+
+        if ($request->ft == 'rl') {
+            $mill_reg->license_no = $this->getLicenseNoInc($request);
+            $mill_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
+            $mill_reg->is_registered = true;
+        }
+
+        if ($request->ft == 'bs') {
+            $mill_reg->mt = $this->__dataType->string_to_num($request->mt);
+            $mill_reg->lkg = $this->__dataType->string_to_num($request->lkg);  
+            $mill_reg->milling_fee = $this->__dataType->string_to_num($request->milling_fee);   
+            $mill_reg->payment_status = $request->payment_status;    
+            $mill_reg->under_payment = $this->__dataType->string_to_num($request->under_payment); 
+            $mill_reg->excess_payment = $this->__dataType->string_to_num($request->excess_payment); 
+            $mill_reg->balance_fee = $this->__dataType->string_to_num($request->balance_fee); 
+            $mill_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
+            $mill_reg->start_milling = $this->__dataType->date_parse($request->start_milling);
+            $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
+            $mill_reg->is_billed = true;
+        }
+
+        if ($request->ft == 'ms') {
+            $mill_reg->planter_share = $this->__dataType->string_to_num($request->planter_share);
+            $mill_reg->mill_share = $this->__dataType->string_to_num($request->mill_share);
+            $mill_reg->other_share = $request->other_share;
+            $mill_reg->is_mill_share = true;
+        }
+            
         $mill_reg->cover_letter_address = $mill->cover_letter_address;
         $mill_reg->billing_address = $mill->billing_address;
         $mill_reg->license_address = $mill->license_address;
+
         $mill_reg->created_at = $this->carbon->now();
         $mill_reg->updated_at = $this->carbon->now();
         $mill_reg->ip_created = request()->ip();
@@ -98,9 +112,54 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
 
 
 
+    public function updateOnRenew($request, $mill){
+
+        $mill_reg = $this->findByMill_CropYear($request->crop_year_id, $mill->mill_id);
+        $mill_reg->crop_year_id = $request->crop_year_id;
+
+        if ($request->ft == 'rl') {
+            $mill_reg->license_no = $this->getLicenseNoInc($request);
+            $mill_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
+            $mill_reg->is_registered = true;
+        }
+
+        if ($request->ft == 'bs') {
+            $mill_reg->mt = $this->__dataType->string_to_num($request->mt);
+            $mill_reg->lkg = $this->__dataType->string_to_num($request->lkg);  
+            $mill_reg->milling_fee = $this->__dataType->string_to_num($request->milling_fee);   
+            $mill_reg->payment_status = $request->payment_status;    
+            $mill_reg->under_payment = $this->__dataType->string_to_num($request->under_payment); 
+            $mill_reg->excess_payment = $this->__dataType->string_to_num($request->excess_payment); 
+            $mill_reg->balance_fee = $this->__dataType->string_to_num($request->balance_fee); 
+            $mill_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
+            $mill_reg->start_milling = $this->__dataType->date_parse($request->start_milling);
+            $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
+            $mill_reg->is_billed = true;
+        }
+
+        if ($request->ft == 'ms') {
+            $mill_reg->planter_share = $this->__dataType->string_to_num($request->planter_share);
+            $mill_reg->mill_share = $this->__dataType->string_to_num($request->mill_share);
+            $mill_reg->other_share = $request->other_share;
+            $mill_reg->is_mill_share = true;
+        }
+
+        $mill_reg->updated_at = $this->carbon->now();
+        $mill_reg->ip_updated = request()->ip();
+        $mill_reg->user_updated = $this->auth->user()->user_id;
+        $mill_reg->save();
+        
+        return $mill_reg;
+
+    }
+
+
+
+
     public function update($request, $slug){
 
         $mill_reg = $this->findBySlug($slug);
+        $mill_reg->license_no = $request->license_no;
         $mill_reg->crop_year_id = $request->crop_year_id;
         $mill_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
         $mill_reg->mt = $this->__dataType->string_to_num($request->mt);
@@ -158,57 +217,82 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
 
 
 
-    public function getMillRegIdInc(){
+    public function findByMill_CropYear($crop_year_id, $mill_id){
 
-        $id = 'MR10001';
-        $mill_reg = $this->mill_reg->select('mill_reg_id')->orderBy('mill_reg_id', 'desc')->first();
-
-        if($mill_reg != null){
-            if($mill_reg->mill_reg_id != null){
-                $num = str_replace('MR', '', $mill_reg->mill_reg_id) + 1;
-                $id = 'MR' . $num;
-            }
-        }
-        
-        return $id;
-        
-    }
-
-
-
-
-    public function getLicenseNoInc($request){
-
-        $crop_year = $this->crop_year_repo->findByCropYearId($request->crop_year_id);
-        $crop_year_text = substr($crop_year->name, -4);
-        $mill_license_no = $crop_year_text.'-01';
-
-        $mill_reg = $this->mill_reg->select('license_no')
-                                   ->where('crop_year_id', $request->crop_year_id)
-                                   ->orderBy('license_no', 'desc')
-                                   ->first();
-
-         if($mill_reg != null){
-            if($mill_reg->license_no != null){
-                $num = str_replace($crop_year_text .'-', '', $mill_reg->license_no) + 01;
-                $num = str_pad($num, 2, '0', STR_PAD_LEFT);
-                $mill_license_no = $crop_year_text .'-' . $num; 
-            }
-        }
-
-        return $mill_license_no;
-        
-    }
-
-
-
-
-    public function isMillExistInCY($crop_year_id, $mill_id){
-
-        $mill_reg = $this->cache->remember('mill_registrations:isMillExistInCY:'.$crop_year_id.':'.$mill_id, 240, 
+        $mill_reg = $this->cache->remember('mill_registrations:findByMill_CropYear:'.$mill_id.':'.$crop_year_id, 240, 
             function() use ($crop_year_id, $mill_id){
                 return $this->mill_reg->where('crop_year_id', $crop_year_id)
                                       ->where('mill_id', $mill_id)
+                                      ->first();
+            }
+        ); 
+        
+        if(empty($mill_reg)){ abort(404); }
+
+        return $mill_reg;
+
+    }
+
+
+
+
+    public function isExistInCY($crop_year_id, $mill_id){
+
+        $mill_reg = $this->cache->remember('mill_registrations:isExistInCY:'.$crop_year_id.':'.$mill_id, 240, 
+            function() use ($crop_year_id, $mill_id){
+                return $this->mill_reg->where('crop_year_id', $crop_year_id)
+                                      ->where('mill_id', $mill_id)
+                                      ->exists();
+        }); 
+
+        return $mill_reg;
+
+    }
+
+
+
+
+    public function isLicenseExistInCY($crop_year_id, $mill_id){
+
+        $mill_reg = $this->cache->remember('mill_registrations:isLicenseExistInCY:'.$crop_year_id.':'.$mill_id, 240, 
+            function() use ($crop_year_id, $mill_id){
+                return $this->mill_reg->where('crop_year_id', $crop_year_id)
+                                      ->where('mill_id', $mill_id)
+                                      ->where('is_registered', true)
+                                      ->exists();
+        }); 
+
+        return $mill_reg;
+
+    }
+
+
+
+
+    public function isBillingExistInCY($crop_year_id, $mill_id){
+
+        $mill_reg = $this->cache->remember('mill_registrations:isBillingExistInCY:'.$crop_year_id.':'.$mill_id, 240, 
+            function() use ($crop_year_id, $mill_id){
+                return $this->mill_reg->where('crop_year_id', $crop_year_id)
+                                      ->where('mill_id', $mill_id)
+                                      ->where('is_billed', true)
+                                      ->exists();
+        }); 
+
+        return $mill_reg;
+
+    }
+
+
+
+
+    public function isMillShareExistInCY($crop_year_id, $mill_id){
+
+        $mill_reg = $this->cache->remember('mill_registrations:isMillShareExistInCY:'.$crop_year_id.':'.$mill_id, 240, 
+            function() use ($crop_year_id, $mill_id){
+                return $this->mill_reg->where('crop_year_id', $crop_year_id)
+                                      ->where('mill_id', $mill_id)
+                                      ->where('is_mill_share', true)
                                       ->exists();
         }); 
 
@@ -250,6 +334,51 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
                         ->with('mill', 'cropYear')
                         ->get();
                           
+    }
+
+
+
+
+    public function getMillRegIdInc(){
+
+        $id = 'MR10001';
+        $mill_reg = $this->mill_reg->select('mill_reg_id')->orderBy('mill_reg_id', 'desc')->first();
+
+        if($mill_reg != null){
+            if($mill_reg->mill_reg_id != null){
+                $num = str_replace('MR', '', $mill_reg->mill_reg_id) + 1;
+                $id = 'MR' . $num;
+            }
+        }
+        
+        return $id;
+        
+    }
+
+
+
+
+    public function getLicenseNoInc($request){
+
+        $crop_year = $this->crop_year_repo->findByCropYearId($request->crop_year_id);
+        $crop_year_text = substr($crop_year->name, -4);
+        $mill_license_no = $crop_year_text.'-01';
+
+        $mill_reg = $this->mill_reg->select('license_no')
+                                   ->where('crop_year_id', $request->crop_year_id)
+                                   ->orderBy('license_no', 'desc')
+                                   ->first();
+
+         if($mill_reg != null){
+            if($mill_reg->license_no != null){
+                $num = str_replace($crop_year_text .'-', '', $mill_reg->license_no) + 01;
+                $num = str_pad($num, 2, '0', STR_PAD_LEFT);
+                $mill_license_no = $crop_year_text .'-' . $num; 
+            }
+        }
+
+        return $mill_license_no;
+        
     }
 
 

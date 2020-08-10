@@ -69,17 +69,37 @@ class MillSubscriber extends BaseSubscriber{
 
 
 
-    public function onRenewLicense($mill, $mill_reg){
+    public function onRenewLicense($mill, $mill_reg, $request){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:mills:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:mills:findBySlug:'. $mill->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isMillExistInCY:'.$mill_reg->crop_year_id.':*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isExistInCY:'.$mill_reg->crop_year_id.':*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isLicenseExistInCY:'.$mill_reg->crop_year_id.':*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isBillingExistInCY:'.$mill_reg->crop_year_id.':*');
+        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isMillShareExistInCY:'.$mill_reg->crop_year_id.':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:fetchByMillId:'. $mill_reg->mill_id .':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:findBySlug:'. $mill_reg->slug);
 
-        $this->session->flash('MILL_RENEW_LICENSE_SUCCESS', 'The Mill has been successfully registered!');
-        $this->session->flash('MILL_RENEW_LICENSE_SUCCESS_SLUG', $mill->slug);
-        $this->session->flash('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG', $mill_reg->slug);
+        if (isset($request->ft)) {
+
+            if($request->ft == 'rl') {
+                $this->session->flash('RENEW_LICENSE_SUCCESS', 'The Mill has been successfully registered!');
+            }elseif ($request->ft == 'bs') {
+                $this->session->flash('BILLING_STATEMENT_SUCCESS', 'The Billing Statement has been successfully created!');
+            }elseif ($request->ft == 'ms') {
+                $this->session->flash('MILL_SHARE_SUCCESS', 'The Mill Share has been set successfully!');
+            }
+
+            $this->session->flash('MILL_RENEW_LICENSE_SUCCESS_SLUG', $mill->slug);
+            $this->session->flash('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG', $mill_reg->slug);
+
+        }else{
+
+            $this->session->flash('MILL_RENEW_LICENSE_SUCCESS', 'The Renewal Details has been successfully updated!');
+            $this->session->flash('MILL_RENEW_LICENSE_SUCCESS_SLUG', $mill->slug);
+            $this->session->flash('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG', $mill_reg->slug);
+
+        }
         
     }
 

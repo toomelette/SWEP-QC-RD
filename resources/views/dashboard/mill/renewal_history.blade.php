@@ -66,6 +66,7 @@
                     <a type="button" 
                        class="btn btn-default" 
                        id="update_button"  
+                       data-license_no="{{ $data->license_no }}"
                        data-crop_year_id="{{ $data->crop_year_id }}"
                        data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
                        data-mt="{{ $data->mt }}"
@@ -227,6 +228,12 @@
 
               <input type="hidden" name="_method" value="PUT">
 
+              {!! __form::textbox(
+                '6', 'license_no', 'text', 'License No.', 'License No.', '' , $errors->has('license_no'), $errors->first('license_no'), ''
+              ) !!}
+
+              <div class="col-md-12"></div>
+
               {!! __form::select_dynamic(
                 '6', 'crop_year_id', 'Crop Year *', '', $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
               ) !!}
@@ -360,6 +367,7 @@
         $("#mill_rl").modal("show");
         $("#mill_rl_body #mill_rl_form").attr("action", $(this).data("url"));
 
+        $("#mill_rl_form #license_no").val($(this).data("license_no"));
         $("#mill_rl_form #crop_year_id").val($(this).data("crop_year_id")).change();
         $("#mill_rl_form #reg_date").val($(this).data("reg_date"));
         $("#mill_rl_form #mt").val($(this).data("mt"));

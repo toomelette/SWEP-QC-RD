@@ -21,9 +21,11 @@ class MillFormRequest extends FormRequest{
     public function rules(){
 
         return [
-        
-            'name'=>'required|string|max:255',
-            'address'=>'required|string|max:255',
+            
+
+            'ft'=>'nullable|string|max:2',
+            'name'=>'nullable|string|max:255',
+            'address'=>'nullable|string|max:255',
             'address_second'=>'nullable|string|max:255',
             'address_third'=>'nullable|string|max:255',
             'tel_no'=>'nullable|string|max:45',

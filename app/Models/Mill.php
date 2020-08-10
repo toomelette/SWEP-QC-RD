@@ -56,12 +56,16 @@ class Mill extends Model{
     }
 
 
+
+
     public function displayLicensesStatusSpan($cy_id){
 
         $mill_reg = $this->millRegistration->where('crop_year_id', $cy_id)->first();
 
         if (!empty($mill_reg)) {
-            return '<span class="badge bg-green">Registered - '. $mill_reg->license_no .'</span>';
+            if ($mill_reg->is_registered == true) {
+                return '<span class="badge bg-green">Registered - '. $mill_reg->license_no .'</span>';
+            }
         }
 
         return '<span class="badge bg-red">Not Registered</span>';
@@ -73,16 +77,51 @@ class Mill extends Model{
 
     public function licensesStatus($cy_id){
 
-        $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id);
+        $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id)->first();
 
-        if (!$mill_reg->isEmpty()) {
-            return true;
+        if (!empty($mill_reg)) {
+            if ($mill_reg->is_registered == true) {
+                return $mill_reg->is_registered;
+            }
         }
 
         return false;
 
     }
 
+
+
+
+    public function billingStatus($cy_id){
+
+        $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id)->first();
+
+        if (!empty($mill_reg)) {
+            if ($mill_reg->is_billed == true) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+
+
+
+    public function millShareStatus($cy_id){
+
+        $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id)->first();
+
+        if (!empty($mill_reg)) {
+            if ($mill_reg->is_mill_share == true) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
 
 
 

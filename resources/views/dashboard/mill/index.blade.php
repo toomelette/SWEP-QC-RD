@@ -3,7 +3,9 @@
   $table_sessions = [ 
     Session::get('MILL_UPDATE_SUCCESS_SLUG'),
     Session::get('MILL_RENEW_LICENSE_SUCCESS_SLUG'),
-    Session::get('MILL_REG_IS_EXIST_SLUG'),
+    Session::get('LICENSE_IS_EXIST_SLUG'),
+    Session::get('BILLING_IS_EXIST_SLUG'),
+    Session::get('MILL_SHARE_IS_EXIST_SLUG'),
   ];
 
   $appended_requests = [
@@ -44,19 +46,31 @@
         <tr>
           <th>@sortablelink('name', 'Name')</th>
           <th>Current Crop Year License</th>
-          <th style="width: 500px">Action</th>
+          <th style="width: 700px">Action</th>
         </tr>
         @foreach($mills as $data) 
           <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
             <td id="mid-vert">{{ $data->name }}</td>
             <td id="mid-vert">{!! $data->displayLicensesStatusSpan($global_current_cy->crop_year_id) !!}</td>
             <td id="mid-vert">
+
               <div class="btn-group">
-                @if(in_array('dashboard.mill.files', $global_user_submenus))
-                  <a type="button" class="btn btn-default" id="files_button" href="{{ route('dashboard.mill.files', $data->slug) }}">
-                    <i class="fa fa-file-text-o"></i>&nbsp; Files
+                {{-- Billing Statement Button --}}
+                @if(in_array('dashboard.mill.renew_license_post', $global_user_submenus))
+                  <a type="button" 
+                     class="btn btn-default" 
+                     @if ($data->billingStatus($global_current_cy->crop_year_id) == false)
+                       id="bs_button" 
+                       data-action="bs" 
+                       data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
+                     @else
+                       disabled
+                     @endif
+                  >
+                    <i class="fa fa-usd"></i>&nbsp; Billing
                   </a>
                 @endif
+                {{-- Renew License Button --}}
                 @if(in_array('dashboard.mill.renew_license_post', $global_user_submenus))
                   <a type="button" 
                      class="btn btn-default" 
@@ -71,9 +85,34 @@
                     <i class="fa fa-certificate"></i>&nbsp; Renew License
                   </a>
                 @endif
+                {{-- Mill Share Button --}}
+                @if(in_array('dashboard.mill.renew_license_post', $global_user_submenus))
+                  <a type="button" 
+                     class="btn btn-default" 
+                     @if ($data->millShareStatus($global_current_cy->crop_year_id) == false)
+                       id="ms_button" 
+                       data-action="ms" 
+                       data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
+                     @else
+                       disabled
+                     @endif
+                  >
+                    <i class="fa fa-pie-chart"></i>&nbsp; Mill Share
+                  </a>
+                @endif
+              </div>
+
+              &nbsp;
+
+              <div class="btn-group">
                 @if(in_array('dashboard.mill.renewal_history', $global_user_submenus))
                   <a type="button" class="btn btn-default" id="rh_button" href="{{ route('dashboard.mill.renewal_history', $data->slug) }}">
                     <i class="fa fa-tasks"></i>&nbsp; Renewal History
+                  </a>
+                @endif
+                @if(in_array('dashboard.mill.files', $global_user_submenus))
+                  <a type="button" class="btn btn-default" id="files_button" href="{{ route('dashboard.mill.files', $data->slug) }}">
+                    <i class="fa fa-file-text-o"></i>&nbsp; Files
                   </a>
                 @endif
                 @if(in_array('dashboard.mill.edit', $global_user_submenus))
@@ -87,6 +126,7 @@
                   </a>
                 @endif
               </div>
+
             </td>
           </tr>
         @endforeach
@@ -122,35 +162,38 @@
   {!! __html::modal_delete('mill_delete') !!}
 
 
-  {{-- TR UPDATE SUCCESS --}}
-  @if(Session::has('MILL_RENEW_LICENSE_SUCCESS'))
+  {{-- LICENSE SUCCESS --}}
 
-    <div class="modal fade" id="mill_renew_success">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><i class="fa fa-fw fa-check"></i> Saved!</h4>
-          </div>
-          <div class="modal-body">
-            <p><p style="font-size: 17px;">{{ Session::get('MILL_RENEW_LICENSE_SUCCESS') }}</p></p>
-          </div>
-          <div class="modal-footer">
+  <div class="modal fade" id="mill_renew_success">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><i class="fa fa-fw fa-check"></i> Saved!</h4>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 17px;">
+            @if (Session::get('RENEW_LICENSE_SUCCESS'))
+              {{ Session::get('RENEW_LICENSE_SUCCESS') }}
+            @endif
+            @if (Session::get('BILLING_STATEMENT_SUCCESS'))
+              {{ Session::get('BILLING_STATEMENT_SUCCESS') }}
+            @endif
+            @if (Session::get('MILL_SHARE_SUCCESS'))
+              {{ Session::get('MILL_SHARE_SUCCESS') }}
+            @endif
+          </p>
+        </div>
+        <div class="modal-footer">
+
+          @if (Session::get('RENEW_LICENSE_SUCCESS'))
 
             @if (in_array('dashboard.mill_registration.dl_cover', $global_user_submenus))
               <a href="{{ route('dashboard.mill_registration.dl_cover', Session::get('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
                  type="button" 
                  class="btn btn-primary">
                 <i class="fa fa-download"></i> Cover Letter
-              </a>
-            @endif
-
-            @if (in_array('dashboard.mill_registration.dl_billing', $global_user_submenus))
-              <a href="{{ route('dashboard.mill_registration.dl_billing', Session::get('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
-                 type="button" 
-                 class="btn btn-primary">
-                <i class="fa fa-download"></i> Billing Statement
               </a>
             @endif
 
@@ -161,52 +204,71 @@
                 <i class="fa fa-download"></i> License
               </a>
             @endif
+            
+          @endif
 
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 
-          </div>
+          @if (Session::get('BILLING_STATEMENT_SUCCESS'))
+
+            @if (in_array('dashboard.mill_registration.dl_billing', $global_user_submenus))
+              <a href="{{ route('dashboard.mill_registration.dl_billing', Session::get('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG')) }}" 
+                 type="button" 
+                 class="btn btn-primary">
+                <i class="fa fa-download"></i> Billing Statement
+              </a>
+            @endif
+            
+          @endif
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
         </div>
       </div>
     </div>
+  </div>
 
-  @endif
 
-
-  {{-- MILL IS EXIST --}}  
-  @if(Session::has('MILL_REG_IS_EXIST'))
-    <div class="modal fade modal-danger" data-backdrop="static" id="mill_is_exist">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button class="close" data-dismiss="modal">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title">
-              <i class="fa fa-exclamation-triangle"></i> 
-              &nbsp;Whoops!
-            </h4>
-          </div>
-          <div class="modal-body">
-            <p style="font-size: 17px;">
-              {{ Session::get('MILL_REG_IS_EXIST') }}
-            </p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-outline" data-dismiss="modal">Close</button>
-          </div>
+  {{-- LICENSE IS EXIST --}}  
+  <div class="modal fade modal-danger" data-backdrop="static" id="mill_reg_is_exist">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">
+            <i class="fa fa-exclamation-triangle"></i> 
+            &nbsp;Whoops!
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 17px;">
+            @if(Session::has('LICENSE_IS_EXIST'))
+              {{ Session::get('LICENSE_IS_EXIST') }}
+            @endif
+            @if(Session::has('BILLING_IS_EXIST'))
+              {{ Session::get('BILLING_IS_EXIST') }}
+            @endif
+            @if(Session::has('MILL_SHARE_IS_EXIST'))
+              {{ Session::get('MILL_SHARE_IS_EXIST') }}
+            @endif
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
-  @endif
+  </div>
 
 
-  {{-- RENEW LICENSE FORM --}}
+  {{-- RENEW LICENSE FORM MODAL --}}
   <div class="modal fade" id="mill_rl" data-backdrop="static">
     <div class="modal-lg modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">
-            <i class="fa fa-certificate"></i> &nbsp;Mill License Renewal
+            <i class="fa fa-certificate"></i> &nbsp;Renew License
             <div class="pull-right">
               <code>Fields with asterisks(*) are required</code>
             </div> 
@@ -220,12 +282,54 @@
 
             <div class="row">
 
+              <input type="hidden" name="ft" value="rl">
+
               {!! __form::select_dynamic(
                 '6', 'crop_year_id', 'Crop Year *', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
               ) !!}
 
               {!! __form::datepicker(
                 '6', 'reg_date',  'Date of Registration *', old('reg_date') ? old('reg_date') : Carbon::now()->format('m/d/Y'), $errors->has('reg_date'), $errors->first('reg_date')
+              ) !!}
+
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save <i class="fa fa-fw fa-save"></i></button>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  {{-- BILLING STATEMENT MODAL --}}
+  <div class="modal fade" id="mill_bs" data-backdrop="static">
+    <div class="modal-lg modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <i class="fa fa-usd"></i> &nbsp;Billing Letter
+            <div class="pull-right">
+              <code>Fields with asterisks(*) are required</code>
+            </div> 
+          </h4>
+        </div>
+        <div class="modal-body" id="bs_body">
+          
+          <form method="POST" id="form" autocomplete="off">
+            
+            @csrf
+
+            <div class="row">
+
+              <input type="hidden" name="ft" value="bs">
+
+              {!! __form::select_dynamic(
+                '6', 'crop_year_id', 'Crop Year *', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
               ) !!}
 
               <div class="col-md-12"></div>
@@ -278,33 +382,63 @@
                 '6', 'end_milling',  'End of Milling', old('end_milling'), $errors->has('end_milling'), $errors->first('end_milling')
               ) !!}
 
+            </div>
 
-              <div class="col-md-12 no-padding">
+          </div>
 
-                <div class="col-md-12">
-                  <h4>Mill Share</h4>
-                </div>
+          <div class="modal-footer">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save <i class="fa fa-fw fa-save"></i></button>
+          </form>
 
-                <div class="col-md-12">
+        </div>
+      </div>
+    </div>
+  </div>
 
-                  {!! __form::textbox_numeric(
-                    '6', 'planter_share', 'text', 'Planter (%)', 'Planter (%)', old('planter_share') , $errors->has('planter_share'), $errors->first('planter_share'), ''
-                  ) !!}
 
-                  {!! __form::textbox_numeric(
-                    '6', 'mill_share', 'text', 'Mill (%)', 'Mill (%)', old('mill_share') , $errors->has('mill_share'), $errors->first('mill_share'), ''
-                  ) !!}
-                  
-                  <div class="col-md-12"></div>
 
-                  {!! __form::textbox(
-                    '12', 'other_share', 'text', 'Others (%)', 'Others (%)', old('other_share'), $errors->has('other_share'), $errors->first('other_share'), ''
-                  ) !!}
-                  
-                </div>
-                
-              </div>
+  {{-- MILL SHARE MODAL --}}
+  <div class="modal fade" id="mill_ms" data-backdrop="static">
+    <div class="modal-lg modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <i class="fa fa-pie-chart"></i> &nbsp;Mill Share
+            <div class="pull-right">
+              <code>Fields with asterisks(*) are required</code>
+            </div> 
+          </h4>
+        </div>
+        <div class="modal-body" id="ms_body">
+          
+          <form method="POST" id="form" autocomplete="off">
+            
+            @csrf
 
+            <div class="row">
+
+              <input type="hidden" name="ft" value="ms">
+
+              {!! __form::select_dynamic(
+                '6', 'crop_year_id', 'Crop Year *', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
+              ) !!}
+
+              <div class="col-md-12"></div>
+
+              {!! __form::textbox_numeric(
+                '6', 'planter_share', 'text', 'Planter (%)', 'Planter (%)', old('planter_share') , $errors->has('planter_share'), $errors->first('planter_share'), ''
+              ) !!}
+
+              {!! __form::textbox_numeric(
+                '6', 'mill_share', 'text', 'Mill (%)', 'Mill (%)', old('mill_share') , $errors->has('mill_share'), $errors->first('mill_share'), ''
+              ) !!}
+              
+              <div class="col-md-12"></div>
+
+              {!! __form::textbox(
+                '12', 'other_share', 'text', 'Others (%)', 'Others (%)', old('other_share'), $errors->has('other_share'), $errors->first('other_share'), ''
+              ) !!}
 
             </div>
 
@@ -337,9 +471,26 @@
     {!! __js::button_modal_confirm_delete_caller('mill_delete') !!}
 
 
-    // ON CLICK APPEAR MODAL
+    // ON CLICK RENEW LICENSE
     $(document).on("click", "#rl_button", function () {
       if($(this).data("action") == "rl"){
+        $('.select2').select2();
+        $('.datepicker').each(function(){
+            $(this).datepicker({
+                autoclose: true,
+                dateFormat: "mm/dd/yy",
+                orientation: "bottom"
+            });
+        });
+        $("#mill_rl").modal("show");
+        $("#rl_body #form").attr("action", $(this).data("url"));
+      }
+    });
+
+
+    // ON CLICK BILLING STATEMENT
+    $(document).on("click", "#bs_button", function () {
+      if($(this).data("action") == "bs"){
         $('.select2').select2();
         $('.datepicker').each(function(){
             $(this).datepicker({
@@ -354,8 +505,24 @@
             clearOnEmpty: true,
             allowNegative: true
         });
-        $("#mill_rl").modal("show");
-        $("#rl_body #form").attr("action", $(this).data("url"));
+        $("#mill_bs").modal("show");
+        $("#bs_body #form").attr("action", $(this).data("url"));
+      }
+    });
+
+
+    // ON CLICK MILL SHARE
+    $(document).on("click", "#ms_button", function () {
+      if($(this).data("action") == "ms"){
+        $('.select2').select2();
+        $(".priceformat").priceFormat({
+            prefix: "",
+            thousandsSeparator: ",",
+            clearOnEmpty: true,
+            allowNegative: true
+        });
+        $("#mill_ms").modal("show");
+        $("#ms_body #form").attr("action", $(this).data("url"));
       }
     });
 
@@ -540,12 +707,12 @@
       {!! __js::toast(Session::get('MILL_DELETE_SUCCESS')) !!}
     @endif
 
-    @if(Session::has('MILL_RENEW_LICENSE_SUCCESS'))
+    @if(Session::has('RENEW_LICENSE_SUCCESS') || Session::has('BILLING_STATEMENT_SUCCESS') || Session::has('MILL_SHARE_SUCCESS'))
       $('#mill_renew_success').modal('show');
     @endif
 
-    @if(Session::has('MILL_REG_IS_EXIST'))
-      $('#mill_is_exist').modal('show');
+    @if(Session::has('LICENSE_REG_IS_EXIST') || Session::has('BILLING_IS_EXIST') || Session::has('MILL_SHARE_IS_EXIST'))
+      $('#mill_reg_is_exist').modal('show');
     @endif
 
 

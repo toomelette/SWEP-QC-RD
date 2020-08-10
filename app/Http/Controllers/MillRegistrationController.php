@@ -60,7 +60,7 @@ class MillRegistrationController extends Controller{
         
         $mill_reg = $this->mill_reg_repo->update($request, $slug);
 
-        $this->event->fire('mill.renew_license', [ $mill_reg->mill, $mill_reg ]);
+        $this->event->fire('mill.renew_license', [ $mill_reg->mill, $mill_reg, $request ]);
         return redirect()->back();
 
     }

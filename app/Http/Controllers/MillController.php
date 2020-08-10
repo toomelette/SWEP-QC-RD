@@ -22,6 +22,7 @@ class MillController extends Controller{
     protected $mill_file_repo;
 
 
+
     public function __construct(MillInterface $mill_repo, 
                                 MillRegistrationInterface $mill_reg_repo,
                                 MillFileInterface $mill_file_repo){
@@ -30,7 +31,6 @@ class MillController extends Controller{
         $this->mill_file_repo = $mill_file_repo;
         parent::__construct();
     }
-
 
 
 
@@ -102,19 +102,40 @@ class MillController extends Controller{
 
         $mill = $this->mill_repo->findbySlug($slug);
 
-        if ($this->mill_reg_repo->isMillExistInCY($request->crop_year_id, $mill->mill_id)) {
-            
-            $this->session->flash('MILL_REG_IS_EXIST','The Mill is already registered in the current crop year and category!');
-            $this->session->flash('MILL_REG_IS_EXIST_SLUG', $slug);
-
-            $request->flash();
-            return redirect()->back();
-            
+        if ($request->ft == 'rl') {
+            if ($this->mill_reg_repo->isLicenseExistInCY($request->crop_year_id, $mill->mill_id)) {
+                $this->session->flash('LICENSE_IS_EXIST','The Mill License is already added in the current crop year');
+                $this->session->flash('LICENSE_IS_EXIST_SLUG', $slug);
+                $request->flash();
+                return redirect()->back();
+            }
         }
 
-        $mill_reg = $this->mill_reg_repo->store($request, $mill);
+        if ($request->ft == 'bs') {
+            if ($this->mill_reg_repo->isBillingExistInCY($request->crop_year_id, $mill->mill_id)) {
+                $this->session->flash('BILLING_IS_EXIST','The Billing Statement is already added in the current crop year');
+                $this->session->flash('BILLING_IS_EXIST_SLUG', $slug);
+                $request->flash();
+                return redirect()->back();
+            } 
+        }
 
-        $this->event->fire('mill.renew_license', [ $mill, $mill_reg ]);
+        if ($request->ft == 'ms') {
+            if ($this->mill_reg_repo->isMillShareExistInCY($request->crop_year_id, $mill->mill_id)) {
+                $this->session->flash('MILL_SHARE_IS_EXIST','The Mill Share is already added in the current crop year');
+                $this->session->flash('MILL_SHARE_IS_EXIST_SLUG', $slug);
+                $request->flash();
+                return redirect()->back();
+            }
+        }
+
+        if (!$this->mill_reg_repo->isExistInCY($request->crop_year_id, $mill->mill_id)) {
+            $mill_reg = $this->mill_reg_repo->store($request, $mill);
+        }else{
+            $mill_reg = $this->mill_reg_repo->updateOnRenew($request, $mill);
+        }
+
+        $this->event->fire('mill.renew_license', [ $mill, $mill_reg, $request ]);
         return redirect()->back();
 
     }

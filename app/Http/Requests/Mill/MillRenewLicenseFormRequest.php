@@ -15,22 +15,23 @@ class MillRenewLicenseFormRequest extends FormRequest{
     public function rules(){
 
         return [
-            
-            'crop_year_id'=>'required|string|max:11',
-            'reg_date' => 'required|date_format:"m/d/Y"',
-            'mt'=>'nullable|string|max:21',
-            'lkg'=>'nullable|string|max:21',
-            'milling_fee'=>'nullable|string|max:21',
-            'payment_status'=>'nullable|string|max:5',
-            'under_payment'=>'nullable|string|max:21',
-            'excess_payment'=>'nullable|string|max:21',
-            'balance_fee'=>'nullable|string|max:21',
-            'rated_capacity'=>'nullable|string|max:21',
-            'start_milling' => 'nullable|date_format:"m/d/Y"',
-            'end_milling' => 'nullable|date_format:"m/d/Y"',
-            'mill_share'=>'nullable|string|max:6',
-            'planter_share'=>'nullable|string|max:6',
-            'other_share'=>'nullable|string|max:90',
+
+            'license_no'=>'sometimes|nullable|string|max:45',
+            'crop_year_id'=>'sometimes|required|string|max:11',
+            'reg_date' => 'sometimes|required|date_format:"m/d/Y"',
+            'mt'=>'sometimes|nullable|string|max:21',
+            'lkg'=>'sometimes|nullable|string|max:21',
+            'milling_fee'=>'sometimes|nullable|string|max:21',
+            'payment_status'=>'sometimes|nullable|string|max:5',
+            'under_payment'=>'sometimes|nullable|string|max:21',
+            'excess_payment'=>'sometimes|nullable|string|max:21',
+            'balance_fee'=>'sometimes|nullable|string|max:21',
+            'rated_capacity'=>'sometimes|nullable|string|max:21',
+            'start_milling' => 'sometimes|nullable|date_format:"m/d/Y"',
+            'end_milling' => 'sometimes|nullable|date_format:"m/d/Y"',
+            'mill_share'=>'sometimes|nullable|string|max:6',
+            'planter_share'=>'sometimes|nullable|string|max:6',
+            'other_share'=>'sometimes|nullable|string|max:90',
 
         ];
 
