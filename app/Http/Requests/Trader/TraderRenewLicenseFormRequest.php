@@ -16,8 +16,10 @@ class TraderRenewLicenseFormRequest extends FormRequest{
 
         return [
             
+
+            'control_no'=>'nullable|string|max:45',
             'crop_year_id'=>'required|string|max:11',
-            'trader_cat_id'=>'required|string|max:11',
+            'trader_cat_id'=>'nullable|string|max:11',
             'reg_date' => 'nullable|date_format:"m/d/Y"',
 
         ];

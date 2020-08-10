@@ -12,7 +12,7 @@
         <a href="{{ route('dashboard.trader_registration.dl_word_file', $trader_reg->slug) }}" 
            class="btn btn-md bg-blue"
            target="_blank">
-           <i class="fa fa-download"></i> Download Word File
+           <i class="fa fa-download"></i> License
         </a>
         &nbsp;
         {!! __html::back_button(['dashboard.trader.renewal_history']) !!}

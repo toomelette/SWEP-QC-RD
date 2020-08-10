@@ -86,6 +86,7 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
     public function update($request, $slug){
 
         $refinery_reg = $this->findBySlug($slug);
+        $refinery_reg->license_no = $request->license_no;
         $refinery_reg->crop_year_id = $request->crop_year_id;
         $refinery_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
         $refinery_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 

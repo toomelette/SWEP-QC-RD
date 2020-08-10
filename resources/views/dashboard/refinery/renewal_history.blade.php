@@ -68,6 +68,7 @@
                     <a type="button" 
                        class="btn btn-default" 
                        id="update_button"
+                       data-license_no="{{ $data->license_no }}"
                        data-crop_year_id="{{ $data->crop_year_id }}"
                        data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
                        data-rated_capacity="{{ $data->rated_capacity }}"
@@ -207,6 +208,10 @@
 
             <div class="row">
 
+              {!! __form::textbox(
+                '12', 'license_no', 'text', 'License No.', 'License No.', '' , $errors->has('license_no'), $errors->first('license_no'), ''
+              ) !!}
+
               {!! __form::select_dynamic(
                 '12', 'crop_year_id', 'Crop Year', '', $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
               ) !!}
@@ -264,6 +269,7 @@
         $("#update_refinery_reg").modal("show");
         $("#update_refinery_reg_body #update_refinery_reg_form").attr("action", $(this).data("url"));
 
+        $("#update_refinery_reg_form #license_no").val($(this).data("license_no"));
         $("#update_refinery_reg_form #crop_year_id").val($(this).data("crop_year_id")).change();
         $("#update_refinery_reg_form #reg_date").val($(this).data("reg_date"));
         $("#update_refinery_reg_form #rated_capacity").val($(this).data("rated_capacity"));
