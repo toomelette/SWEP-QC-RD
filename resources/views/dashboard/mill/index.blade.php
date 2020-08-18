@@ -5,7 +5,7 @@
     Session::get('MILL_RENEW_LICENSE_SUCCESS_SLUG'),
     Session::get('LICENSE_IS_EXIST_SLUG'),
     Session::get('BILLING_IS_EXIST_SLUG'),
-    Session::get('MILL_SHARE_IS_EXIST_SLUG'),
+    Session::get('CROP_EST_IS_EXIST_SLUG'),
   ];
 
   $appended_requests = [
@@ -91,15 +91,15 @@
                 @if(in_array('dashboard.mill.renew_license_post', $global_user_submenus))
                   <a type="button" 
                      class="btn btn-default" 
-                     @if ($data->millShareStatus($global_current_cy->crop_year_id) == false)
-                       id="ms_button" 
-                       data-action="ms" 
+                     @if ($data->cropEstStatus($global_current_cy->crop_year_id) == false)
+                       id="ce_button" 
+                       data-action="ce" 
                        data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
                      @else
                        disabled
                      @endif
                   >
-                    <i class="fa fa-pie-chart"></i>&nbsp; Mill Share
+                    <i class="fa fa-pie-chart"></i>&nbsp; Crop Estimate
                   </a>
                 @endif
               </div>
@@ -182,8 +182,8 @@
             @if (Session::get('BILLING_STATEMENT_SUCCESS'))
               {{ Session::get('BILLING_STATEMENT_SUCCESS') }}
             @endif
-            @if (Session::get('MILL_SHARE_SUCCESS'))
-              {{ Session::get('MILL_SHARE_SUCCESS') }}
+            @if (Session::get('CROP_EST_SUCCESS'))
+              {{ Session::get('CROP_EST_SUCCESS') }}
             @endif
           </p>
         </div>
@@ -251,8 +251,8 @@
             @if(Session::has('BILLING_IS_EXIST'))
               {{ Session::get('BILLING_IS_EXIST') }}
             @endif
-            @if(Session::has('MILL_SHARE_IS_EXIST'))
-              {{ Session::get('MILL_SHARE_IS_EXIST') }}
+            @if(Session::has('CROP_EST_IS_EXIST'))
+              {{ Session::get('CROP_EST_IS_EXIST') }}
             @endif
           </p>
         </div>
@@ -266,7 +266,7 @@
 
   {{-- RENEW LICENSE FORM MODAL --}}
   <div class="modal fade" id="mill_rl" data-backdrop="static">
-    <div class="modal-lg modal-dialog">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">
@@ -287,11 +287,11 @@
               <input type="hidden" name="ft" value="rl">
 
               {!! __form::select_dynamic(
-                '6', 'crop_year_id', 'Crop Year *', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
+                '12', 'crop_year_id', 'Crop Year *', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
               ) !!}
 
               {!! __form::datepicker(
-                '6', 'reg_date',  'Date of Registration *', old('reg_date') ? old('reg_date') : Carbon::now()->format('m/d/Y'), $errors->has('reg_date'), $errors->first('reg_date')
+                '12', 'reg_date',  'Date of Registration *', old('reg_date') ? old('reg_date') : Carbon::now()->format('m/d/Y'), $errors->has('reg_date'), $errors->first('reg_date')
               ) !!}
 
           </div>
@@ -370,20 +370,6 @@
                 '6', 'balance_fee', 'text', 'Balance', 'Balance', old('balance_fee') , $errors->has('balance_fee'), $errors->first('balance_fee'), ''
               ) !!}
 
-              {!! __form::textbox_numeric(
-                '6', 'rated_capacity', 'text', 'Rated Capacity', 'Rated Capacity', old('rated_capacity') , $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
-              ) !!}
-
-              <div class="col-md-12"></div>
-
-              {!! __form::datepicker(
-                '6', 'start_milling',  'Start of Milling', old('start_milling'), $errors->has('start_milling'), $errors->first('start_milling')
-              ) !!}
-
-              {!! __form::datepicker(
-                '6', 'end_milling',  'End of Milling', old('end_milling'), $errors->has('end_milling'), $errors->first('end_milling')
-              ) !!}
-
             </div>
 
           </div>
@@ -400,19 +386,19 @@
 
 
 
-  {{-- MILL SHARE MODAL --}}
-  <div class="modal fade" id="mill_ms" data-backdrop="static">
+  {{-- CROP ESTIMATE MODAL --}}
+  <div class="modal fade" id="mill_ce" data-backdrop="static">
     <div class="modal-lg modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">
-            <i class="fa fa-pie-chart"></i> &nbsp;Mill Share
+            <i class="fa fa-pie-chart"></i> &nbsp;Crop Estimate
             <div class="pull-right">
               <code>Fields with asterisks(*) are required</code>
             </div> 
           </h4>
         </div>
-        <div class="modal-body" id="ms_body">
+        <div class="modal-body" id="ce_body">
           
           <form method="POST" id="form" autocomplete="off">
             
@@ -420,7 +406,7 @@
 
             <div class="row">
 
-              <input type="hidden" name="ft" value="ms">
+              <input type="hidden" name="ft" value="ce">
 
               {!! __form::select_dynamic(
                 '6', 'crop_year_id', 'Crop Year *', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
@@ -435,11 +421,25 @@
               {!! __form::textbox_numeric(
                 '6', 'mill_share', 'text', 'Mill (%)', 'Mill (%)', old('mill_share') , $errors->has('mill_share'), $errors->first('mill_share'), ''
               ) !!}
-              
+
               <div class="col-md-12"></div>
 
               {!! __form::textbox(
-                '12', 'other_share', 'text', 'Others (%)', 'Others (%)', old('other_share'), $errors->has('other_share'), $errors->first('other_share'), ''
+                '6', 'other_share', 'text', 'Others (%)', 'Others (%)', old('other_share'), $errors->has('other_share'), $errors->first('other_share'), ''
+              ) !!}
+
+              {!! __form::textbox_numeric(
+                '6', 'rated_capacity', 'text', 'Rated Capacity', 'Rated Capacity', old('rated_capacity') , $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
+              ) !!}
+
+              <div class="col-md-12"></div>
+
+              {!! __form::datepicker(
+                '6', 'start_milling',  'Start of Milling', old('start_milling'), $errors->has('start_milling'), $errors->first('start_milling')
+              ) !!}
+
+              {!! __form::datepicker(
+                '6', 'end_milling',  'End of Milling', old('end_milling'), $errors->has('end_milling'), $errors->first('end_milling')
               ) !!}
 
             </div>
@@ -513,18 +513,25 @@
     });
 
 
-    // ON CLICK MILL SHARE
-    $(document).on("click", "#ms_button", function () {
-      if($(this).data("action") == "ms"){
+    // ON CLICK CROP ESTIMATE
+    $(document).on("click", "#ce_button", function () {
+      if($(this).data("action") == "ce"){
         $('.select2').select2();
+        $('.datepicker').each(function(){
+            $(this).datepicker({
+                autoclose: true,
+                dateFormat: "mm/dd/yy",
+                orientation: "bottom"
+            });
+        });
         $(".priceformat").priceFormat({
             prefix: "",
             thousandsSeparator: ",",
             clearOnEmpty: true,
             allowNegative: true
         });
-        $("#mill_ms").modal("show");
-        $("#ms_body #form").attr("action", $(this).data("url"));
+        $("#mill_ce").modal("show");
+        $("#ce_body #form").attr("action", $(this).data("url"));
       }
     });
 
@@ -709,11 +716,11 @@
       {!! __js::toast(Session::get('MILL_DELETE_SUCCESS')) !!}
     @endif
 
-    @if(Session::has('RENEW_LICENSE_SUCCESS') || Session::has('BILLING_STATEMENT_SUCCESS') || Session::has('MILL_SHARE_SUCCESS'))
+    @if(Session::has('RENEW_LICENSE_SUCCESS') || Session::has('BILLING_STATEMENT_SUCCESS') || Session::has('CROP_EST_SUCCESS'))
       $('#mill_renew_success').modal('show');
     @endif
 
-    @if(Session::has('LICENSE_REG_IS_EXIST') || Session::has('BILLING_IS_EXIST') || Session::has('MILL_SHARE_IS_EXIST'))
+    @if(Session::has('LICENSE_REG_IS_EXIST') || Session::has('BILLING_IS_EXIST') || Session::has('CROP_EST_IS_EXIST'))
       $('#mill_reg_is_exist').modal('show');
     @endif
 

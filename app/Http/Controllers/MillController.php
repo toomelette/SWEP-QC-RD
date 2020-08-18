@@ -120,10 +120,10 @@ class MillController extends Controller{
             } 
         }
 
-        if ($request->ft == 'ms') {
-            if ($this->mill_reg_repo->isMillShareExistInCY($request->crop_year_id, $mill->mill_id)) {
-                $this->session->flash('MILL_SHARE_IS_EXIST','The Mill Share is already added in the current crop year');
-                $this->session->flash('MILL_SHARE_IS_EXIST_SLUG', $slug);
+        if ($request->ft == 'ce') {
+            if ($this->mill_reg_repo->isCropEstExistInCY($request->crop_year_id, $mill->mill_id)) {
+                $this->session->flash('CROP_EST_IS_EXIST','The Crop Estimate is already added in the current crop year');
+                $this->session->flash('CROP_EST_IS_EXIST_SLUG', $slug);
                 $request->flash();
                 return redirect()->back();
             }

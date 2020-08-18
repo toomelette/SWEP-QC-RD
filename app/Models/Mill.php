@@ -77,7 +77,7 @@ class Mill extends Model{
 
     public function licensesStatus($cy_id){
 
-        $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id)->first();
+        $mill_reg = $this->millRegistration->where('crop_year_id', $cy_id)->first();
 
         if (!empty($mill_reg)) {
             if ($mill_reg->is_registered == true) {
@@ -94,7 +94,7 @@ class Mill extends Model{
 
     public function billingStatus($cy_id){
 
-        $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id)->first();
+        $mill_reg = $this->millRegistration->where('crop_year_id', $cy_id)->first();
 
         if (!empty($mill_reg)) {
             if ($mill_reg->is_billed == true) {
@@ -109,12 +109,12 @@ class Mill extends Model{
 
 
 
-    public function millShareStatus($cy_id){
+    public function cropEstStatus($cy_id){
 
-        $mill_reg = $this->MillRegistration->where('crop_year_id', $cy_id)->first();
+        $mill_reg = $this->millRegistration->where('crop_year_id', $cy_id)->first();
 
         if (!empty($mill_reg)) {
-            if ($mill_reg->is_mill_share == true) {
+            if ($mill_reg->is_crop_est == true) {
                 return true;
             }
         }

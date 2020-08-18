@@ -80,17 +80,17 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
             $mill_reg->under_payment = $this->__dataType->string_to_num($request->under_payment); 
             $mill_reg->excess_payment = $this->__dataType->string_to_num($request->excess_payment); 
             $mill_reg->balance_fee = $this->__dataType->string_to_num($request->balance_fee); 
-            $mill_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
-            $mill_reg->start_milling = $this->__dataType->date_parse($request->start_milling);
-            $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
             $mill_reg->is_billed = true;
         }
 
-        if ($request->ft == 'ms') {
+        if ($request->ft == 'ce') {
             $mill_reg->planter_share = $this->__dataType->string_to_num($request->planter_share);
             $mill_reg->mill_share = $this->__dataType->string_to_num($request->mill_share);
             $mill_reg->other_share = $request->other_share;
-            $mill_reg->is_mill_share = true;
+            $mill_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
+            $mill_reg->start_milling = $this->__dataType->date_parse($request->start_milling);
+            $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
+            $mill_reg->is_crop_est = true;
         }
             
         $mill_reg->cover_letter_address = $mill->cover_letter_address;
@@ -131,17 +131,17 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
             $mill_reg->under_payment = $this->__dataType->string_to_num($request->under_payment); 
             $mill_reg->excess_payment = $this->__dataType->string_to_num($request->excess_payment); 
             $mill_reg->balance_fee = $this->__dataType->string_to_num($request->balance_fee); 
-            $mill_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
-            $mill_reg->start_milling = $this->__dataType->date_parse($request->start_milling);
-            $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
             $mill_reg->is_billed = true;
         }
 
-        if ($request->ft == 'ms') {
+        if ($request->ft == 'ce') {
             $mill_reg->planter_share = $this->__dataType->string_to_num($request->planter_share);
             $mill_reg->mill_share = $this->__dataType->string_to_num($request->mill_share);
             $mill_reg->other_share = $request->other_share;
-            $mill_reg->is_mill_share = true;
+            $mill_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
+            $mill_reg->start_milling = $this->__dataType->date_parse($request->start_milling);
+            $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
+            $mill_reg->is_crop_est = true;
         }
 
         $mill_reg->updated_at = $this->carbon->now();
@@ -238,14 +238,9 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
 
     public function isExistInCY($crop_year_id, $mill_id){
 
-        $mill_reg = $this->cache->remember('mill_registrations:isExistInCY:'.$crop_year_id.':'.$mill_id, 240, 
-            function() use ($crop_year_id, $mill_id){
-                return $this->mill_reg->where('crop_year_id', $crop_year_id)
-                                      ->where('mill_id', $mill_id)
-                                      ->exists();
-        }); 
-
-        return $mill_reg;
+        return $this->mill_reg->where('crop_year_id', $crop_year_id)
+                              ->where('mill_id', $mill_id)
+                              ->exists();
 
     }
 
@@ -254,15 +249,10 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
 
     public function isLicenseExistInCY($crop_year_id, $mill_id){
 
-        $mill_reg = $this->cache->remember('mill_registrations:isLicenseExistInCY:'.$crop_year_id.':'.$mill_id, 240, 
-            function() use ($crop_year_id, $mill_id){
-                return $this->mill_reg->where('crop_year_id', $crop_year_id)
-                                      ->where('mill_id', $mill_id)
-                                      ->where('is_registered', true)
-                                      ->exists();
-        }); 
-
-        return $mill_reg;
+        return $this->mill_reg->where('crop_year_id', $crop_year_id)
+                              ->where('mill_id', $mill_id)
+                              ->where('is_registered', true)
+                              ->exists();
 
     }
 
@@ -271,32 +261,22 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
 
     public function isBillingExistInCY($crop_year_id, $mill_id){
 
-        $mill_reg = $this->cache->remember('mill_registrations:isBillingExistInCY:'.$crop_year_id.':'.$mill_id, 240, 
-            function() use ($crop_year_id, $mill_id){
-                return $this->mill_reg->where('crop_year_id', $crop_year_id)
-                                      ->where('mill_id', $mill_id)
-                                      ->where('is_billed', true)
-                                      ->exists();
-        }); 
-
-        return $mill_reg;
+        return $this->mill_reg->where('crop_year_id', $crop_year_id)
+                              ->where('mill_id', $mill_id)
+                              ->where('is_billed', true)
+                              ->exists();
 
     }
 
 
 
 
-    public function isMillShareExistInCY($crop_year_id, $mill_id){
+    public function isCropEstExistInCY($crop_year_id, $mill_id){
 
-        $mill_reg = $this->cache->remember('mill_registrations:isMillShareExistInCY:'.$crop_year_id.':'.$mill_id, 240, 
-            function() use ($crop_year_id, $mill_id){
-                return $this->mill_reg->where('crop_year_id', $crop_year_id)
-                                      ->where('mill_id', $mill_id)
-                                      ->where('is_mill_share', true)
-                                      ->exists();
-        }); 
-
-        return $mill_reg;
+        return $this->mill_reg->where('crop_year_id', $crop_year_id)
+                              ->where('mill_id', $mill_id)
+                              ->where('is_crop_est', true)
+                              ->exists();
 
     }
 

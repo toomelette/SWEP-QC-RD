@@ -41,7 +41,7 @@ class MillRegistration extends Model{
         'license_address' => 1,
         'is_registered' => false,
         'is_billed' => false,
-        'is_mill_share' => false,
+        'is_crop_est' => false,
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',

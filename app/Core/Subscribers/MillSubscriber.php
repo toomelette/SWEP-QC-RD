@@ -73,10 +73,6 @@ class MillSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:mills:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:mills:findBySlug:'. $mill->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isExistInCY:'.$mill_reg->crop_year_id.':*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isLicenseExistInCY:'.$mill_reg->crop_year_id.':*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isBillingExistInCY:'.$mill_reg->crop_year_id.':*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isMillShareExistInCY:'.$mill_reg->crop_year_id.':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:fetchByMillId:'. $mill_reg->mill_id .':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:findBySlug:'. $mill_reg->slug);
 
@@ -86,8 +82,8 @@ class MillSubscriber extends BaseSubscriber{
                 $this->session->flash('RENEW_LICENSE_SUCCESS', 'The Mill has been successfully registered!');
             }elseif ($request->ft == 'bs') {
                 $this->session->flash('BILLING_STATEMENT_SUCCESS', 'The Billing Statement has been successfully created!');
-            }elseif ($request->ft == 'ms') {
-                $this->session->flash('MILL_SHARE_SUCCESS', 'The Mill Share has been set successfully!');
+            }elseif ($request->ft == 'ce') {
+                $this->session->flash('CROP_EST_SUCCESS', 'The Crop Estimate has been added successfully!');
             }
 
             $this->session->flash('MILL_RENEW_LICENSE_SUCCESS_SLUG', $mill->slug);

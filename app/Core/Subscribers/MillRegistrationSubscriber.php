@@ -29,10 +29,6 @@ class MillRegistrationSubscriber extends BaseSubscriber{
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:mills:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:mills:findBySlug:'. optional($mill_reg->mill)->slug .'');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isExistInCY:'.$mill_reg->crop_year_id.':*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isLicenseExistInCY:'.$mill_reg->crop_year_id.':*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isBillingExistInCY:'.$mill_reg->crop_year_id.':*');
-        $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:isMillShareExistInCY:'.$mill_reg->crop_year_id.':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:fetchByMillId:'. $mill_reg->mill_id .':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:mill_registrations:findBySlug:'. $mill_reg->slug);
 
