@@ -7,7 +7,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">Trader License Details</h2>
+      <h2 class="box-title">Mill License Details</h2>
       <div class="pull-right">
 
         @if (in_array('dashboard.mill_registration.dl_cover', $global_user_submenus))

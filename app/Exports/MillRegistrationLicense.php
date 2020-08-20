@@ -40,15 +40,15 @@ class MillRegistrationLicense{
         $txt = ' of ';
         $textrun->addText($txt, $par);
 
-        if (isset($mill_reg->license_address)) {
+        if (isset($mill_reg->mill->license_address)) {
             
-            if ($mill_reg->license_address == 1) {
+            if ($mill_reg->mill->license_address == 1) {
                 $mill_address = self::stringFilter(optional($mill_reg->mill)->address);
                 $textrun->addText($mill_address, ['name' => 'Cambria','size' => 12, 'italic' => true]);               
-            }elseif ($mill_reg->license_address == 2) {
+            }elseif ($mill_reg->mill->license_address == 2) {
                 $mill_address = ' of '.self::stringFilter(optional($mill_reg->mill)->address_second);
                 $textrun->addText($mill_address, ['name' => 'Cambria','size' => 12, 'italic' => true]); 
-            }elseif ($mill_reg->license_address == 3) {
+            }elseif ($mill_reg->mill->license_address == 3) {
                 $mill_address = ' of '.self::stringFilter(optional($mill_reg->mill)->address_third);
                 $textrun->addText($mill_address, ['name' => 'Cambria','size' => 12, 'italic' => true]);
             }

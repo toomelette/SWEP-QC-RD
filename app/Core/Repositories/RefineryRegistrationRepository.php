@@ -115,13 +115,10 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
 
     public function findBySlug($slug){
 
-        $refinery_reg = $this->cache->remember('refinery_registrations:findBySlug:' . $slug, 240, function() use ($slug){
-                return $this->refinery_reg->where('slug', $slug)
-                                      ->with('refinery', 'cropYear')
-                                      ->first();
-            }
-        ); 
-        
+        $refinery_reg = $this->refinery_reg->where('slug', $slug)
+                                           ->with('refinery', 'cropYear')
+                                           ->first();
+                                           
         if(empty($refinery_reg)){ abort(404); }
 
         return $refinery_reg;

@@ -52,17 +52,17 @@ class MillRegistrationBilling{
         $textrun->addText($name, ['name' => 'Cambria', 'size' => 12, 'bold' => true]);
         $textrun->addTextBreak();
 
-        if (isset($mill_reg->billing_address)) {
+        if (isset($mill_reg->mill->billing_address)) {
             
-            if ($mill_reg->billing_address == 1) {
+            if ($mill_reg->mill->billing_address == 1) {
                 $address = self::stringFilter(optional($mill_reg->mill)->address);
                 $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
                 $textrun->addTextBreak(1);              
-            }elseif ($mill_reg->billing_address == 2) {
+            }elseif ($mill_reg->mill->billing_address == 2) {
                 $address = self::stringFilter(optional($mill_reg->mill)->address_second);
                 $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
                 $textrun->addTextBreak(1);
-            }elseif ($mill_reg->billing_address == 3) {
+            }elseif ($mill_reg->mill->billing_address == 3) {
                 $address = self::stringFilter(optional($mill_reg->mill)->address_third);
                 $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
                 $textrun->addTextBreak(1);  

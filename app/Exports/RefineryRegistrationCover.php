@@ -50,17 +50,17 @@ class RefineryRegistrationCover{
         $textrun->addText($name, ['name' => 'Cambria', 'size' => 12, 'bold' => true,]);
         $textrun->addTextBreak();
 
-        if (isset($refinery_reg->cover_letter_address)) {
+        if (isset($refinery_reg->refinery->cover_letter_address)) {
             
-            if ($refinery_reg->cover_letter_address == 1) {
+            if ($refinery_reg->refinery->cover_letter_address == 1) {
                 $address = self::stringFilter(optional($refinery_reg->refinery)->address);
                 $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
                 $textrun->addTextBreak(2);           
-            }elseif ($refinery_reg->cover_letter_address == 2) {
+            }elseif ($refinery_reg->refinery->cover_letter_address == 2) {
                 $address = self::stringFilter(optional($refinery_reg->refinery)->address_second);
                 $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
                 $textrun->addTextBreak(2);
-            }elseif ($refinery_reg->cover_letter_address == 3) {
+            }elseif ($refinery_reg->refinery->cover_letter_address == 3) {
                 $address = self::stringFilter(optional($refinery_reg->refinery)->address_third);
                 $textrun->addText($address, ['name' => 'Cambria', 'size' => 12]);
                 $textrun->addTextBreak(2);   

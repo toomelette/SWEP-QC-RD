@@ -40,15 +40,15 @@ class RefineryRegistrationLicense{
         $txt = ' of ';
         $textrun->addText($txt, $par);
 
-        if (isset($refinery_reg->license_address)) {
+        if (isset($refinery_reg->refinery->license_address)) {
             
-            if ($refinery_reg->license_address == 1) {
+            if ($refinery_reg->refinery->license_address == 1) {
                 $refinery_address = self::stringFilter(optional($refinery_reg->refinery)->address);
                 $textrun->addText($refinery_address, ['name' => 'Cambria','size' => 12, 'italic'=> true ]);           
-            }elseif ($refinery_reg->license_address == 2) {
+            }elseif ($refinery_reg->refinery->license_address == 2) {
                 $refinery_address = self::stringFilter(optional($refinery_reg->refinery)->address_second);
                 $textrun->addText($refinery_address, ['name' => 'Cambria','size' => 12, 'italic'=> true ]);  
-            }elseif ($refinery_reg->license_address == 3) {
+            }elseif ($refinery_reg->refinery->license_address == 3) {
                 $refinery_address = self::stringFilter(optional($refinery_reg->refinery)->address_third);
                 $textrun->addText($refinery_address, ['name' => 'Cambria','size' => 12, 'italic'=> true ]);  
             }
