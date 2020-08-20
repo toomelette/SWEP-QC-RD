@@ -3,7 +3,8 @@
   $table_sessions = [ 
     Session::get('REFINERY_UPDATE_SUCCESS_SLUG'),
     Session::get('REFINERY_RENEW_LICENSE_SUCCESS_SLUG'),
-    Session::get('REFINERY_REG_IS_EXIST_SLUG'),
+    Session::get('LICENSE_IS_EXIST_SLUG'),
+    Session::get('RATED_CAPACITY_IS_EXIST_SLUG'),
   ];
 
   $appended_requests = [
@@ -46,7 +47,7 @@
         <tr>
           <th>@sortablelink('name', 'Name')</th>
           <th>Current Crop Year License</th>
-          <th style="width: 500px">Action</th>
+          <th style="width: 650px">Action</th>
         </tr>
         @foreach($refineries as $data) 
           <tr {!! __html::table_highlighter($data->slug, $table_sessions) !!} >
@@ -54,13 +55,11 @@
             <td id="mid-vert">
               {!! $data->displayLicensesStatusSpan($global_current_cy->crop_year_id) !!}
             </td>
+
             <td id="mid-vert">
+
               <div class="btn-group">
-                @if(in_array('dashboard.refinery.files', $global_user_submenus))
-                  <a type="button" class="btn btn-default" id="files_button" href="{{ route('dashboard.refinery.files', $data->slug) }}">
-                    <i class="fa fa-file-text-o"></i>&nbsp; Files
-                  </a>
-                @endif
+                {{-- Renew License --}}
                 @if(in_array('dashboard.refinery.renew_license_post', $global_user_submenus))
                   <a type="button" 
                      class="btn btn-default" 
@@ -75,9 +74,32 @@
                     <i class="fa fa-certificate"></i>&nbsp; Renew License
                   </a>
                 @endif
+                {{-- Rated Capacity --}}
+                @if(in_array('dashboard.refinery.renew_license_post', $global_user_submenus))
+                  <a type="button" 
+                     class="btn btn-default" 
+                     @if ($data->ratedCapacityStatus($global_current_cy->crop_year_id) == false)
+                       id="rc_button" 
+                       data-action="rc" 
+                       data-url="{{ route('dashboard.refinery.renew_license_post', $data->slug) }}"
+                     @else
+                       disabled
+                     @endif
+                  >
+                    <i class="fa fa-pie-chart"></i>&nbsp; Rated Capacity
+                  </a>
+                @endif
+              </div>
+
+              <div class="btn-group">
                 @if(in_array('dashboard.refinery.renewal_history', $global_user_submenus))
                   <a type="button" class="btn btn-default" id="rh_button" href="{{ route('dashboard.refinery.renewal_history', $data->slug) }}">
                     <i class="fa fa-tasks"></i>&nbsp; Renewal History
+                  </a>
+                @endif
+                @if(in_array('dashboard.refinery.files', $global_user_submenus))
+                  <a type="button" class="btn btn-default" id="files_button" href="{{ route('dashboard.refinery.files', $data->slug) }}">
+                    <i class="fa fa-file-text-o"></i>&nbsp; Files
                   </a>
                 @endif
                 @if(in_array('dashboard.refinery.edit', $global_user_submenus))
@@ -91,7 +113,9 @@
                   </a>
                 @endif
               </div>
+
             </td>
+
           </tr>
         @endforeach
         </table>
@@ -126,21 +150,28 @@
   {!! __html::modal_delete('refinery_delete') !!}
 
 
-  {{-- TR UPDATE SUCCESS --}}
-  @if(Session::has('REFINERY_RENEW_LICENSE_SUCCESS'))
+  {{-- REGISTRATION SUCCESS MODAL --}}
+  <div class="modal fade" id="refinery_renew_success">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title"><i class="fa fa-fw fa-check"></i> Saved!</h4>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 17px;">
+            @if (Session::get('RENEW_LICENSE_SUCCESS'))
+              {{ Session::get('RENEW_LICENSE_SUCCESS') }}
+            @endif
+            @if (Session::get('RATED_CAPACITY_SUCCESS'))
+              {{ Session::get('RATED_CAPACITY_SUCCESS') }}
+            @endif
+          </p>
+        </div>
+        <div class="modal-footer">
 
-    <div class="modal fade" id="refinery_renew_success">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><i class="fa fa-fw fa-check"></i> Saved!</h4>
-          </div>
-          <div class="modal-body">
-            <p><p style="font-size: 17px;">{{ Session::get('REFINERY_RENEW_LICENSE_SUCCESS') }}</p></p>
-          </div>
-          <div class="modal-footer">
+          @if (Session::get('RENEW_LICENSE_SUCCESS'))
 
             @if (in_array('dashboard.refinery_registration.dl_cover', $global_user_submenus))
               <a href="{{ route('dashboard.refinery_registration.dl_cover', Session::get('REFINERY_RENEW_LICENSE_SUCCESS_RR_SLUG')) }}" 
@@ -158,42 +189,45 @@
               </a>
             @endif
 
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          @endif
 
-          </div>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
         </div>
       </div>
     </div>
-
-  @endif
+  </div>
 
 
   {{-- REFINERY IS EXIST --}}  
-  @if(Session::has('REFINERY_REG_IS_EXIST'))
-    <div class="modal fade modal-danger" data-backdrop="static" id="refinery_is_exist">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button class="close" data-dismiss="modal">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title">
-              <i class="fa fa-exclamation-triangle"></i> 
-              &nbsp;Whoops!
-            </h4>
-          </div>
-          <div class="modal-body">
-            <p style="font-size: 17px;">
-              {{ Session::get('REFINERY_REG_IS_EXIST') }}
-            </p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-outline" data-dismiss="modal">Close</button>
-          </div>
+  <div class="modal fade modal-danger" data-backdrop="static" id="refinery_is_exist">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">
+            <i class="fa fa-exclamation-triangle"></i> 
+            &nbsp;Whoops!
+          </h4>
+        </div>
+        <div class="modal-body">
+          <p style="font-size: 17px;">
+            @if(Session::has('LICENSE_IS_EXIST'))
+              {{ Session::get('LICENSE_IS_EXIST') }}
+            @endif
+            @if(Session::has('RATED_CAPACITY_IS_EXIST'))
+              {{ Session::get('RATED_CAPACITY_IS_EXIST') }}
+            @endif
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
-  @endif
+  </div>
 
 
   {{-- RENEW LICENSE FORM --}}
@@ -213,12 +247,52 @@
 
             <div class="row">
 
+              <input type="hidden" name="ft" value="rl">
+
               {!! __form::select_dynamic(
                 '12', 'crop_year_id', 'Crop Year', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
               ) !!}
 
               {!! __form::datepicker(
                 '12', 'reg_date',  'Date of Registration', old('reg_date') ? old('reg_date') : Carbon::now()->format('m/d/Y'), $errors->has('reg_date'), $errors->first('reg_date')
+              ) !!}
+
+            </div>
+
+          </div>
+
+          <div class="modal-footer">
+            <button class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save <i class="fa fa-fw fa-save"></i></button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {{-- RATED CAPACITY FORM --}}
+  <div class="modal fade" id="refinery_rc" data-backdrop="static">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">
+            <i class="fa fa-pie-chart"></i> &nbsp;Refinery Rated Capacity
+          </h4>
+        </div>
+        <div class="modal-body" id="rc_body">
+
+          <form method="POST" id="form" autocomplete="off">
+            
+            @csrf
+
+            <div class="row">
+
+              <input type="hidden" name="ft" value="rc">
+
+              {!! __form::select_dynamic(
+                '12', 'crop_year_id', 'Crop Year', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
               ) !!}
 
               {!! __form::textbox_numeric(
@@ -256,7 +330,7 @@
     {!! __js::button_modal_confirm_delete_caller('refinery_delete') !!}
 
 
-    // ON CLICK APPEAR MODAL
+    // ON CLICK RENEW LICENSE
     $(document).on("click", "#rl_button", function () {
       if($(this).data("action") == "rl"){
         $('.select2').select2();
@@ -267,14 +341,24 @@
             orientation: "bottom"
           });
         });
+        $("#refinery_rl").modal("show");
+        $("#rl_body #form").attr("action", $(this).data("url"));
+      }
+    });
+
+
+    // ON CLICK RATED CAPACITY
+    $(document).on("click", "#rc_button", function () {
+      if($(this).data("action") == "rc"){
+        $('.select2').select2();
         $(".priceformat").priceFormat({
             prefix: "",
             thousandsSeparator: ",",
             clearOnEmpty: true,
             allowNegative: true
         });
-        $("#refinery_rl").modal("show");
-        $("#rl_body #form").attr("action", $(this).data("url"));
+        $("#refinery_rc").modal("show");
+        $("#rc_body #form").attr("action", $(this).data("url"));
       }
     });
 
@@ -435,11 +519,11 @@
       {!! __js::toast(Session::get('REFINERY_DELETE_SUCCESS')) !!}
     @endif
 
-    @if(Session::has('REFINERY_RENEW_LICENSE_SUCCESS'))
+    @if(Session::has('RENEW_LICENSE_SUCCESS') || Session::has('RATED_CAPACITY_SUCCESS'))
       $('#refinery_renew_success').modal('show');
     @endif
 
-    @if(Session::has('REFINERY_REG_IS_EXIST'))
+    @if(Session::has('LICENSE_IS_EXIST') || Session::has('RATED_CAPACITY_IS_EXIST'))
       $('#refinery_is_exist').modal('show');
     @endif
 

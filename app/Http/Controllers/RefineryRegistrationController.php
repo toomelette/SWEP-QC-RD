@@ -79,7 +79,7 @@ class RefineryRegistrationController extends Controller{
         
         $refinery_reg = $this->refinery_reg_repo->update($request, $slug);
 
-        $this->event->fire('refinery.renew_license', [ $refinery_reg->refinery, $refinery_reg ]);
+        $this->event->fire('refinery.renew_license', [ $refinery_reg->refinery, $refinery_reg, $request ]);
         return redirect()->back();
 
     }

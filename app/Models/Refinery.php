@@ -70,10 +70,29 @@ class Refinery extends Model{
 
     public function licensesStatus($cy_id){
 
-        $refinery_reg = $this->refineryRegistration->where('crop_year_id', $cy_id);
+        $refinery_reg = $this->refineryRegistration->where('crop_year_id', $cy_id)->first();
 
-        if (!$refinery_reg->isEmpty()) {
-            return true;
+        if (!empty($refinery_reg)) {
+            if ($refinery_reg->is_registered == true) {
+                return true;
+            }
+        }
+
+        return false;
+
+    }
+
+
+
+
+    public function ratedCapacityStatus($cy_id){
+
+        $refinery_reg = $this->refineryRegistration->where('crop_year_id', $cy_id)->first();
+
+        if (!empty($refinery_reg)) {
+            if ($refinery_reg->is_rated_capacity == true) {
+                return true;
+            }
         }
 
         return false;

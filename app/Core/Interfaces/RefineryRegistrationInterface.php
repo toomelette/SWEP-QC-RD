@@ -12,11 +12,17 @@ interface RefineryRegistrationInterface {
 
 	public function update($request, $slug);
 
+	public function updateOnRenew($request, $slug);
+
 	public function destroy($slug);
 
 	public function findBySlug($slug);
 
-	public function isRefineryExistInCY($crop_year_id, $refinery_id);
+	public function isExistInCY($crop_year_id, $refinery_id);
+
+	public function isLicenseExistInCY($crop_year_id, $refinery_id);
+
+	public function isRatedCapacityExistInCY($crop_year_id, $refinery_id);
 
 	public function getByRegDate($df, $dt);
 

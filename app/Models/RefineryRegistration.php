@@ -24,6 +24,8 @@ class RefineryRegistration extends Model{
         'crop_year_id' => '',
         'license_no' => '',
         'reg_date' => null,
+        'is_registered' => false,
+        'is_rated_capacity' => false,
         'created_at' => null,
         'updated_at' => null,
         'ip_created' => '',

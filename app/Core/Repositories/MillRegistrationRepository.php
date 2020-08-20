@@ -114,7 +114,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
 
     public function updateOnRenew($request, $mill){
 
-        $mill_reg = $this->findByMill_CropYear($request->crop_year_id, $mill->mill_id);
+        $mill_reg = $this->findByCropYear($request->crop_year_id, $mill->mill_id);
         $mill_reg->crop_year_id = $request->crop_year_id;
 
         if ($request->ft == 'rl') {
@@ -213,15 +213,11 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
 
 
 
-    public function findByMill_CropYear($crop_year_id, $mill_id){
+    public function findByCropYear($crop_year_id, $mill_id){
 
-        $mill_reg = $this->cache->remember('mill_registrations:findByMill_CropYear:'.$mill_id.':'.$crop_year_id, 240, 
-            function() use ($crop_year_id, $mill_id){
-                return $this->mill_reg->where('crop_year_id', $crop_year_id)
-                                      ->where('mill_id', $mill_id)
-                                      ->first();
-            }
-        ); 
+        $mill_reg = $this->mill_reg->where('crop_year_id', $crop_year_id)
+                                   ->where('mill_id', $mill_id)
+                                   ->first();
         
         if(empty($mill_reg)){ abort(404); }
 

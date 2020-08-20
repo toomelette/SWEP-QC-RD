@@ -81,7 +81,7 @@ class Mill extends Model{
 
         if (!empty($mill_reg)) {
             if ($mill_reg->is_registered == true) {
-                return $mill_reg->is_registered;
+                return true;
             }
         }
 

@@ -102,19 +102,31 @@ class RefineryController extends Controller{
 
         $refinery = $this->refinery_repo->findbySlug($slug);
 
-        if ($this->refinery_reg_repo->isRefineryExistInCY($request->crop_year_id, $refinery->refinery_id)) {
-            
-            $this->session->flash('MILL_REG_IS_EXIST','The Refinery is already registered in the current crop year and category!');
-            $this->session->flash('MILL_REG_IS_EXIST_SLUG', $slug);
-
-            $request->flash();
-            return redirect()->back();
-            
+        if ($request->ft == 'rl') {
+            if ($this->refinery_reg_repo->isLicenseExistInCY($request->crop_year_id, $refinery->refinery_id)) {
+                $this->session->flash('LICENSE_IS_EXIST','The Refinery License is already added in the current crop year');
+                $this->session->flash('LICENSE_IS_EXIST_SLUG', $slug);
+                $request->flash();
+                return redirect()->back();
+            }
         }
 
-        $refinery_reg = $this->refinery_reg_repo->store($request, $refinery);
+        if ($request->ft == 'rc') {
+            if ($this->refinery_reg_repo->isRatedCapacityExistInCY($request->crop_year_id, $refinery->refinery_id)) {
+                $this->session->flash('RATED_CAPACITY_IS_EXIST','The Refinery Rated Capacity is already added in the current crop year');
+                $this->session->flash('RATED_CAPACITY_IS_EXIST_SLUG', $slug);
+                $request->flash();
+                return redirect()->back();
+            }
+        }
 
-        $this->event->fire('refinery.renew_license', [ $refinery, $refinery_reg ]);
+        if (!$this->refinery_reg_repo->isExistInCY($request->crop_year_id, $refinery->refinery_id)) {
+            $refinery_reg = $this->refinery_reg_repo->store($request, $refinery);
+        }else{
+            $refinery_reg = $this->refinery_reg_repo->updateOnRenew($request, $refinery);
+        }
+
+        $this->event->fire('refinery.renew_license', [ $refinery, $refinery_reg, $request ]);
         return redirect()->back();
 
     }

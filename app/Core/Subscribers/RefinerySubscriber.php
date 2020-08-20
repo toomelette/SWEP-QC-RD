@@ -69,7 +69,7 @@ class RefinerySubscriber extends BaseSubscriber{
 
 
 
-    public function onRenewLicense($refinery, $refinery_reg){
+    public function onRenewLicense($refinery, $refinery_reg, $request){
 
         $this->__cache->deletePattern(''. config('app.name') .'_cache:refineries:fetch:*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:refineries:findBySlug:'. $refinery->slug .'');
@@ -77,9 +77,24 @@ class RefinerySubscriber extends BaseSubscriber{
         $this->__cache->deletePattern(''. config('app.name') .'_cache:refinery_registrations:fetchByRefineryId:'. $refinery_reg->refinery_id .':*');
         $this->__cache->deletePattern(''. config('app.name') .'_cache:refinery_registrations:findBySlug:'. $refinery_reg->slug);
 
-        $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS', 'The Refinery has been successfully registered!');
-        $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS_SLUG', $refinery->slug);
-        $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS_RR_SLUG', $refinery_reg->slug);
+        if (isset($request->ft)) {
+
+            if($request->ft == 'rl') {
+                $this->session->flash('RENEW_LICENSE_SUCCESS', 'The Refinery has been successfully registered!');
+            }elseif ($request->ft == 'rc') {
+                $this->session->flash('RATED_CAPACITY_SUCCESS', 'The Rated Capacity has been successfully created!');
+            }
+
+            $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS_SLUG', $refinery->slug);
+            $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS_RR_SLUG', $refinery_reg->slug);
+
+        }else{
+
+            $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS', 'The Renewal Details has been successfully updated!');
+            $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS_SLUG', $refinery->slug);
+            $this->session->flash('REFINERY_RENEW_LICENSE_SUCCESS_RR_SLUG', $refinery_reg->slug);
+
+        }
         
     }
 

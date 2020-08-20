@@ -5,7 +5,6 @@ namespace App\Core\Repositories;
 use App\Core\BaseClasses\BaseRepository;
 use App\Core\Interfaces\RefineryRegistrationInterface;
 use App\Core\Interfaces\CropYearInterface;
-
 use App\Models\RefineryRegistration;
 
 
@@ -63,16 +62,54 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
         $refinery_reg->refinery_reg_id = $this->getRefineryRegIdInc();
         $refinery_reg->refinery_id = $refinery->refinery_id;
         $refinery_reg->crop_year_id = $request->crop_year_id;
-        $refinery_reg->license_no = $this->getLicenseNoInc($request);
-        $refinery_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
-        $refinery_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
+        
+        if ($request->ft == 'rl') {
+            $refinery_reg->license_no = $this->getLicenseNoInc($request);
+            $refinery_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
+            $refinery_reg->is_registered = true;
+        }
+
+        if ($request->ft == 'rc') {
+            $refinery_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity);
+            $refinery_reg->is_rated_capacity = true;   
+        }
+
         $refinery_reg->cover_letter_address = $refinery->cover_letter_address;
         $refinery_reg->license_address = $refinery->license_address;
+
         $refinery_reg->created_at = $this->carbon->now();
         $refinery_reg->updated_at = $this->carbon->now();
         $refinery_reg->ip_created = request()->ip();
         $refinery_reg->ip_updated = request()->ip();
         $refinery_reg->user_created = $this->auth->user()->user_id;
+        $refinery_reg->user_updated = $this->auth->user()->user_id;
+        $refinery_reg->save();
+        
+        return $refinery_reg;
+
+    }
+
+
+
+
+    public function updateOnRenew($request, $refinery){
+
+        $refinery_reg = $this->findByCropYear($request->crop_year_id, $refinery->refinery_id);
+        $refinery_reg->crop_year_id = $request->crop_year_id;
+        
+        if ($request->ft == 'rl') {
+            $refinery_reg->license_no = $this->getLicenseNoInc($request);
+            $refinery_reg->reg_date = $this->__dataType->date_parse($request->reg_date);
+            $refinery_reg->is_registered = true;
+        }
+
+        if ($request->ft == 'rc') {
+            $refinery_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity);
+            $refinery_reg->is_rated_capacity = true;
+        }
+
+        $refinery_reg->updated_at = $this->carbon->now();
+        $refinery_reg->ip_updated = request()->ip();
         $refinery_reg->user_updated = $this->auth->user()->user_id;
         $refinery_reg->save();
         
@@ -128,6 +165,57 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
 
 
 
+    public function findByCropYear($crop_year_id, $refinery_id){
+
+        $refinery_reg = $this->refinery_reg->where('crop_year_id', $crop_year_id)
+                                           ->where('refinery_id', $refinery_id)
+                                           ->first();
+        
+        if(empty($refinery_reg)){ abort(404); }
+
+        return $refinery_reg;
+
+    }
+
+
+
+
+
+    public function isExistInCY($crop_year_id, $refinery_id){
+
+        return $this->refinery_reg->where('crop_year_id', $crop_year_id)
+                                  ->where('refinery_id', $refinery_id)
+                                  ->exists();
+
+    }
+
+
+
+
+    public function isLicenseExistInCY($crop_year_id, $refinery_id){
+
+        return $this->refinery_reg->where('crop_year_id', $crop_year_id)
+                                  ->where('refinery_id', $refinery_id)
+                                  ->where('is_registered', true)
+                                  ->exists();
+
+    }
+
+
+
+
+    public function isRatedCapacityExistInCY($crop_year_id, $refinery_id){
+
+        return $this->refinery_reg->where('crop_year_id', $crop_year_id)
+                                  ->where('refinery_id', $refinery_id)
+                                  ->where('is_rated_capacity', true)
+                                  ->exists();
+
+    }
+
+
+
+
     public function getRefineryRegIdInc(){
 
         $id = 'RR10001';
@@ -171,24 +259,6 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
         return $refinery_license_no;
         
     }
-
-
-
-
-
-    public function isRefineryExistInCY($crop_year_id, $refinery_id){
-
-        $refinery_reg = $this->cache->remember('refinery_registrations:isRefineryExistInCY:'.$crop_year_id.':'.$refinery_id, 240, 
-            function() use ($crop_year_id, $refinery_id){
-                return $this->refinery_reg->where('crop_year_id', $crop_year_id)
-                                          ->where('refinery_id', $refinery_id)
-                                          ->exists();
-        }); 
-
-        return $refinery_reg;
-
-    }
-
 
 
 
