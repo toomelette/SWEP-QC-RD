@@ -39,8 +39,8 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
                     $refinery_reg->where('license_no', 'LIKE', '%'. $request->q .'%');
                 }
 
-                return $refinery_reg->select('crop_year_id', 'license_no', 'reg_date', 'rated_capacity', 'slug')
-                                    ->with('cropYear')
+                return $refinery_reg->select('refinery_id', 'crop_year_id', 'license_no', 'reg_date', 'rated_capacity', 'slug')
+                                    ->with('refinery', 'cropYear')
                                     ->where('refinery_id', $refinery_id)
                                     ->sortable()
                                     ->orderBy('reg_date', 'desc')

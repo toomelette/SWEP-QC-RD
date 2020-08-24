@@ -42,8 +42,8 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
                     $mill_reg->where('license_no', 'LIKE', '%'. $request->q .'%');
                 }
 
-                return $mill_reg->select('crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling', 'planter_share', 'mill_share', 'other_share', 'slug')
-                                  ->with('cropYear')
+                return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling', 'planter_share', 'mill_share', 'other_share', 'slug')
+                                  ->with('mill', 'cropYear')
                                   ->where('mill_id', $mill_id)
                                   ->sortable()
                                   ->orderBy('reg_date', 'desc')

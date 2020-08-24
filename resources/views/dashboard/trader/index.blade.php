@@ -55,27 +55,45 @@
               <td id="mid-vert">
                 <div class="btn-group">
                   @if(in_array('dashboard.trader.files', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="files_button" href="{{ route('dashboard.trader.files', $data->slug) }}">
+                    <a type="button" 
+                       class="btn btn-default" 
+                       id="files_button" 
+                       href="{{ route('dashboard.trader.files', $data->slug) }}">
                       <i class="fa fa-file-text-o"></i>&nbsp; Files
                     </a>
                   @endif
                   @if(in_array('dashboard.trader.renew_license_post', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="rl_button" data-action="rl" data-url="{{ route('dashboard.trader.renew_license_post', $data->slug) }}">
+                    <a type="button" 
+                       class="btn btn-default" 
+                       id="rl_button" 
+                       data-action="rl" 
+                       data-url="{{ route('dashboard.trader.renew_license_post', $data->slug) }}"
+                       data-name="{{ $data->name }}">
                       <i class="fa fa-certificate"></i>&nbsp; Renew License
                     </a>
                   @endif
                   @if(in_array('dashboard.trader.renewal_history', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="rh_button" href="{{ route('dashboard.trader.renewal_history', $data->slug) }}">
+                    <a type="button" 
+                       class="btn btn-default"  
+                       id="rh_button" 
+                       href="{{ route('dashboard.trader.renewal_history', $data->slug) }}">
                       <i class="fa fa-tasks"></i>&nbsp; Renewal History
                     </a>
                   @endif
                   @if(in_array('dashboard.trader.edit', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="edit_button" href="{{ route('dashboard.trader.edit', $data->slug) }}">
+                    <a type="button" 
+                       class="btn btn-default"
+                       id="edit_button"
+                       href="{{ route('dashboard.trader.edit', $data->slug) }}">
                       <i class="fa fa-pencil"></i>
                     </a>
                   @endif
                   @if(in_array('dashboard.trader.destroy', $global_user_submenus))
-                    <a type="button" class="btn btn-default" id="delete_button" data-action="delete" data-url="{{ route('dashboard.trader.destroy', $data->slug) }}">
+                    <a type="button" 
+                       class="btn btn-default" 
+                       id="delete_button" 
+                       data-action="delete" 
+                       data-url="{{ route('dashboard.trader.destroy', $data->slug) }}">
                       <i class="fa fa-trash"></i>
                     </a>
                   @endif
@@ -194,6 +212,10 @@
 
             <div class="row">
 
+              <div class="form-group col-md-12">
+                <h4>Trader Name: <span id="trader_name"></span></h4>
+              </div>
+
               {!! __form::select_dynamic(
                 '12', 'crop_year_id', 'Crop Year', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
               ) !!}
@@ -253,6 +275,7 @@
 
         $("#trader_rl").modal("show");
         $("#rl_body #form").attr("action", $(this).data("url"));
+        $("#trader_name").text($(this).data("name"));
         
       }
 

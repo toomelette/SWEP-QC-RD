@@ -67,6 +67,7 @@
                        id="rl_button" 
                        data-action="rl" 
                        data-url="{{ route('dashboard.refinery.renew_license_post', $data->slug) }}"
+                       data-name="{{ $data->name }}"
                      @else
                        disabled
                      @endif
@@ -82,6 +83,7 @@
                        id="rc_button" 
                        data-action="rc" 
                        data-url="{{ route('dashboard.refinery.renew_license_post', $data->slug) }}"
+                       data-name="{{ $data->name }}"
                      @else
                        disabled
                      @endif
@@ -247,6 +249,10 @@
 
             <div class="row">
 
+              <div class="form-group col-md-12">
+                <h4>Refinery: <span class="refinery_name"></span></h4>
+              </div>
+
               <input type="hidden" name="ft" value="rl">
 
               {!! __form::select_dynamic(
@@ -288,6 +294,10 @@
             @csrf
 
             <div class="row">
+
+              <div class="form-group col-md-12">
+                <h4>Refinery: <span class="refinery_name"></span></h4>
+              </div>
 
               <input type="hidden" name="ft" value="rc">
 
@@ -341,6 +351,7 @@
             orientation: "bottom"
           });
         });
+        $(".refinery_name").text($(this).data("name"));
         $("#refinery_rl").modal("show");
         $("#rl_body #form").attr("action", $(this).data("url"));
       }
@@ -357,6 +368,7 @@
             clearOnEmpty: true,
             allowNegative: true
         });
+        $(".refinery_name").text($(this).data("name"));
         $("#refinery_rc").modal("show");
         $("#rc_body #form").attr("action", $(this).data("url"));
       }

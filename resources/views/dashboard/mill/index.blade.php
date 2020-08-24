@@ -65,6 +65,7 @@
                        id="bs_button" 
                        data-action="bs" 
                        data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
+                       data-name="{{ $data->name }}"
                      @else
                        disabled
                      @endif
@@ -80,6 +81,7 @@
                        id="rl_button" 
                        data-action="rl" 
                        data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
+                       data-name="{{ $data->name }}"
                      @else
                        disabled
                      @endif
@@ -95,6 +97,7 @@
                        id="ce_button" 
                        data-action="ce" 
                        data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
+                       data-name="{{ $data->name }}"
                      @else
                        disabled
                      @endif
@@ -284,6 +287,10 @@
 
             <div class="row">
 
+              <div class="form-group col-md-12">
+                <h4>Mill: <span class="mill_name"></span></h4>
+              </div>
+
               <input type="hidden" name="ft" value="rl">
 
               {!! __form::select_dynamic(
@@ -327,6 +334,10 @@
             @csrf
 
             <div class="row">
+
+              <div class="form-group col-md-12">
+                <h4>Mill: <span class="mill_name"></span></h4>
+              </div>
 
               <input type="hidden" name="ft" value="bs">
 
@@ -406,6 +417,10 @@
 
             <div class="row">
 
+              <div class="form-group col-md-12">
+                <h4>Mill: <span class="mill_name"></span></h4>
+              </div>
+
               <input type="hidden" name="ft" value="ce">
 
               {!! __form::select_dynamic(
@@ -484,6 +499,8 @@
                 orientation: "bottom"
             });
         });
+
+        $(".mill_name").text($(this).data("name"));
         $("#mill_rl").modal("show");
         $("#rl_body #form").attr("action", $(this).data("url"));
       }
@@ -507,6 +524,8 @@
             clearOnEmpty: true,
             allowNegative: true
         });
+
+        $(".mill_name").text($(this).data("name"));
         $("#mill_bs").modal("show");
         $("#bs_body #form").attr("action", $(this).data("url"));
       }
@@ -530,6 +549,8 @@
             clearOnEmpty: true,
             allowNegative: true
         });
+
+        $(".mill_name").text($(this).data("name"));
         $("#mill_ce").modal("show");
         $("#ce_body #form").attr("action", $(this).data("url"));
       }

@@ -73,6 +73,7 @@
                     <a type="button" 
                        class="btn btn-default" 
                        id="update_button" 
+                       data-name="{{ optional($data->trader)->name }}"
                        data-control_no="{{ $data->control_no }}"
                        data-crop_year_id="{{ $data->crop_year_id }}" 
                        data-trader_cat_id="{{ $data->trader_cat_id }}"
@@ -204,6 +205,10 @@
 
             <div class="row">
 
+              <div class="form-group col-md-12">
+                <h4>Trader Name: <span id="trader_name"></span></h4>
+              </div>
+
               {!! __form::textbox(
                 '12', 'control_no', 'text', 'Control No.', 'Control No.', '' , $errors->has('control_no'), $errors->first('control_no'), ''
               ) !!}
@@ -266,6 +271,7 @@
         $("#update_trader_reg").modal("show");
         $("#update_trader_reg_body #update_trader_reg_form").attr("action", $(this).data("url"));
 
+        $("#trader_name").text($(this).data("name"));
         $("#update_trader_reg_form #control_no").val($(this).data("control_no"));
         $("#update_trader_reg_form #crop_year_id").val($(this).data("crop_year_id")).change();
         $("#update_trader_reg_form #trader_cat_id").val($(this).data("trader_cat_id")).change();

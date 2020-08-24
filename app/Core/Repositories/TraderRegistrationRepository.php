@@ -40,8 +40,8 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
                     $trader_reg->where('control_no', 'LIKE', '%'. $request->q .'%');
                 }
 
-                return $trader_reg->select('crop_year_id', 'trader_cat_id', 'control_no', 'reg_date', 'slug')
-                                  ->with('cropYear', 'traderCategory')
+                return $trader_reg->select('trader_id', 'crop_year_id', 'trader_cat_id', 'control_no', 'reg_date', 'slug')
+                                  ->with('trader', 'cropYear', 'traderCategory')
                                   ->where('trader_id', $trader_id)
                                   ->sortable()
                                   ->orderBy('reg_date', 'desc')

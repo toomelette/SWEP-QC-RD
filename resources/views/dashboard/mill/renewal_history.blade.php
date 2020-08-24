@@ -66,6 +66,7 @@
                     <a type="button" 
                        class="btn btn-default" 
                        id="update_button"  
+                       data-name="{{ optional($data->mill)->name }}"
                        data-license_no="{{ $data->license_no }}"
                        data-crop_year_id="{{ $data->crop_year_id }}"
                        data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
@@ -226,6 +227,10 @@
 
             <div class="row">
 
+              <div class="form-group col-md-12">
+                <h4>Mill: <span class="mill_name"></span></h4>
+              </div>
+
               <input type="hidden" name="_method" value="PUT">
 
               {!! __form::textbox(
@@ -365,6 +370,9 @@
       if($(this).data("action") == "update"){
 
         $("#mill_rl").modal("show");
+
+        $(".mill_name").text($(this).data("name"));
+        
         $("#mill_rl_body #mill_rl_form").attr("action", $(this).data("url"));
 
         $("#mill_rl_form #license_no").val($(this).data("license_no"));
