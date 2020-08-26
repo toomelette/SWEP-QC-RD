@@ -88,9 +88,20 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
             $mill_reg->mill_share = $this->__dataType->string_to_num($request->mill_share);
             $mill_reg->other_share = $request->other_share;
             $mill_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
+            $mill_reg->est_start_milling = $this->__dataType->date_parse($request->est_start_milling);
+            $mill_reg->est_end_milling = $this->__dataType->date_parse($request->est_end_milling);
             $mill_reg->start_milling = $this->__dataType->date_parse($request->start_milling);
             $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
-            $mill_reg->is_crop_est = true;
+            $mill_reg->molasses_tank_first = $this->__dataType->string_to_num($request->molasses_tank_first);
+            $mill_reg->molasses_tank_second = $this->__dataType->string_to_num($request->molasses_tank_second);
+            $mill_reg->gtcm_mt = $this->__dataType->string_to_num($request->gtcm_mt); 
+            $mill_reg->raw_mt = $this->__dataType->string_to_num($request->raw_mt); 
+            $mill_reg->raw_lkg = $this->__dataType->string_to_num($request->raw_lkg); 
+            $mill_reg->ah_plant_cane = $this->__dataType->string_to_num($request->ah_plant_cane); 
+            $mill_reg->ah_ratoon_cane = $this->__dataType->string_to_num($request->ah_ratoon_cane); 
+            $mill_reg->ap_plant_cane = $this->__dataType->string_to_num($request->ap_plant_cane); 
+            $mill_reg->ap_ratoon_cane = $this->__dataType->string_to_num($request->ap_ratoon_cane); 
+            $mill_reg->is_mill_lib = true;
         }
             
         $mill_reg->cover_letter_address = $mill->cover_letter_address;
@@ -141,7 +152,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
             $mill_reg->rated_capacity = $this->__dataType->string_to_num($request->rated_capacity); 
             $mill_reg->start_milling = $this->__dataType->date_parse($request->start_milling);
             $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
-            $mill_reg->is_crop_est = true;
+            $mill_reg->is_mill_lib = true;
         }
 
         $mill_reg->updated_at = $this->carbon->now();
@@ -267,7 +278,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
 
         return $this->mill_reg->where('crop_year_id', $crop_year_id)
                               ->where('mill_id', $mill_id)
-                              ->where('is_crop_est', true)
+                              ->where('is_mill_lib', true)
                               ->exists();
 
     }

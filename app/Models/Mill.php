@@ -109,12 +109,12 @@ class Mill extends Model{
 
 
 
-    public function cropEstStatus($cy_id){
+    public function millLibStatus($cy_id){
 
         $mill_reg = $this->millRegistration->where('crop_year_id', $cy_id)->first();
 
         if (!empty($mill_reg)) {
-            if ($mill_reg->is_crop_est == true) {
+            if ($mill_reg->is_mill_lib == true) {
                 return true;
             }
         }
