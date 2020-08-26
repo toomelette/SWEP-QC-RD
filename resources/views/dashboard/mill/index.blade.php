@@ -3,9 +3,6 @@
   $table_sessions = [ 
     Session::get('MILL_UPDATE_SUCCESS_SLUG'),
     Session::get('MILL_RENEW_LICENSE_SUCCESS_SLUG'),
-    Session::get('LICENSE_IS_EXIST_SLUG'),
-    Session::get('BILLING_IS_EXIST_SLUG'),
-    Session::get('CROP_EST_IS_EXIST_SLUG'),
   ];
 
   $appended_requests = [
@@ -68,7 +65,21 @@
                        data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
                        data-name="{{ $data->name }}"
                      @else
-                       disabled
+                       <?php
+                        $mr = $data->getCurrentMillRegistration($global_current_cy->crop_year_id);
+                       ?>
+                       id="bs_button" 
+                       data-action="bs" 
+                       data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
+                       data-name="{{ $data->name }}"
+                       data-crop_year_id="{{ $mr->crop_year_id }}"
+                       data-mt="{{ $mr->mt }}"
+                       data-lkg="{{ $mr->lkg }}"
+                       data-milling_fee="{{ $mr->milling_fee }}"
+                       data-payment_status="{{ $mr->payment_status }}"
+                       data-under_payment="{{ $mr->under_payment }}"
+                       data-excess_payment="{{ $mr->excess_payment }}"
+                       data-balance_fee="{{ $mr->balance_fee }}"
                      @endif
                   >
                     <i class="fa fa-usd"></i>&nbsp; Billing
@@ -85,7 +96,15 @@
                        data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
                        data-name="{{ $data->name }}"
                      @else
-                       disabled
+                       <?php
+                        $mr = $data->getCurrentMillRegistration($global_current_cy->crop_year_id);
+                       ?>
+                       id="rl_button" 
+                       data-action="rl" 
+                       data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
+                       data-name="{{ $data->name }}"
+                       data-crop_year_id="{{ $mr->crop_year_id }}"
+                       data-reg_date="{{ __dataType::date_parse($mr->reg_date, 'm/d/Y') }}"
                      @endif
                   >
                     <i class="fa fa-certificate"></i>&nbsp; Renew License
@@ -102,7 +121,31 @@
                        data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
                        data-name="{{ $data->name }}"
                      @else
-                       disabled
+                       <?php
+                        $mr = $data->getCurrentMillRegistration($global_current_cy->crop_year_id);
+                       ?>
+                       id="ml_button" 
+                       data-action="ml" 
+                       data-url="{{ route('dashboard.mill.renew_license_post', $data->slug) }}"
+                       data-name="{{ $data->name }}"
+                       data-crop_year_id="{{ $mr->crop_year_id }}"
+                       data-mill_share="{{ $mr->mill_share }}"
+                       data-planter_share="{{ $mr->planter_share }}"
+                       data-other_share="{{ $mr->other_share }}"  
+                       data-rated_capacity="{{ $mr->rated_capacity }}"
+                       data-est_start_milling="{{ __dataType::date_parse($mr->est_start_milling, 'm/d/Y') }}"
+                       data-est_end_milling="{{ __dataType::date_parse($mr->est_end_milling, 'm/d/Y') }}"
+                       data-start_milling="{{ __dataType::date_parse($mr->start_milling, 'm/d/Y') }}"
+                       data-end_milling="{{ __dataType::date_parse($mr->end_milling, 'm/d/Y') }}"
+                       data-molasses_tank_first="{{ $mr->molasses_tank_first }}"
+                       data-molasses_tank_second="{{ $mr->molasses_tank_second }}"
+                       data-gtcm_mt="{{ $mr->gtcm_mt }}"
+                       data-raw_mt="{{ $mr->raw_mt }}"
+                       data-raw_lkg="{{ $mr->raw_lkg }}"
+                       data-ah_plant_cane="{{ $mr->ah_plant_cane }}"
+                       data-ah_ratoon_cane="{{ $mr->ah_ratoon_cane }}"
+                       data-ap_plant_cane="{{ $mr->ap_plant_cane }}"
+                       data-ap_ratoon_cane="{{ $mr->ap_ratoon_cane }}"
                      @endif
                   >
                     <i class="fa fa-book"></i>&nbsp; Mill Library

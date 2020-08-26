@@ -18,9 +18,13 @@
             });
         });
 
-        $(".mill_name").text($(this).data("name"));
         $("#mill_rl").modal("show");
-        $("#rl_body #form").attr("action", $(this).data("url"));
+        $(".mill_name").text($(this).data("name"));
+        $("#rl_body #rl_form").attr("action", $(this).data("url"));
+
+        $("#rl_form #crop_year_id").val($(this).data("crop_year_id")).change();
+        $("#rl_form #reg_date").val($(this).data("reg_date"));
+
       }
     });
 
@@ -43,9 +47,19 @@
             allowNegative: true
         });
 
-        $(".mill_name").text($(this).data("name"));
         $("#mill_bs").modal("show");
-        $("#bs_body #form").attr("action", $(this).data("url"));
+        $(".mill_name").text($(this).data("name"));
+        $("#bs_body #bs_form").attr("action", $(this).data("url"));
+
+        $("#bs_form #crop_year_id").val($(this).data("crop_year_id")).change();
+        $("#bs_form #mt").val($(this).data("mt"));
+        $("#bs_form #lkg").val($(this).data("lkg"));
+        $("#bs_form #milling_fee").val($(this).data("milling_fee"));
+        $("#bs_form #payment_status").val($(this).data("payment_status")).change();
+        $("#bs_form #under_payment").val($(this).data("under_payment"));
+        $("#bs_form #excess_payment").val($(this).data("excess_payment"));
+        $("#bs_form #balance_fee").val($(this).data("balance_fee"));
+
       }
     });
 
@@ -68,9 +82,29 @@
             allowNegative: true
         });
 
-        $(".mill_name").text($(this).data("name"));
         $("#mill_ml").modal("show");
-        $("#ml_body #form").attr("action", $(this).data("url"));
+        $(".mill_name").text($(this).data("name"));
+        $("#ml_body #ml_form").attr("action", $(this).data("url"));
+
+        $("#ml_form #crop_year_id").val($(this).data("crop_year_id")).change();
+        $("#ml_form #mill_share").val($(this).data("mill_share"));
+        $("#ml_form #planter_share").val($(this).data("planter_share"));
+        $("#ml_form #other_share").val($(this).data("other_share"));
+        $("#ml_form #rated_capacity").val($(this).data("rated_capacity"));
+        $("#ml_form #est_start_milling").val($(this).data("est_start_milling"));
+        $("#ml_form #est_end_milling").val($(this).data("est_end_milling"));
+        $("#ml_form #start_milling").val($(this).data("start_milling"));
+        $("#ml_form #end_milling").val($(this).data("end_milling"));
+        $("#ml_form #molasses_tank_first").val($(this).data("molasses_tank_first"));
+        $("#ml_form #molasses_tank_second").val($(this).data("molasses_tank_second"));
+        $("#ml_form #gtcm_mt").val($(this).data("gtcm_mt"));
+        $("#ml_form #raw_mt").val($(this).data("raw_mt"));
+        $("#ml_form #raw_lkg").val($(this).data("raw_lkg"));
+        $("#ml_form #ah_plant_cane").val($(this).data("ah_plant_cane"));
+        $("#ml_form #ah_ratoon_cane").val($(this).data("ah_ratoon_cane"));
+        $("#ml_form #ap_plant_cane").val($(this).data("ap_plant_cane"));
+        $("#ml_form #ap_ratoon_cane").val($(this).data("ap_ratoon_cane"));
+
       }
     });
 
@@ -255,12 +289,8 @@
       {!! __js::toast(Session::get('MILL_DELETE_SUCCESS')) !!}
     @endif
 
-    @if(Session::has('RENEW_LICENSE_SUCCESS') || Session::has('BILLING_STATEMENT_SUCCESS') || Session::has('CROP_EST_SUCCESS'))
+    @if(Session::has('RENEW_LICENSE_SUCCESS') || Session::has('BILLING_STATEMENT_SUCCESS') || Session::has('MILL_LIB_SUCCESS'))
       $('#mill_renew_success').modal('show');
-    @endif
-
-    @if(Session::has('LICENSE_REG_IS_EXIST') || Session::has('BILLING_IS_EXIST') || Session::has('CROP_EST_IS_EXIST'))
-      $('#mill_reg_is_exist').modal('show');
     @endif
 
 

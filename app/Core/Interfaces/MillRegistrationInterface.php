@@ -20,12 +20,6 @@ interface MillRegistrationInterface {
 	
 	public function isExistInCY($crop_year_id, $mill_id);
 
-	public function isLicenseExistInCY($crop_year_id, $mill_id);
-	
-	public function isBillingExistInCY($crop_year_id, $mill_id);
-	
-	public function isCropEstExistInCY($crop_year_id, $mill_id);
-
 	public function getByRegDate($df, $dt);
 
 	public function getByCropYearId($cy_id);

@@ -53,6 +53,17 @@ class Refinery extends Model{
     }
 
 
+
+
+    public function getCurrentRefineryRegistration($cy_id){
+
+        return $this->refineryRegistration->where('crop_year_id', $cy_id)->first();
+
+    }
+
+
+
+
     public function displayLicensesStatusSpan($cy_id){
 
         $refinery_reg = $this->refineryRegistration->where('crop_year_id', $cy_id)->first();

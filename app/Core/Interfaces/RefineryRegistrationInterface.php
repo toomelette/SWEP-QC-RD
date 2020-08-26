@@ -20,10 +20,6 @@ interface RefineryRegistrationInterface {
 
 	public function isExistInCY($crop_year_id, $refinery_id);
 
-	public function isLicenseExistInCY($crop_year_id, $refinery_id);
-
-	public function isRatedCapacityExistInCY($crop_year_id, $refinery_id);
-
 	public function getByRegDate($df, $dt);
 
 	public function getByCropYearId($cy_id);

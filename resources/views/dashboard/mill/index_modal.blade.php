@@ -1,7 +1,6 @@
   
 
 
-
   {!! __html::modal_delete('mill_delete') !!}
 
 
@@ -23,8 +22,8 @@
             @if (Session::get('BILLING_STATEMENT_SUCCESS'))
               {{ Session::get('BILLING_STATEMENT_SUCCESS') }}
             @endif
-            @if (Session::get('CROP_EST_SUCCESS'))
-              {{ Session::get('CROP_EST_SUCCESS') }}
+            @if (Session::get('MILL_LIB_SUCCESS'))
+              {{ Session::get('MILL_LIB_SUCCESS') }}
             @endif
           </p>
         </div>
@@ -72,43 +71,6 @@
 
 
 
-
-  {{-- LICENSE IS EXIST --}}  
-  <div class="modal fade modal-danger" data-backdrop="static" id="mill_reg_is_exist">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button class="close" data-dismiss="modal">
-            <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title">
-            <i class="fa fa-exclamation-triangle"></i> 
-            &nbsp;Whoops!
-          </h4>
-        </div>
-        <div class="modal-body">
-          <p style="font-size: 17px;">
-            @if(Session::has('LICENSE_IS_EXIST'))
-              {{ Session::get('LICENSE_IS_EXIST') }}
-            @endif
-            @if(Session::has('BILLING_IS_EXIST'))
-              {{ Session::get('BILLING_IS_EXIST') }}
-            @endif
-            @if(Session::has('CROP_EST_IS_EXIST'))
-              {{ Session::get('CROP_EST_IS_EXIST') }}
-            @endif
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-outline" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-
   {{-- RENEW LICENSE FORM MODAL --}}
   <div class="modal fade" id="mill_rl" data-backdrop="static">
     <div class="modal-dialog">
@@ -123,7 +85,7 @@
         </div>
         <div class="modal-body" id="rl_body">
           
-          <form method="POST" id="form" autocomplete="off">
+          <form method="POST" id="rl_form" autocomplete="off">
             
             @csrf
 
@@ -136,7 +98,7 @@
               <input type="hidden" name="ft" value="rl">
 
               {!! __form::select_dynamic(
-                '12', 'crop_year_id', 'Crop Year *', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
+                '12', 'crop_year_id', 'Crop Year *', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%;" required'
               ) !!}
 
               {!! __form::datepicker(
@@ -172,7 +134,7 @@
         </div>
         <div class="modal-body" id="bs_body">
           
-          <form method="POST" id="form" autocomplete="off">
+          <form method="POST" id="bs_form" autocomplete="off">
             
             @csrf
 
@@ -185,7 +147,7 @@
               <input type="hidden" name="ft" value="bs">
 
               {!! __form::select_dynamic(
-                '6', 'crop_year_id', 'Crop Year *', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'
+                '6', 'crop_year_id', 'Crop Year *', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%;" required'
               ) !!}
 
               <div class="col-md-12"></div>
@@ -241,7 +203,7 @@
 
 
 
-  {{-- CROP ESTIMATE MODAL --}}
+  {{-- MILL LIBRARY --}}
   <div class="modal fade" id="mill_ml" data-backdrop="static">
     <div class="modal-lg modal-dialog">
       <div class="modal-content">
@@ -255,7 +217,7 @@
         </div>
         <div class="modal-body" id="ml_body">
           
-          <form method="POST" id="form" autocomplete="off">
+          <form method="POST" id="ml_form" autocomplete="off">
             
             @csrf
 
@@ -265,7 +227,7 @@
                 <h4>Mill: <span class="mill_name"></span></h4>
               </div>
 
-              <input type="hidden" name="ft" value="ce">
+              <input type="hidden" name="ft" value="ml">
 
               {!! __form::select_dynamic(
                 '6', 'crop_year_id', 'Crop Year *', $global_current_cy->crop_year_id, $global_crop_years_all, 'crop_year_id', 'name', $errors->has('crop_year_id'), $errors->first('crop_year_id'), 'select2', 'style="width:100%; "required'

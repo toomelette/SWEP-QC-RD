@@ -102,24 +102,6 @@ class RefineryController extends Controller{
 
         $refinery = $this->refinery_repo->findbySlug($slug);
 
-        if ($request->ft == 'rl') {
-            if ($this->refinery_reg_repo->isLicenseExistInCY($request->crop_year_id, $refinery->refinery_id)) {
-                $this->session->flash('LICENSE_IS_EXIST','The Refinery License is already added in the current crop year');
-                $this->session->flash('LICENSE_IS_EXIST_SLUG', $slug);
-                $request->flash();
-                return redirect()->back();
-            }
-        }
-
-        if ($request->ft == 'rc') {
-            if ($this->refinery_reg_repo->isRatedCapacityExistInCY($request->crop_year_id, $refinery->refinery_id)) {
-                $this->session->flash('RATED_CAPACITY_IS_EXIST','The Refinery Rated Capacity is already added in the current crop year');
-                $this->session->flash('RATED_CAPACITY_IS_EXIST_SLUG', $slug);
-                $request->flash();
-                return redirect()->back();
-            }
-        }
-
         if (!$this->refinery_reg_repo->isExistInCY($request->crop_year_id, $refinery->refinery_id)) {
             $refinery_reg = $this->refinery_reg_repo->store($request, $refinery);
         }else{

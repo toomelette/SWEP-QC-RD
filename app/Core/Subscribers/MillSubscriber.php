@@ -82,8 +82,8 @@ class MillSubscriber extends BaseSubscriber{
                 $this->session->flash('RENEW_LICENSE_SUCCESS', 'The Mill has been successfully registered!');
             }elseif ($request->ft == 'bs') {
                 $this->session->flash('BILLING_STATEMENT_SUCCESS', 'The Billing Statement has been successfully created!');
-            }elseif ($request->ft == 'ce') {
-                $this->session->flash('CROP_EST_SUCCESS', 'The Crop Estimate has been added successfully!');
+            }elseif ($request->ft == 'ml') {
+                $this->session->flash('MILL_LIB_SUCCESS', 'The Mill Library has been added successfully!');
             }
 
             $this->session->flash('MILL_RENEW_LICENSE_SUCCESS_SLUG', $mill->slug);
@@ -94,9 +94,8 @@ class MillSubscriber extends BaseSubscriber{
             $this->session->flash('MILL_RENEW_LICENSE_SUCCESS', 'The Renewal Details has been successfully updated!');
             $this->session->flash('MILL_RENEW_LICENSE_SUCCESS_SLUG', $mill->slug);
             $this->session->flash('MILL_RENEW_LICENSE_SUCCESS_TR_SLUG', $mill_reg->slug);
-
         }
-        
+
     }
 
 

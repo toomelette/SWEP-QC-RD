@@ -28,6 +28,7 @@
         $("#mill_rl_form #license_no").val($(this).data("license_no"));
         $("#mill_rl_form #crop_year_id").val($(this).data("crop_year_id")).change();
         $("#mill_rl_form #reg_date").val($(this).data("reg_date"));
+
         $("#mill_rl_form #mt").val($(this).data("mt"));
         $("#mill_rl_form #lkg").val($(this).data("lkg"));
         $("#mill_rl_form #milling_fee").val($(this).data("milling_fee"));
@@ -35,12 +36,24 @@
         $("#mill_rl_form #under_payment").val($(this).data("under_payment"));
         $("#mill_rl_form #excess_payment").val($(this).data("excess_payment"));
         $("#mill_rl_form #balance_fee").val($(this).data("balance_fee"));
+
+        $("#mill_rl_form #mill_share").val($(this).data("mill_share"));
+        $("#mill_rl_form #planter_share").val($(this).data("planter_share"));
+        $("#mill_rl_form #other_share").val($(this).data("other_share"));
         $("#mill_rl_form #rated_capacity").val($(this).data("rated_capacity"));
+        $("#mill_rl_form #est_start_milling").val($(this).data("est_start_milling"));
+        $("#mill_rl_form #est_end_milling").val($(this).data("est_end_milling"));
         $("#mill_rl_form #start_milling").val($(this).data("start_milling"));
         $("#mill_rl_form #end_milling").val($(this).data("end_milling"));
-        $("#mill_rl_form #planter_share").val($(this).data("planter_share"));
-        $("#mill_rl_form #mill_share").val($(this).data("mill_share"));
-        $("#mill_rl_form #other_share").val($(this).data("other_share"));
+        $("#mill_rl_form #molasses_tank_first").val($(this).data("molasses_tank_first"));
+        $("#mill_rl_form #molasses_tank_second").val($(this).data("molasses_tank_second"));
+        $("#mill_rl_form #gtcm_mt").val($(this).data("gtcm_mt"));
+        $("#mill_rl_form #raw_mt").val($(this).data("raw_mt"));
+        $("#mill_rl_form #raw_lkg").val($(this).data("raw_lkg"));
+        $("#mill_rl_form #ah_plant_cane").val($(this).data("ah_plant_cane"));
+        $("#mill_rl_form #ah_ratoon_cane").val($(this).data("ah_ratoon_cane"));
+        $("#mill_rl_form #ap_plant_cane").val($(this).data("ap_plant_cane"));
+        $("#mill_rl_form #ap_ratoon_cane").val($(this).data("ap_ratoon_cane"));
 
         if($(this).data("payment_status") == "E"){
           $("#excess_payment").attr('disabled','disabled');

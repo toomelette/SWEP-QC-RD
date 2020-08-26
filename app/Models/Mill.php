@@ -58,6 +58,15 @@ class Mill extends Model{
 
 
 
+    public function getCurrentMillRegistration($cy_id){
+
+        return $this->millRegistration->where('crop_year_id', $cy_id)->first();
+
+    }
+
+
+
+
     public function displayLicensesStatusSpan($cy_id){
 
         $mill_reg = $this->millRegistration->where('crop_year_id', $cy_id)->first();

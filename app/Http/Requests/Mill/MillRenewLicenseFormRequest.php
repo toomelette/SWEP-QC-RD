@@ -18,7 +18,7 @@ class MillRenewLicenseFormRequest extends FormRequest{
 
             'license_no'=>'sometimes|nullable|string|max:45',
             'crop_year_id'=>'required|string|max:11',
-            'reg_date' => 'sometimes|required|date_format:"m/d/Y"',
+            'reg_date' => 'sometimes|nullable|date_format:"m/d/Y"',
 
             'mt'=>'sometimes|nullable|string|max:21',
             'lkg'=>'sometimes|nullable|string|max:21',

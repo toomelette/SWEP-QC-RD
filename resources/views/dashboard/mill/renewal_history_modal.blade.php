@@ -114,6 +114,10 @@
 
               <input type="hidden" name="_method" value="PUT">
 
+
+              {{-- License --}}
+              <div class="form-group col-md-12" style="border-top:solid 1px;"></div>
+
               {!! __form::textbox(
                 '6', 'license_no', 'text', 'License No.', 'License No.', '' , $errors->has('license_no'), $errors->first('license_no'), ''
               ) !!}
@@ -128,7 +132,10 @@
                 '6', 'reg_date',  'Date of Registration *', '', $errors->has('reg_date'), $errors->first('reg_date')
               ) !!}
 
-              <div class="col-md-12"></div>
+
+              {{-- Billing --}}
+              <div class="form-group col-md-12" style="border-top:solid 1px;"></div>
+
 
               {!! __form::textbox_numeric(
                 '6', 'mt', 'text', 'MT', 'MT', '', $errors->has('mt'), $errors->first('mt'), ''
@@ -164,45 +171,139 @@
                 '6', 'balance_fee', 'text', 'Balance', 'Balance', '', $errors->has('balance_fee'), $errors->first('balance_fee'), ''
               ) !!}
 
+
+              {{-- Mill Library --}}
+              <div class="form-group col-md-12" style="border-top:solid 1px;"></div>
+
+
+              {{-- Mill Participation --}}
+              <div class="col-md-12 no-padding">
+
+                <div class="col-md-12">
+                  <h4>Mill Participation</h4>
+                </div>
+
+                <div class="col-md-12">
+
+                  {!! __form::textbox_numeric(
+                    '6', 'planter_share', 'text', 'Planter Share (%)', 'Planter (%)', old('planter_share') , $errors->has('planter_share'), $errors->first('planter_share'), ''
+                  ) !!}
+
+                  {!! __form::textbox_numeric(
+                    '6', 'mill_share', 'text', 'Mill Share (%)', 'Mill (%)', old('mill_share') , $errors->has('mill_share'), $errors->first('mill_share'), ''
+                  ) !!}
+
+                  {!! __form::textbox(
+                    '12', 'other_share', 'text', 'Other Shares (%)', 'Others (%)', old('other_share'), $errors->has('other_share'), $errors->first('other_share'), ''
+                  ) !!}
+
+                </div>
+
+              </div>
+
+
               {!! __form::textbox_numeric(
-                '6', 'rated_capacity', 'text', 'Rated Capacity', 'Rated Capacity', '', $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
+                '12', 'rated_capacity', 'text', 'Mill Rated Capacity', 'Mill Rated Capacity', old('rated_capacity') , $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
               ) !!}
 
               <div class="col-md-12"></div>
 
               {!! __form::datepicker(
-                '6', 'start_milling',  'Start of Milling', '', $errors->has('start_milling'), $errors->first('start_milling')
+                '6', 'est_start_milling',  'Estimated Start of Milling', old('est_start_milling'), $errors->has('est_start_milling'), $errors->first('est_start_milling')
               ) !!}
 
               {!! __form::datepicker(
-                '6', 'end_milling',  'End of Milling', '', $errors->has('end_milling'), $errors->first('end_milling')
+                '6', 'est_end_milling',  'Estimated End of Milling', old('est_end_milling'), $errors->has('est_end_milling'), $errors->first('est_end_milling')
+              ) !!}
+
+              <div class="col-md-12"></div>
+
+              {!! __form::datepicker(
+                '6', 'start_milling',  'Actual Start of Milling', old('start_milling'), $errors->has('start_milling'), $errors->first('start_milling')
+              ) !!}
+
+              {!! __form::datepicker(
+                '6', 'end_milling',  'Actual End of Milling', old('end_milling'), $errors->has('end_milling'), $errors->first('end_milling')
+              ) !!}
+
+              <div class="col-md-12"></div>
+
+              {!! __form::textbox_numeric(
+                '6', 'molasses_tank_first', 'text', 'Mollases Tank 1', 'Mollases Tank 1', old('molasses_tank_first') , $errors->has('molasses_tank_first'), $errors->first('molasses_tank_first'), ''
+              ) !!}
+
+              {!! __form::textbox_numeric(
+                '6', 'molasses_tank_second', 'text', 'Mollases Tank 2', 'Mollases Tank 2', old('molasses_tank_second') , $errors->has('molasses_tank_second'), $errors->first('molasses_tank_second'), ''
               ) !!}
 
 
+              {{-- Mill Participation --}}
               <div class="col-md-12 no-padding">
 
                 <div class="col-md-12">
-                  <h4>Mill Share</h4>
+                  <h4>Crop Estimates</h4>
                 </div>
 
                 <div class="col-md-12">
 
                   {!! __form::textbox_numeric(
-                    '6', 'planter_share', 'text', 'Planter (%)', 'Planter (%)', '' , $errors->has('planter_share'), $errors->first('planter_share'), ''
+                    '4', 'gtcm_mt', 'text', 'GTCM MT', 'GTCM MT', old('gtcm_mt') , $errors->has('gtcm_mt'), $errors->first('gtcm_mt'), ''
                   ) !!}
 
                   {!! __form::textbox_numeric(
-                    '6', 'mill_share', 'text', 'Mill (%)', 'Mill (%)', '' , $errors->has('mill_share'), $errors->first('mill_share'), ''
+                    '4', 'raw_mt', 'text', 'RAW MT', 'RAW MT', old('raw_mt') , $errors->has('raw_mt'), $errors->first('raw_mt'), ''
                   ) !!}
-                  
-                  <div class="col-md-12"></div>
 
-                  {!! __form::textbox(
-                    '12', 'other_share', 'text', 'Others (%)', 'Others (%)', '' , $errors->has('other_share'), $errors->first('other_share'), ''
+                  {!! __form::textbox_numeric(
+                    '4', 'raw_lkg', 'text', 'RAW LKG', 'RAW LKG', old('raw_lkg') , $errors->has('raw_lkg'), $errors->first('raw_lkg'), ''
                   ) !!}
-                  
+
                 </div>
-                
+
+              </div>
+
+
+              {{-- Area Harvested --}}
+              <div class="col-md-12 no-padding">
+
+                <div class="col-md-12">
+                  <h4>Area Harvested</h4>
+                </div>
+
+                <div class="col-md-12">
+
+                  {!! __form::textbox_numeric(
+                    '6', 'ah_plant_cane', 'text', 'Plant Cane', 'Plant Cane', old('ah_plant_cane') , $errors->has('ah_plant_cane'), $errors->first('ah_plant_cane'), ''
+                  ) !!}
+
+                  {!! __form::textbox_numeric(
+                    '6', 'ah_ratoon_cane', 'text', 'Ratoon Cane', 'Ratoon Cane', old('ah_ratoon_cane') , $errors->has('ah_ratoon_cane'), $errors->first('ah_ratoon_cane'), ''
+                  ) !!}
+
+                </div>
+
+              </div>
+
+
+              {{-- Area Planted --}}
+              <div class="col-md-12 no-padding">
+
+                <div class="col-md-12">
+                  <h4>Area Planted</h4>
+                </div>
+
+                <div class="col-md-12">
+
+                  {!! __form::textbox_numeric(
+                    '6', 'ap_plant_cane', 'text', 'Plant Cane', 'Plant Cane', old('ap_plant_cane') , $errors->has('ap_plant_cane'), $errors->first('ap_plant_cane'), ''
+                  ) !!}
+
+                  {!! __form::textbox_numeric(
+                    '6', 'ap_ratoon_cane', 'text', 'Ratoon Cane', 'Ratoon Cane', old('ap_ratoon_cane') , $errors->has('ap_ratoon_cane'), $errors->first('ap_ratoon_cane'), ''
+                  ) !!}
+
+                </div>
+
               </div>
 
             </div>

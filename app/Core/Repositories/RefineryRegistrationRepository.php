@@ -192,30 +192,6 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
 
 
 
-    public function isLicenseExistInCY($crop_year_id, $refinery_id){
-
-        return $this->refinery_reg->where('crop_year_id', $crop_year_id)
-                                  ->where('refinery_id', $refinery_id)
-                                  ->where('is_registered', true)
-                                  ->exists();
-
-    }
-
-
-
-
-    public function isRatedCapacityExistInCY($crop_year_id, $refinery_id){
-
-        return $this->refinery_reg->where('crop_year_id', $crop_year_id)
-                                  ->where('refinery_id', $refinery_id)
-                                  ->where('is_rated_capacity', true)
-                                  ->exists();
-
-    }
-
-
-
-
     public function getRefineryRegIdInc(){
 
         $id = 'RR10001';

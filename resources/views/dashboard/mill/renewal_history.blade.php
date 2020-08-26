@@ -70,6 +70,7 @@
                        data-license_no="{{ $data->license_no }}"
                        data-crop_year_id="{{ $data->crop_year_id }}"
                        data-reg_date="{{ __dataType::date_parse($data->reg_date, 'm/d/Y') }}"
+
                        data-mt="{{ $data->mt }}"
                        data-lkg="{{ $data->lkg }}"
                        data-milling_fee="{{ $data->milling_fee }}"
@@ -77,12 +78,25 @@
                        data-under_payment="{{ $data->under_payment }}"
                        data-excess_payment="{{ $data->excess_payment }}"
                        data-balance_fee="{{ $data->balance_fee }}"
+
+                       data-mill_share="{{ $data->mill_share }}"
+                       data-planter_share="{{ $data->planter_share }}"
+                       data-other_share="{{ $data->other_share }}"  
                        data-rated_capacity="{{ $data->rated_capacity }}"
+                       data-est_start_milling="{{ __dataType::date_parse($data->est_start_milling, 'm/d/Y') }}"
+                       data-est_end_milling="{{ __dataType::date_parse($data->est_end_milling, 'm/d/Y') }}"
                        data-start_milling="{{ __dataType::date_parse($data->start_milling, 'm/d/Y') }}"
                        data-end_milling="{{ __dataType::date_parse($data->end_milling, 'm/d/Y') }}"
-                       data-planter_share="{{ $data->planter_share }}"
-                       data-mill_share="{{ $data->mill_share }}"
-                       data-other_share="{{ $data->other_share }}"
+                       data-molasses_tank_first="{{ $data->molasses_tank_first }}"
+                       data-molasses_tank_second="{{ $data->molasses_tank_second }}"
+                       data-gtcm_mt="{{ $data->gtcm_mt }}"
+                       data-raw_mt="{{ $data->raw_mt }}"
+                       data-raw_lkg="{{ $data->raw_lkg }}"
+                       data-ah_plant_cane="{{ $data->ah_plant_cane }}"
+                       data-ah_ratoon_cane="{{ $data->ah_ratoon_cane }}"
+                       data-ap_plant_cane="{{ $data->ap_plant_cane }}"
+                       data-ap_ratoon_cane="{{ $data->ap_ratoon_cane }}"
+
                        data-action="update" 
                        data-url="{{ route('dashboard.mill_registration.update', $data->slug) }}">
                       <i class="fa fa-pencil"></i>
