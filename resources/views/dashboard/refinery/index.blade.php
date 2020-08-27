@@ -62,12 +62,7 @@
                 @if(in_array('dashboard.refinery.renew_license_post', $global_user_submenus))
                   <a type="button" 
                      class="btn btn-default" 
-                     @if ($data->licensesStatus($global_current_cy->crop_year_id) == false)
-                       id="rl_button" 
-                       data-action="rl" 
-                       data-url="{{ route('dashboard.refinery.renew_license_post', $data->slug) }}"
-                       data-name="{{ $data->name }}"
-                     @else
+                     @if ($data->licensesStatus($global_current_cy->crop_year_id) == true)
                        <?php
                         $rr = $data->getCurrentRefineryRegistration($global_current_cy->crop_year_id);
                        ?>
@@ -77,6 +72,11 @@
                        data-name="{{ $data->name }}"
                        data-crop_year_id="{{ $rr->crop_year_id }}"
                        data-reg_date="{{ __dataType::date_parse($rr->reg_date, 'm/d/Y') }}"
+                     @else
+                       id="rl_button" 
+                       data-action="rl" 
+                       data-url="{{ route('dashboard.refinery.renew_license_post', $data->slug) }}"
+                       data-name="{{ $data->name }}"
                      @endif
                   >
                     <i class="fa fa-certificate"></i>&nbsp; Renew License
@@ -87,13 +87,7 @@
                 @if(in_array('dashboard.refinery.renew_license_post', $global_user_submenus))
                   <a type="button" 
                      class="btn btn-default" 
-                     @if ($data->ratedCapacityStatus($global_current_cy->crop_year_id) == false)
-                       id="rc_button" 
-                       data-action="rc" 
-                       data-url="{{ route('dashboard.refinery.renew_license_post', $data->slug) }}"
-                       data-name="{{ $data->name }}"
-                       data-crop_year_id="{{ $rr->crop_year_id }}"
-                     @else
+                     @if ($data->ratedCapacityStatus($global_current_cy->crop_year_id) == true)
                        <?php
                         $rr = $data->getCurrentRefineryRegistration($global_current_cy->crop_year_id);
                        ?>
@@ -103,6 +97,11 @@
                        data-name="{{ $data->name }}"
                        data-crop_year_id="{{ $rr->crop_year_id }}"
                        data-rated_capacity="{{ $rr->rated_capacity }}"
+                     @else
+                       id="rc_button" 
+                       data-action="rc" 
+                       data-url="{{ route('dashboard.refinery.renew_license_post', $data->slug) }}"
+                       data-name="{{ $data->name }}"
                      @endif
                   >
                     <i class="fa fa-pie-chart"></i>&nbsp; Rated Capacity

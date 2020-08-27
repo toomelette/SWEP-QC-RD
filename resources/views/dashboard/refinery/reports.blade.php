@@ -9,7 +9,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">Directory of Sugar Refineries</h2>
+      <h2 class="box-title"><b>Directory of Sugar Refineries</b></h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
@@ -48,7 +48,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">Rated Capacity</h2>
+      <h2 class="box-title"><b>Rated Capacity</b></h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
@@ -87,7 +87,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">Number of Registered Refineries by Month</h2>
+      <h2 class="box-title"><b>Number of Registered Refineries by Month</b></h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
@@ -126,7 +126,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">List of Registered Refinery by Date</h2>
+      <h2 class="box-title"><b>List of Registered Refinery by Date</b></h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
@@ -169,7 +169,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">List of Registered Refinery by Crop Year</h2>
+      <h2 class="box-title"><b>List of Registered Refinery by Crop Year</b></h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 

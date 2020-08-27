@@ -32,6 +32,9 @@ class MillRegistrationReportRequest extends FormRequest{
             // Count By Crop Year
             'cbcy_cy'=>'sometimes|required|string|max:11',
 
+            // Mill Library
+            'ml_field'=>'sometimes|nullable|array|max:12',
+
             // List of Registered Mills by Date
             'bd_df'=>'sometimes|required|date_format:"m/d/Y"',
             'bd_dt'=>'sometimes|required|date_format:"m/d/Y"',

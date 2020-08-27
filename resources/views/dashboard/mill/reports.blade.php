@@ -1,3 +1,24 @@
+<?php
+
+  $ml_fields = [
+
+    '1' => 'Mill Registration Status',
+    '2' => 'Refinery Registration Status',
+    '3' => 'Mill Participation',
+    '4' => 'Mill Rated Capacity',
+    '5' => 'Refinery Rated Capacity',
+    '6' => 'Molasses Tank 1',
+    '7' => 'Molasses Tank 2',
+    '8' => 'Estimated Start of Milling',
+    '9' => 'Estimated End of Milling',
+    '10' => 'Crop Estimates',
+    '11' => 'Area Harvested',
+    '12' => 'Area Planted',
+
+  ];
+
+?>
+
 @extends('layouts.admin-master')
 
 @section('content')
@@ -9,7 +30,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">Directory of Sugar Mills</h2>
+      <h2 class="box-title"><b>Directory of Sugar Mills</b></h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
@@ -47,7 +68,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">Rated Capacity</h2>
+      <h2 class="box-title"><b>Rated Capacity</b></h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
@@ -85,7 +106,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">Mill Participation</h2>
+      <h2 class="box-title"><b>Mill Participation</b></h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
@@ -124,7 +145,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">Number of Registered Mills by Month</h2>
+      <h2 class="box-title"><b>Number of Registered Mills by Month</b></h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
@@ -156,6 +177,72 @@
     </form>
 
   </div>
+           
+
+
+  {{-- Mill Library --}}
+  <div class="box box-solid">
+      
+    <div class="box-header with-border">
+      <h2 class="box-title"><b>Mill Library</b></h2>
+      <div class="pull-right">
+          <code>Fields with asterisks(*) are required</code>
+      </div> 
+    </div>
+    
+    <form method="GET" 
+          id="form_bd" 
+          action="{{ route('dashboard.mill_registration.reports_output') }}"
+          target="_blank">
+
+      <div class="box-body">
+        <div class="col-md-12">
+
+          <input type="hidden" id="ft" name="ft" value="ml">
+          
+          {!! __form::select_dynamic(
+            '3', 'cbcy_cy', 'Crop Year *', old('cbcy_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('cbcy_cy'), $errors->first('cbcy_cy'), 'select2', ''
+          ) !!}
+
+
+          <div class="form-group col-md-12">
+
+            <label>Please select fields:</label><br>
+
+            @foreach ($ml_fields as $key => $title)
+              <label>
+                <input type="checkbox" 
+                       class="minimal" 
+                       name="ml_field[]" 
+                       value="{{ $key }}" 
+                       @if ($errors->has('ml_field'))
+                          {{ in_array($key, old('ml_field')) ? 'checked' : '' }}
+                       @endif
+                >
+                &nbsp; {{ $title }}
+              </label>
+              <br>
+            @endforeach
+            
+            @if($errors->has('ml_field'))
+              <p class="text-danger">{{ $errors->first('ml_field') }}</p>
+            @endif
+
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button type="submit" class="btn btn-default">
+          Print <i class="fa fa-fw fa-print"></i>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
 
        
 
@@ -163,7 +250,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">List of Registered Mills by Date</h2>
+      <h2 class="box-title"><b>List of Registered Mills by Date</b></h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
@@ -206,7 +293,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">List of Registered Mills by Crop Year</h2>
+      <h2 class="box-title"><b>List of Registered Mills by Crop Year</b></h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
@@ -242,5 +329,11 @@
 
 
 </section>
+
+@endsection
+
+
+@section('modals')
+
 
 @endsection

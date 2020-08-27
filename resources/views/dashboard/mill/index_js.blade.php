@@ -32,7 +32,9 @@
     // ON CLICK BILLING STATEMENT
     $(document).on("click", "#bs_button", function () {
       if($(this).data("action") == "bs"){
+
         $('.select2').select2();
+
         $('.datepicker').each(function(){
             $(this).datepicker({
                 autoclose: true,
@@ -40,6 +42,7 @@
                 orientation: "bottom"
             });
         });
+        
         $(".priceformat").priceFormat({
             prefix: "",
             thousandsSeparator: ",",
