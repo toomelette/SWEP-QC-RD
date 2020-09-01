@@ -41,4 +41,22 @@ class __static{
     }
 
 
+
+
+    // Report Regions
+    public static function report_regions(){
+
+        return [
+
+	      'LUZON' => 'LUZ',
+	      'NEGROS' => 'NEG',
+	      'PANAY' => 'PAN',
+	      'EASTERN VISAYAS' => 'EV',
+	      'MINDANAO' => 'MIN',
+
+	    ];
+    
+    }
+
+
 }

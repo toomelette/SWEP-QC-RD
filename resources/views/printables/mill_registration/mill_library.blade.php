@@ -16,6 +16,7 @@
         size: auto;
         margin-top: 25mm;
         margin-bottom: 30mm;  
+        margin-right: 30mm;  
       } 
 
   </style>
@@ -44,11 +45,11 @@
             <th rowspan="2">Mills</th>
             
             @if (in_array('1', $fields))
-              <th colspan="1" rowspan="2">Mill W/License</th>
+              <th colspan="1" rowspan="2">Mill License</th>
             @endif
             
             @if (in_array('2', $fields))
-              <th colspan="1" rowspan="2">Refinery W/License</th>
+              <th colspan="1" rowspan="2">Refinery License</th>
             @endif
             
             @if (in_array('3', $fields))
@@ -120,226 +121,84 @@
 
         <tbody>
 
-          <tr>
-            <th style="vertical-align: text-top; padding-top:5px; font-weight:bold;" colspan="18">
-              LUZON
-            </th>
-          </tr>
+          @foreach (__static::report_regions() as $rr_name => $rr_key)
 
-          @foreach($mill_registrations as $data)
-            @if (!empty($data->mill))
-              @if ($data->mill->region->island_group == 1)
-                <tr>
+            <tr>
+              <th style="vertical-align: text-top; padding-top:5px; font-weight:bold;" colspan="18">
+                {{ $rr_name }}
+              </th>
+            </tr>
 
-                  <td style="vertical-align: text-top; padding-top:5px;">
-                    {{ optional($data->mill)->name }}
-                  </td>
+            @foreach($mill_registrations as $data)
+              @if (!empty($data->mill))
+                @if ($data->mill->report_region == $rr_key)
+                  <tr>
 
-                  @if (in_array('1', $fields))
-                    <td>{{ $data->license_no}}</td>
-                  @endif
+                    <td style="vertical-align: text-top; padding-top:5px;">
+                      {{ optional($data->mill)->name }}
+                    </td>
 
-                  @if (in_array('2', $fields))
-                    <td></td>
-                  @endif
+                    @if (in_array('1', $fields))
+                      <td>{{ $data->license_no}}</td>
+                    @endif
 
-                  @if (in_array('3', $fields))
-                    <td>{{ number_format($data->planter_share, 2) }}</td>
-                    <td>{{ number_format($data->mill_share, 2) }}</td>
-                  @endif
+                    @if (in_array('2', $fields))
+                      <td></td>
+                    @endif
 
-                  @if (in_array('4', $fields))
-                    <td>{{ number_format($data->rated_capacity, 2) }}</td>
-                  @endif
+                    @if (in_array('3', $fields))
+                      <td>{{ number_format($data->planter_share, 2) }}</td>
+                      <td>{{ number_format($data->mill_share, 2) }}</td>
+                    @endif
 
-                  @if (in_array('5', $fields))
-                    <td></td>
-                  @endif
+                    @if (in_array('4', $fields))
+                      <td>{{ number_format($data->rated_capacity, 2) }}</td>
+                    @endif
 
-                  @if (in_array('6', $fields))
-                    <td>{{ number_format($data->molasses_tank_first, 2) }}</td>
-                  @endif
+                    @if (in_array('5', $fields))
+                      <td></td>
+                    @endif
 
-                  @if (in_array('7', $fields))
-                    <td>{{ number_format($data->molasses_tank_second, 2) }}</td>
-                  @endif
+                    @if (in_array('6', $fields))
+                      <td>{{ number_format($data->molasses_tank_first, 2) }}</td>
+                    @endif
 
-                  @if (in_array('8', $fields))
-                    <td>{{ __dataType::date_parse($data->est_start_milling, 'm/d/Y') }}</td>
-                  @endif
+                    @if (in_array('7', $fields))
+                      <td>{{ number_format($data->molasses_tank_second, 2) }}</td>
+                    @endif
 
-                  @if (in_array('9', $fields))
-                    <td>{{ __dataType::date_parse($data->est_end_milling, 'm/d/Y') }}</td>
-                  @endif
+                    @if (in_array('8', $fields))
+                      <td>{{ __dataType::date_parse($data->est_start_milling, 'm/d/Y') }}</td>
+                    @endif
 
-                  @if (in_array('10', $fields))
-                    <td>{{ number_format($data->gtcm_mt, 2) }}</td>
-                    <td>{{ number_format($data->raw_mt, 2) }}</td>
-                    <td>{{ number_format($data->raw_lkg, 2) }}</td>
-                  @endif
+                    @if (in_array('9', $fields))
+                      <td>{{ __dataType::date_parse($data->est_end_milling, 'm/d/Y') }}</td>
+                    @endif
 
-                  @if (in_array('11', $fields))
-                    <td>{{ number_format($data->ah_plant_cane, 2) }}</td>
-                    <td>{{ number_format($data->ah_ratoon_cane, 2) }}</td>
-                  @endif
+                    @if (in_array('10', $fields))
+                      <td>{{ number_format($data->gtcm_mt, 2) }}</td>
+                      <td>{{ number_format($data->raw_mt, 2) }}</td>
+                      <td>{{ number_format($data->raw_lkg, 2) }}</td>
+                    @endif
 
-                  @if (in_array('11', $fields))
-                    <td>{{ number_format($data->ap_plant_cane, 2) }}</td>
-                    <td>{{ number_format($data->ap_ratoon_cane, 2) }}</td>
-                  @endif
-                  
-                </tr>
+                    @if (in_array('11', $fields))
+                      <td>{{ number_format($data->ah_plant_cane, 2) }}</td>
+                      <td>{{ number_format($data->ah_ratoon_cane, 2) }}</td>
+                    @endif
+
+                    @if (in_array('11', $fields))
+                      <td>{{ number_format($data->ap_plant_cane, 2) }}</td>
+                      <td>{{ number_format($data->ap_ratoon_cane, 2) }}</td>
+                    @endif
+                    
+                  </tr>
+                @endif
               @endif
-            @endif
+            @endforeach
+            
           @endforeach
 
-
-          <tr>
-            <th style="vertical-align: text-top; padding-top:5px; font-weight:bold;" colspan="18">
-              VISAYAS
-            </th>
-          </tr>
-
-          @foreach($mill_registrations as $data)
-            @if (!empty($data->mill))
-              @if ($data->mill->region->island_group == 2)
-                <tr>
-
-                  <td style="vertical-align: text-top; padding-top:5px;">
-                    {{ optional($data->mill)->name }}
-                  </td>
-
-                  @if (in_array('1', $fields))
-                    <td>{{ $data->license_no}}</td>
-                  @endif
-
-                  @if (in_array('2', $fields))
-                    <td></td>
-                  @endif
-
-                  @if (in_array('3', $fields))
-                    <td>{{ number_format($data->planter_share, 2) }}</td>
-                    <td>{{ number_format($data->mill_share, 2) }}</td>
-                  @endif
-
-                  @if (in_array('4', $fields))
-                    <td>{{ number_format($data->rated_capacity, 2) }}</td>
-                  @endif
-
-                  @if (in_array('5', $fields))
-                    <td></td>
-                  @endif
-
-                  @if (in_array('6', $fields))
-                    <td>{{ number_format($data->molasses_tank_first, 2) }}</td>
-                  @endif
-
-                  @if (in_array('7', $fields))
-                    <td>{{ number_format($data->molasses_tank_second, 2) }}</td>
-                  @endif
-
-                  @if (in_array('8', $fields))
-                    <td>{{ __dataType::date_parse($data->est_start_milling, 'm/d/Y') }}</td>
-                  @endif
-
-                  @if (in_array('9', $fields))
-                    <td>{{ __dataType::date_parse($data->est_end_milling, 'm/d/Y') }}</td>
-                  @endif
-
-                  @if (in_array('10', $fields))
-                    <td>{{ number_format($data->gtcm_mt, 2) }}</td>
-                    <td>{{ number_format($data->raw_mt, 2) }}</td>
-                    <td>{{ number_format($data->raw_lkg, 2) }}</td>
-                  @endif
-
-                  @if (in_array('11', $fields))
-                    <td>{{ number_format($data->ah_plant_cane, 2) }}</td>
-                    <td>{{ number_format($data->ah_ratoon_cane, 2) }}</td>
-                  @endif
-
-                  @if (in_array('11', $fields))
-                    <td>{{ number_format($data->ap_plant_cane, 2) }}</td>
-                    <td>{{ number_format($data->ap_ratoon_cane, 2) }}</td>
-                  @endif
-                  
-                </tr>
-              @endif
-            @endif
-          @endforeach
-
-
-          <tr>
-            <th style="vertical-align: text-top; padding-top:5px; font-weight:bold;" colspan="18">
-              MINDANAO
-            </th>
-          </tr>
-
-          @foreach($mill_registrations as $data)
-            @if (!empty($data->mill))
-              @if ($data->mill->region->island_group == 3)
-                <tr>
-
-                  <td style="vertical-align: text-top; padding-top:5px;">
-                    {{ optional($data->mill)->name }}
-                  </td>
-
-                  @if (in_array('1', $fields))
-                    <td>{{ $data->license_no}}</td>
-                  @endif
-
-                  @if (in_array('2', $fields))
-                    <td></td>
-                  @endif
-
-                  @if (in_array('3', $fields))
-                    <td>{{ number_format($data->planter_share, 2) }}</td>
-                    <td>{{ number_format($data->mill_share, 2) }}</td>
-                  @endif
-
-                  @if (in_array('4', $fields))
-                    <td>{{ number_format($data->rated_capacity, 2) }}</td>
-                  @endif
-
-                  @if (in_array('5', $fields))
-                    <td></td>
-                  @endif
-
-                  @if (in_array('6', $fields))
-                    <td>{{ number_format($data->molasses_tank_first, 2) }}</td>
-                  @endif
-
-                  @if (in_array('7', $fields))
-                    <td>{{ number_format($data->molasses_tank_second, 2) }}</td>
-                  @endif
-
-                  @if (in_array('8', $fields))
-                    <td>{{ __dataType::date_parse($data->est_start_milling, 'm/d/Y') }}</td>
-                  @endif
-
-                  @if (in_array('9', $fields))
-                    <td>{{ __dataType::date_parse($data->est_end_milling, 'm/d/Y') }}</td>
-                  @endif
-
-                  @if (in_array('10', $fields))
-                    <td>{{ number_format($data->gtcm_mt, 2) }}</td>
-                    <td>{{ number_format($data->raw_mt, 2) }}</td>
-                    <td>{{ number_format($data->raw_lkg, 2) }}</td>
-                  @endif
-
-                  @if (in_array('11', $fields))
-                    <td>{{ number_format($data->ah_plant_cane, 2) }}</td>
-                    <td>{{ number_format($data->ah_ratoon_cane, 2) }}</td>
-                  @endif
-
-                  @if (in_array('11', $fields))
-                    <td>{{ number_format($data->ap_plant_cane, 2) }}</td>
-                    <td>{{ number_format($data->ap_ratoon_cane, 2) }}</td>
-                  @endif
-
-                </tr>
-              @endif
-            @endif
-          @endforeach
+          
 
         </tbody>
 

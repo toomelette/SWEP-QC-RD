@@ -71,6 +71,7 @@ class RefineryRepository extends BaseRepository implements RefineryInterface {
         $refinery->fax_no_second = $request->fax_no_second;
         $refinery->email = $request->email;
         $refinery->region_id = $request->region_id;
+        $refinery->report_region = $request->report_region;
         $refinery->officer = $request->officer;
         $refinery->position = $request->position;
         $refinery->salutation = $request->salutation;
@@ -104,6 +105,7 @@ class RefineryRepository extends BaseRepository implements RefineryInterface {
         $refinery->fax_no_second = $request->fax_no_second;
         $refinery->email = $request->email;
         $refinery->region_id = $request->region_id;
+        $refinery->report_region = $request->report_region;
         $refinery->officer = $request->officer;
         $refinery->position = $request->position;
         $refinery->salutation = $request->salutation;

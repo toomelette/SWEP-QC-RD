@@ -27,53 +27,73 @@
     <span style="font-size: 14px;">CY {{ $crop_year->name }}</span>  
   </div>
 
+  <div class="row" style="margin-bottom:15px;">
+    <div class="col-xs-12 table-responsive">
+      <table style="border-top:1px solid; border-bottom:1px solid;">
+        <tbody>
+          <tr>
+            <th style="width:200px;">SUGAR MILLS</th>
+            <th style="width:200px; text-align:center;">METRO MANILA ADDRESS</th>
+            <th style="width:200px; text-align:center;">MILL SITE ADDRESS</th>
+            <th style="width:200px; text-align:center;">OFFICIAL / EMAIL ADDRESS</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <div class="row" id="content">
 
-    <div class="col-xs-12">
+    <div class="col-xs-12 table-responsive">
 
-      <table class="table table-bordered">
+      @foreach (__static::report_regions() as $rr_name => $rr_key)
 
-        <thead>
-          <tr>
-            <th style="width:100px;">SUGAR MILLS</th>
-            <th style="width:100px;">METRO MANILA ADDRESS</th>
-            <th style="width:100px;">MILL SITE ADDRESS</th>
-            <th style="width:100px;">OFFICIAL / EMAIL ADDRESS</th>
-          </tr>
-        </thead>
+        <?php $i = 0; ?>
 
-        <tbody>
+        <table class="table table-bordered">
 
-          <?php $i = 0; ?>
-
-          @foreach($mill_registrations as $data)
-            @if (!empty($data->mill))
+            <thead style="display: table-header-group;">
               <tr>
-                <td style="vertical-align: text-top; padding-top:5px;">
-                  {{ $i += 1 }}. {{ optional($data->mill)->name }}<br>
-                  {{ optional(optional($data->mill)->region)->name }}
-                </td>
-                <td style="padding-top:5px;">
-                  {{ optional($data->mill)->address }}<br>
-                  {{ optional($data->mill)->tel_no }}<br>
-                  {{ optional($data->mill)->fax_no }}<br>
-                </td>
-                <td style="vertical-align: text-top; padding-top:5px;">
-                  {{ optional($data->mill)->address_second }}<br>
-                  {{ optional($data->mill)->tel_no_second }}<br>
-                  {{ optional($data->mill)->fax_no_second }}<br>
-                </td>
-                <td style="vertical-align: text-top; padding-top:5px;">
-                  {{ optional($data->mill)->officer }} - {{ optional($data->mill)->position }}<br>
-                  {{ optional($data->mill)->email }}
-                </td>
+                <th colspan="4" style="font-size:11px;">
+                  {{ $rr_name }}
+                </th>
               </tr>
-            @endif
-          @endforeach
+            </thead>
 
-        </tbody>
+          <tbody>
 
-      </table>
+            @foreach($mill_registrations as $data)
+              @if (!empty($data->mill))
+                @if ($data->mill->report_region == $rr_key)
+                  <tr>
+                    <td style="vertical-align: text-top; padding-top:5px; width:200px;">
+                      {{ $i += 1 }}. {{ optional($data->mill)->name }}<br>
+                      {{ optional(optional($data->mill)->region)->name }}
+                    </td>
+                    <td style="padding-top:5px; width:200px;">
+                      {{ optional($data->mill)->address }}<br>
+                      {{ optional($data->mill)->tel_no }}<br>
+                      {{ optional($data->mill)->fax_no }}<br>
+                    </td>
+                    <td style="vertical-align: text-top; padding-top:5px; width:200px;">
+                      {{ optional($data->mill)->address_second }}<br>
+                      {{ optional($data->mill)->tel_no_second }}<br>
+                      {{ optional($data->mill)->fax_no_second }}<br>
+                    </td>
+                    <td style="vertical-align: text-top; padding-top:5px; width:200px;">
+                      {{ optional($data->mill)->officer }} - {{ optional($data->mill)->position }}<br>
+                      {{ optional($data->mill)->email }}
+                    </td>
+                  </tr>
+                @endif
+              @endif
+            @endforeach
+
+          </tbody>
+
+        </table>
+        
+      @endforeach
 
     </div>
 

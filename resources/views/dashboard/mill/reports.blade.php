@@ -3,10 +3,10 @@
   $ml_fields = [
 
     '1' => 'Mill Registration Status',
-    '2' => 'Refinery Registration Status',
+    // '2' => 'Refinery Registration Status',
     '3' => 'Mill Participation',
     '4' => 'Mill Rated Capacity',
-    '5' => 'Refinery Rated Capacity',
+    // '5' => 'Refinery Rated Capacity',
     '6' => 'Molasses Tank 1',
     '7' => 'Molasses Tank 2',
     '8' => 'Estimated Start of Milling',
@@ -55,121 +55,6 @@
 
       <div class="box-footer">
         <button type="submit" class="btn btn-default">
-          Print <i class="fa fa-fw fa-print"></i>
-        </button>
-      </div>
-
-    </form>
-
-  </div>
-       
-
-  {{-- RATED CAPACITY --}}
-  <div class="box box-solid">
-      
-    <div class="box-header with-border">
-      <h2 class="box-title"><b>Rated Capacity</b></h2>
-      <div class="pull-right">
-          <code>Fields with asterisks(*) are required</code>
-      </div> 
-    </div>
-    
-    <form method="GET" 
-          id="form_bd" 
-          action="{{ route('dashboard.mill_registration.reports_output') }}"
-          target="_blank">
-
-      <div class="box-body">
-        <div class="col-md-12">
-
-          <input type="hidden" id="ft" name="ft" value="rc">
-
-          {!! __form::select_dynamic(
-            '3', 'rc_cy', 'Crop Year *', old('rc_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('rc_cy'), $errors->first('rc_cy'), 'select2', ''
-          ) !!}
-
-        </div>
-      </div>
-
-      <div class="box-footer">
-        <button type="submit" class="btn btn-default">
-          Print <i class="fa fa-fw fa-print"></i>
-        </button>
-      </div>
-
-    </form>
-
-  </div>
-       
-
-  {{-- MILL PARTICIPATION --}}
-  <div class="box box-solid">
-      
-    <div class="box-header with-border">
-      <h2 class="box-title"><b>Mill Participation</b></h2>
-      <div class="pull-right">
-          <code>Fields with asterisks(*) are required</code>
-      </div> 
-    </div>
-    
-    <form method="GET" 
-          id="form_bd" 
-          action="{{ route('dashboard.mill_registration.reports_output') }}"
-          target="_blank">
-
-      <div class="box-body">
-        <div class="col-md-12">
-
-          <input type="hidden" id="ft" name="ft" value="mp">
-
-          {!! __form::select_dynamic(
-            '3', 'mp_cy', 'Crop Year *', old('mp_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('mp_cy'), $errors->first('mp_cy'), 'select2', ''
-          ) !!}
-
-        </div>
-      </div>
-
-      <div class="box-footer">
-        <button type="submit" class="btn btn-default">
-          Print <i class="fa fa-fw fa-print"></i>
-        </button>
-      </div>
-
-    </form>
-
-  </div>
-           
-
-
-  {{-- Count By Crop Year --}}
-  <div class="box box-solid">
-      
-    <div class="box-header with-border">
-      <h2 class="box-title"><b>Number of Registered Mills by Month</b></h2>
-      <div class="pull-right">
-          <code>Fields with asterisks(*) are required</code>
-      </div> 
-    </div>
-    
-    <form method="GET" 
-          id="form_cbcy"
-          action="{{ route('dashboard.mill_registration.reports_output') }}"
-          target="_blank">
-
-      <div class="box-body">
-        <div class="col-md-12">
-
-          <input type="hidden" id="ft" name="ft" value="cbcy">
-          
-          {!! __form::select_dynamic(
-            '3', 'cbcy_cy', 'Crop Year *', old('cbcy_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('cbcy_cy'), $errors->first('cbcy_cy'), 'select2', ''
-          ) !!}
-
-        </div>
-      </div>
-
-      <div class="box-footer">
-        <button class="btn btn-default">
           Print <i class="fa fa-fw fa-print"></i>
         </button>
       </div>
@@ -236,6 +121,45 @@
 
       <div class="box-footer">
         <button type="submit" class="btn btn-default">
+          Print <i class="fa fa-fw fa-print"></i>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+           
+
+
+  {{-- Count By Crop Year --}}
+  <div class="box box-solid">
+      
+    <div class="box-header with-border">
+      <h2 class="box-title"><b>Number of Registered Mills by Month</b></h2>
+      <div class="pull-right">
+          <code>Fields with asterisks(*) are required</code>
+      </div> 
+    </div>
+    
+    <form method="GET" 
+          id="form_cbcy"
+          action="{{ route('dashboard.mill_registration.reports_output') }}"
+          target="_blank">
+
+      <div class="box-body">
+        <div class="col-md-12">
+
+          <input type="hidden" id="ft" name="ft" value="cbcy">
+          
+          {!! __form::select_dynamic(
+            '3', 'cbcy_cy', 'Crop Year *', old('cbcy_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('cbcy_cy'), $errors->first('cbcy_cy'), 'select2', ''
+          ) !!}
+
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button class="btn btn-default">
           Print <i class="fa fa-fw fa-print"></i>
         </button>
       </div>

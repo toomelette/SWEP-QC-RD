@@ -27,57 +27,81 @@
     <span style="font-size: 14px;">CY {{ $crop_year->name }}</span>  
   </div>
 
+  <div class="row" style="margin-bottom:15px;">
+    <div class="col-xs-12 table-responsive">
+      <table style="border-top:1px solid; border-bottom:1px solid;">
+        <tbody>
+          <tr>
+            <th style="width:200px;">SUGAR MILLS</th>
+            <th style="width:100px; text-align:center;">RATED CAPACITY</th>
+            <th style="width:200px;">METRO MANILA ADDRESS</th>
+            <th style="width:200px;">MILL SITE ADDRESS</th>
+            <th style="width:200px;">OFFICIAL / EMAIL ADDRESS</th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <div class="row" id="content">
 
-    <div class="col-xs-12">
+    <div class="col-xs-12 table-responsive">
 
-      <table class="table table-bordered">
+      @foreach (__static::report_regions() as $rr_name => $rr_key)
 
-        <thead>
-          <tr>
-            <th style="width:100px;">SUGAR MILLS</th>
-            <th style="width:50px;">RATED CAPACITY</th>
-            <th style="width:100px;">METRO MANILA ADDRESS</th>
-            <th style="width:100px;">MILL SITE ADDRESS</th>
-            <th style="width:100px;">OFFICIAL / EMAIL ADDRESS</th>
-          </tr>
-        </thead>
+        <?php $i = 0; ?>
 
-        <tbody>
+        <table class="table table-bordered">
 
-          <?php $i = 0; ?>
+          <thead style="display: table-header-group;">
+            <tr>
+              <th colspan="5" style="font-size:11px;">
+                {{ $rr_name }}
+              </th>
+            </tr>
+          </thead>
 
-          @foreach($refinery_registrations as $data)
-            @if (!empty($data->refinery))
-              <tr>
-                <td style="vertical-align: text-top; padding-top:5px;">
-                  {{ $i += 1 }}. {{ optional($data->refinery)->name }}<br>
-                  {{ optional(optional($data->refinery)->region)->name }}
-                </td>
-                <td style="vertical-align: text-top; padding-top:5px;">
-                  {{ number_format($data->rated_capacity, 2)  }}
-                </td>
-                <td style="padding-top:5px;">
-                  {{ optional($data->refinery)->address }}<br>
-                  {{ optional($data->refinery)->tel_no }}<br>
-                  {{ optional($data->refinery)->fax_no }}<br>
-                </td>
-                <td style="vertical-align: text-top; padding-top:5px;">
-                  {{ optional($data->refinery)->address_second }}<br>
-                  {{ optional($data->refinery)->tel_no_second }}<br>
-                  {{ optional($data->refinery)->fax_no_second }}<br>
-                </td>
-                <td style="vertical-align: text-top; padding-top:5px;">
-                  {{ optional($data->refinery)->officer }} - {{ optional($data->refinery)->position }}<br>
-                  {{ optional($data->refinery)->email }}
-                </td>
-              </tr>
-            @endif
-          @endforeach
+          <tbody>
 
-        </tbody>
+            <?php $i = 0; ?>
 
-      </table>
+            @foreach($refinery_registrations as $data)
+              @if (!empty($data->refinery))
+                @if ($data->refinery->report_region == $rr_key)
+
+                <tr>
+                  <td style="vertical-align: text-top; padding-top:5px; width:200px;">
+                    {{ $i += 1 }}. {{ optional($data->refinery)->name }}<br>
+                    {{ optional(optional($data->refinery)->region)->name }}
+                  </td>
+                  <td style="vertical-align: text-top; padding-top:5px; width:100px;">
+                    {{ number_format($data->rated_capacity, 2)  }}
+                  </td>
+                  <td style="padding-top:5px; width:200px;">
+                    {{ optional($data->refinery)->address }}<br>
+                    {{ optional($data->refinery)->tel_no }}<br>
+                    {{ optional($data->refinery)->fax_no }}<br>
+                  </td>
+                  <td style="vertical-align: text-top; padding-top:5px; width:200px;">
+                    {{ optional($data->refinery)->address_second }}<br>
+                    {{ optional($data->refinery)->tel_no_second }}<br>
+                    {{ optional($data->refinery)->fax_no_second }}<br>
+                  </td>
+                  <td style="vertical-align: text-top; padding-top:5px; width:200px;">
+                    {{ optional($data->refinery)->officer }} - {{ optional($data->refinery)->position }}<br>
+                    {{ optional($data->refinery)->email }}
+                  </td>
+                </tr>
+                  
+                @endif
+              @endif
+            @endforeach
+
+          </tbody>
+
+        </table>
+
+      @endforeach
 
     </div>
 

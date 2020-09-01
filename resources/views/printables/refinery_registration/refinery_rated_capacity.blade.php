@@ -53,82 +53,33 @@
             $total_M = 0; 
           ?>
 
+          @foreach (__static::report_regions() as $rr_name => $rr_key)
 
-          <tr>
-            <td style="vertical-align: text-top; padding-top:5px; font-weight:bold;">
-              LUZON
-            </td>
-            <td style="padding-top:5px;"></td>
-          </tr>
+            <tr>
+              <td style="vertical-align: text-top; padding-top:5px; font-weight:bold;">
+                {{ $rr_name }}
+              </td>
+              <td style="padding-top:5px;"></td>
+            </tr>
 
-          @foreach($refinery_registrations as $data)
-            @if (!empty($data->refinery))
-              @if ($data->refinery->region->island_group == 1)
+            @foreach($refinery_registrations as $data)
+              @if (!empty($data->refinery))
+                @if ($data->refinery->report_region == $rr_key)
 
-              <?php $total_L += $data->rated_capacity ?>
+                <?php $total_L += $data->rated_capacity ?>
 
-                <tr>
-                  <td style="vertical-align: text-top; padding-top:5px;">
-                    {{ optional($data->refinery)->name }}
-                  </td>
-                  <td style="padding-top:5px;">
-                    {{ number_format($data->rated_capacity, 2) }}<br>
-                  </td>
-                </tr>
+                  <tr>
+                    <td style="vertical-align: text-top; padding-top:5px;">
+                      {{ optional($data->refinery)->name }}
+                    </td>
+                    <td style="padding-top:5px;">
+                      {{ number_format($data->rated_capacity, 2) }}<br>
+                    </td>
+                  </tr>
+                @endif
               @endif
-            @endif
-          @endforeach
-
-
-          <tr>
-            <td style="vertical-align: text-top; padding-top:5px; font-weight:bold;">
-              VISAYAS
-            </td>
-            <td style="padding-top:5px;"></td>
-          </tr>
-
-          @foreach($refinery_registrations as $data)
-            @if (!empty($data->refinery))
-              @if ($data->refinery->region->island_group == 2)
-
-              <?php $total_M += $data->rated_capacity ?>
-
-                <tr>
-                  <td style="vertical-align: text-top; padding-top:5px;">
-                    {{ optional($data->refinery)->name }}
-                  </td>
-                  <td style="padding-top:5px;">
-                    {{ number_format($data->rated_capacity, 2) }}<br>
-                  </td>
-                </tr>
-              @endif
-            @endif
-          @endforeach
-
-
-          <tr>
-            <td style="vertical-align: text-top; padding-top:5px; font-weight:bold;">
-              MINDANAO
-            </td>
-            <td style="padding-top:5px;"></td>
-          </tr>
-
-          @foreach($refinery_registrations as $data)
-            @if (!empty($data->refinery))
-              @if ($data->refinery->region->island_group == 3)
-
-              <?php $total_M += $data->rated_capacity ?>
-
-                <tr>
-                  <td style="vertical-align: text-top; padding-top:5px;">
-                    {{ optional($data->refinery)->name }}
-                  </td>
-                  <td style="padding-top:5px;">
-                    {{ number_format($data->rated_capacity, 2) }}<br>
-                  </td>
-                </tr>
-              @endif
-            @endif
+            @endforeach
+            
           @endforeach
 
           <?php

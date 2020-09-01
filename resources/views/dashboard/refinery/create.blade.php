@@ -68,16 +68,22 @@
 
             <div class="col-md-12"></div>
 
-            {!! __form::textbox(
-              '4', 'officer', 'text', 'Officer', 'Officer', old('officer'), $errors->has('officer'), $errors->first('officer'), ''
+            {!! __form::select_static(
+              '6', 'report_region', 'Report Region', old('report_region'), __static::report_regions(), $errors->has('report_region'), $errors->first('report_region'), 'select2', ''
             ) !!}
 
             {!! __form::textbox(
-              '4', 'position', 'text', 'Position', 'Position', old('position'), $errors->has('position'), $errors->first('position'), ''
+              '6', 'officer', 'text', 'Officer', 'Officer', old('officer'), $errors->has('officer'), $errors->first('officer'), ''
+            ) !!}
+
+            <div class="col-md-12"></div>
+
+            {!! __form::textbox(
+              '6', 'position', 'text', 'Position', 'Position', old('position'), $errors->has('position'), $errors->first('position'), ''
             ) !!}
 
             {!! __form::textbox(
-              '4', 'salutation', 'text', 'Salutation', 'Salutation', old('salutation'), $errors->has('salutation'), $errors->first('salutation'), ''
+              '6', 'salutation', 'text', 'Salutation', 'Salutation', old('salutation'), $errors->has('salutation'), $errors->first('salutation'), ''
             ) !!}
 
             <div class="col-md-12"></div>

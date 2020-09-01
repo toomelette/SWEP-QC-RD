@@ -21,6 +21,7 @@ class Mill extends Model{
         'slug' => '',
         'mill_id' => '',
         'region_id' => '',
+        'report_region' => '',
         'name' => '',
         'address' => '',
         'address_second' => '',

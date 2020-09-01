@@ -72,6 +72,7 @@ class MillRepository extends BaseRepository implements MillInterface {
         $mill->fax_no_second = $request->fax_no_second;
         $mill->email = $request->email;
         $mill->region_id = $request->region_id;
+        $mill->report_region = $request->report_region;
         $mill->officer = $request->officer;
         $mill->position = $request->position;
         $mill->salutation = $request->salutation;
@@ -106,6 +107,7 @@ class MillRepository extends BaseRepository implements MillInterface {
         $mill->fax_no_second = $request->fax_no_second;
         $mill->email = $request->email;
         $mill->region_id = $request->region_id;
+        $mill->report_region = $request->report_region;
         $mill->officer = $request->officer;
         $mill->position = $request->position;
         $mill->salutation = $request->salutation;

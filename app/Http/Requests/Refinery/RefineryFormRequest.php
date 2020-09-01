@@ -28,6 +28,7 @@ class RefineryFormRequest extends FormRequest{
             'fax_no_second'=>'nullable|string|max:45',
             'email'=>'nullable|string|max:90',
             'region_id'=>'nullable|string|max:11',
+            'report_region'=>'nullable|string|max:11',
             'officer'=>'nullable|string|max:90',
             'position'=>'nullable|string|max:90',
             'salutation'=>'nullable|string|max:90',

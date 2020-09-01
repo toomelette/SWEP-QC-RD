@@ -70,7 +70,15 @@
 
         <tbody>
 
+          <?php
+            $total = 0;
+          ?>
+
           @foreach($months as $key => $data)
+
+            <?php
+              $total += countByMonthYear($refinery_registrations, $key);
+            ?>
 
             <tr>
               <td>
@@ -88,7 +96,7 @@
                 TOTAL
               </td>
               <td style="text-align:center; font-weight: bold;">
-                {{ $refinery_registrations->count() }}
+                {{ $total }}
               </td>
             </tr>
 

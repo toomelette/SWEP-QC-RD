@@ -21,6 +21,7 @@ class Refinery extends Model{
         'slug' => '',
         'refinery_id' => '',
         'region_id' => '',
+        'report_region' => '',
         'name' => '',
         'address' => '',
         'address_second' => '',
