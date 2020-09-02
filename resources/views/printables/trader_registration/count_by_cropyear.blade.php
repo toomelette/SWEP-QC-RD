@@ -37,23 +37,6 @@
     return $count;
 
   }
-  
-
-
-  function countByCat($trader_registrations, $cat_id){
-
-    $trader_registrations_array = $trader_registrations->pluck('trader_cat_id')->toArray();
-    $count = 0;
-
-    foreach ($trader_registrations as $data) {
-      if ($data->trader_cat_id == $cat_id) {
-        $count++;
-      }
-    }
-
-    return $count;
-
-  }
 
 
 
@@ -121,6 +104,17 @@
 
           @foreach($months as $key => $data)
 
+            <?php
+
+              $subtotal_std += countByMonthYearAndCat($trader_registrations, $key, 'TC1001');
+              $subtotal_sti += countByMonthYearAndCat($trader_registrations, $key, 'TC1002');
+              $subtotal_md += countByMonthYearAndCat($trader_registrations, $key, 'TC1003');
+              $subtotal_mi += countByMonthYearAndCat($trader_registrations, $key, 'TC1004');
+              $subtotal_mus += countByMonthYearAndCat($trader_registrations, $key, 'TC1005');
+              $subtotal_hfcs += countByMonthYearAndCat($trader_registrations, $key, 'TC1006');
+
+            ?>
+
             <tr>
               <td>
                 {{ $data }}
@@ -150,32 +144,36 @@
 
           @endforeach
 
-            <tr>
-              <td>
-                TOTAL
-              </td>
-              <td style="text-align:center; font-weight: bold;">
-                {{ countByCat($trader_registrations, 'TC1001') }}
-              </td>
-              <td style="text-align:center; font-weight: bold;">
-                {{ countByCat($trader_registrations, 'TC1002') }}
-              </td>
-              <td style="text-align:center; font-weight: bold;">
-                {{ countByCat($trader_registrations, 'TC1003') }}
-              </td>
-              <td style="text-align:center; font-weight: bold;">
-                {{ countByCat($trader_registrations, 'TC1004') }}
-              </td>
-              <td style="text-align:center; font-weight: bold;">
-                {{ countByCat($trader_registrations, 'TC1005') }}
-              </td>
-              <td style="text-align:center; font-weight: bold;">
-                {{ countByCat($trader_registrations, 'TC1006') }}
-              </td>
-              <td style="text-align:center; font-weight: bold;">
-                {{ $trader_registrations->count() }}
-              </td>
-            </tr>
+          <?php
+            $total = $subtotal_std + $subtotal_sti + $subtotal_md + $subtotal_mi + $subtotal_mus + $subtotal_hfcs;
+          ?>
+
+          <tr>
+            <td>
+              TOTAL
+            </td>
+            <td style="text-align:center; font-weight: bold;">
+              {{ $subtotal_std }}
+            </td>
+            <td style="text-align:center; font-weight: bold;">
+              {{ $subtotal_sti }}
+            </td>
+            <td style="text-align:center; font-weight: bold;">
+              {{ $subtotal_md }}
+            </td>
+            <td style="text-align:center; font-weight: bold;">
+              {{ $subtotal_mi }}
+            </td>
+            <td style="text-align:center; font-weight: bold;">
+              {{ $subtotal_mus }}
+            </td>
+            <td style="text-align:center; font-weight: bold;">
+              {{ $subtotal_hfcs }}
+            </td>
+            <td style="text-align:center; font-weight: bold;">
+              {{ $total }}
+            </td>
+          </tr>
 
         </tbody>
 
