@@ -6,11 +6,11 @@
            
 
 
-  {{-- Traders Directory --}}
+  {{-- List of Registered Traders --}}
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">Traders Directory</h2>
+      <h2 class="box-title">List of Registered Traders</h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
