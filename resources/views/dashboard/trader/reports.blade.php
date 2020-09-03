@@ -3,7 +3,95 @@
 @section('content')
 
 <section class="content">
+           
+
+
+  {{-- Traders Directory --}}
+  <div class="box box-solid">
+      
+    <div class="box-header with-border">
+      <h2 class="box-title">Traders Directory</h2>
+      <div class="pull-right">
+          <code>Fields with asterisks(*) are required</code>
+      </div> 
+    </div>
+    
+    <form method="GET"
+          id="form_bcyc"
+          action="{{ route('dashboard.trader_registration.reports_output') }}"
+          target="_blank">
+
+      <div class="box-body">
+        <div class="col-md-12">
+
+          <input type="hidden" id="ft" name="ft" value="bcyc">
+          
+          {!! __form::select_dynamic(
+            '3', 'bcyc_cy', 'Crop Year *', old('bcyc_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('bcyc_cy'), $errors->first('bcyc_cy'), 'select2', ''
+          ) !!}
+
+          {!! __form::select_dynamic(
+            '3', 'bcyc_tc', 'Trader Category *', old('bcyc_tc'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('bcyc_tc'), $errors->first('bcyc_tc'), 'select2', ''
+          ) !!}
+
+          {!! __form::select_static(
+            '3', 'bcyc_rt', 'Type *', old('bcyc_rt'), ['By Region' => 'BR', 'Alphabetical' => 'A'], $errors->has('bcyc_rt'), $errors->first('bcyc_rt'), '', ''
+          ) !!}
+
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button class="btn btn-default">
+          Print <i class="fa fa-fw fa-print"></i>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+           
+
+
+
+  {{-- Count By Crop Year --}}
+  <div class="box box-solid">
+      
+    <div class="box-header with-border">
+      <h2 class="box-title">Number of Registered Traders by Month and Category</h2>
+      <div class="pull-right">
+          <code>Fields with asterisks(*) are required</code>
+      </div> 
+    </div>
+    
+    <form method="GET" 
+          id="form_cbcy"
+          action="{{ route('dashboard.trader_registration.reports_output') }}"
+          target="_blank">
+
+      <div class="box-body">
+        <div class="col-md-12">
+
+          <input type="hidden" id="ft" name="ft" value="cbcy">
+          
+          {!! __form::select_dynamic(
+            '3', 'cbcy_cy', 'Crop Year *', old('cbcy_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('cbcy_cy'), $errors->first('cbcy_cy'), 'select2', ''
+          ) !!}
+
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button class="btn btn-default">
+          Print <i class="fa fa-fw fa-print"></i>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
        
+
 
   {{-- List by Date and Category --}}
   <div class="box box-solid">
@@ -47,92 +135,6 @@
         </button>&nbsp;
         <button class="btn btn-success submit_button" data-type="e">
           Export in Excel <i class="fa fa-fw fa-file-text-o"></i>
-        </button>
-      </div>
-
-    </form>
-
-  </div>
-           
-
-
-  {{-- List by Crop Year and Category --}}
-  <div class="box box-solid">
-      
-    <div class="box-header with-border">
-      <h2 class="box-title">List of Registered Traders by Crop Year and Category</h2>
-      <div class="pull-right">
-          <code>Fields with asterisks(*) are required</code>
-      </div> 
-    </div>
-    
-    <form method="GET" 
-          id="form_bcyc" 
-          action="{{ route('dashboard.trader_registration.reports_output') }}"
-          target="_blank">
-
-      <div class="box-body">
-        <div class="col-md-12">
-
-          <input type="hidden" id="ft" name="ft" value="bcyc">
-          
-          {!! __form::select_dynamic(
-            '3', 'bcyc_cy', 'Crop Year *', old('bcyc_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('bcyc_cy'), $errors->first('bcyc_cy'), 'select2', ''
-          ) !!}
-
-          {!! __form::select_dynamic(
-            '3', 'bcyc_tc', 'Trader Category *', old('bcyc_tc'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('bcyc_tc'), $errors->first('bcyc_tc'), 'select2', ''
-          ) !!}
-
-          {!! __form::select_static(
-            '3', 'bcyc_rt', 'Type *', old('bcyc_rt'), ['By Region' => 'BR', 'Alphabetical' => 'A'], $errors->has('bcyc_rt'), $errors->first('bcyc_rt'), '', ''
-          ) !!}
-
-        </div>
-      </div>
-
-      <div class="box-footer">
-        <button class="btn btn-default">
-          Print <i class="fa fa-fw fa-print"></i>
-        </button>
-      </div>
-
-    </form>
-
-  </div>
-           
-
-
-  {{-- Count By Crop Year --}}
-  <div class="box box-solid">
-      
-    <div class="box-header with-border">
-      <h2 class="box-title">Number of Registered Traders by Month and Category</h2>
-      <div class="pull-right">
-          <code>Fields with asterisks(*) are required</code>
-      </div> 
-    </div>
-    
-    <form method="GET" 
-          id="form_cbcy"
-          action="{{ route('dashboard.trader_registration.reports_output') }}"
-          target="_blank">
-
-      <div class="box-body">
-        <div class="col-md-12">
-
-          <input type="hidden" id="ft" name="ft" value="cbcy">
-          
-          {!! __form::select_dynamic(
-            '3', 'cbcy_cy', 'Crop Year *', old('cbcy_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('cbcy_cy'), $errors->first('cbcy_cy'), 'select2', ''
-          ) !!}
-
-        </div>
-      </div>
-
-      <div class="box-footer">
-        <button class="btn btn-default">
-          Print <i class="fa fa-fw fa-print"></i>
         </button>
       </div>
 
