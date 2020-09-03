@@ -328,7 +328,7 @@ class TraderRegistrationRepository extends BaseRepository implements TraderRegis
         return $trader_reg->select('trader_id', 'trader_officer', 'trader_email')
                           ->with('trader', 'trader.region')
                           ->get()
-                          ->sortByDesc(function($trader_reg) {
+                          ->sortBy(function($trader_reg) {
                             return $trader_reg->trader->name;
                           });
                           
