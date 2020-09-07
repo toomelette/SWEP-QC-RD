@@ -247,6 +247,30 @@
     }, 50));
 
 
+    // ON RAW MT
+    $('#raw_mt').keyup(delay(function() { 
+      raw_lkg = 0;
+      if ($('#raw_mt').val() != ""){
+        raw_mt = $('#raw_mt').val().replace(/,/g, "");
+        raw_mt_float = parseFloat(raw_mt);
+        raw_lkg = raw_mt_float * 20;
+      }
+      $('#raw_lkg').val(raw_lkg.toFixed(2)); 
+      pf('#raw_lkg');
+    }, 50));
+
+    $('#raw_mt').keydown(delay(function() { 
+      raw_lkg = 0;
+      if ($('#raw_mt').val() != ""){
+        raw_mt = $('#raw_mt').val().replace(/,/g, "");
+        raw_mt_float = parseFloat(raw_mt);
+        raw_lkg = raw_mt_float * 20;
+      }
+      $('#raw_lkg').val(raw_lkg.toFixed(2)); 
+      pf('#raw_lkg');
+    }, 50));
+
+
     // TOAST NOTIFICATION
     @if(Session::has('MILL_REG_DELETE_SUCCESS'))
       {!! __js::toast(Session::get('MILL_REG_DELETE_SUCCESS')) !!}

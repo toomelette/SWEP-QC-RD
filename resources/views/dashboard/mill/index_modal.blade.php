@@ -325,17 +325,17 @@
               <div class="col-md-12 no-padding">
 
                 <div class="col-md-12">
-                  <h4>Area Harvested</h4>
+                  <h4>Area Harvested (Previous Crop Year)</h4>
                 </div>
 
                 <div class="col-md-12">
 
                   {!! __form::textbox_numeric(
-                    '6', 'ah_plant_cane', 'text', 'Plant Cane', 'Plant Cane', old('ah_plant_cane') , $errors->has('ah_plant_cane'), $errors->first('ah_plant_cane'), ''
+                    '6', 'ah_plant_cane', 'text', 'Plant Cane (HAS.)', 'Plant Cane', old('ah_plant_cane') , $errors->has('ah_plant_cane'), $errors->first('ah_plant_cane'), ''
                   ) !!}
 
                   {!! __form::textbox_numeric(
-                    '6', 'ah_ratoon_cane', 'text', 'Ratoon Cane', 'Ratoon Cane', old('ah_ratoon_cane') , $errors->has('ah_ratoon_cane'), $errors->first('ah_ratoon_cane'), ''
+                    '6', 'ah_ratoon_cane', 'text', 'Ratoon Cane (HAS.)', 'Ratoon Cane', old('ah_ratoon_cane') , $errors->has('ah_ratoon_cane'), $errors->first('ah_ratoon_cane'), ''
                   ) !!}
 
                 </div>
@@ -347,17 +347,17 @@
               <div class="col-md-12 no-padding">
 
                 <div class="col-md-12">
-                  <h4>Area Planted</h4>
+                  <h4>Area Planted (Current Crop Year)</h4>
                 </div>
 
                 <div class="col-md-12">
 
                   {!! __form::textbox_numeric(
-                    '6', 'ap_plant_cane', 'text', 'Plant Cane', 'Plant Cane', old('ap_plant_cane') , $errors->has('ap_plant_cane'), $errors->first('ap_plant_cane'), ''
+                    '6', 'ap_plant_cane', 'text', 'Plant Cane (HAS.)', 'Plant Cane', old('ap_plant_cane') , $errors->has('ap_plant_cane'), $errors->first('ap_plant_cane'), ''
                   ) !!}
 
                   {!! __form::textbox_numeric(
-                    '6', 'ap_ratoon_cane', 'text', 'Ratoon Cane', 'Ratoon Cane', old('ap_ratoon_cane') , $errors->has('ap_ratoon_cane'), $errors->first('ap_ratoon_cane'), ''
+                    '6', 'ap_ratoon_cane', 'text', 'Ratoon Cane (HAS.)', 'Ratoon Cane', old('ap_ratoon_cane') , $errors->has('ap_ratoon_cane'), $errors->first('ap_ratoon_cane'), ''
                   ) !!}
 
                 </div>
