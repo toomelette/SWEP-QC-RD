@@ -212,6 +212,12 @@
             <i class="fa fa-pie-chart"></i> &nbsp;Crop Estimate
             <div class="pull-right">
               <code>Fields with asterisks(*) are required</code>
+              <button type="submit" class="btn btn-default" id="mdl_edit_button">
+                Edit <i class="fa fa-fw fa-pencil"></i>
+              </button>
+              <button type="submit" class="btn btn-default" id="mdl_view_button">
+                Back <i class="fa fa-fw fa-arrow-left"></i>
+              </button>
             </div> 
           </h4>
         </div>
@@ -223,9 +229,111 @@
 
             <div class="row">
 
-              <div class="form-group col-md-12">
-                <h4>Mill: <span class="mill_name"></span></h4>
+              <div class="col-md-12">
+                <p>Mill: <span class="mill_name"></span></p>
               </div>
+
+              {{-- Details --}}
+              <div class="col-md-12 no-padding" id="mdl_view">
+                
+                <div class="col-md-12">
+                  <p>Crop Year: <span id="v_crop_year"></span></p>
+                </div>
+
+                <div class="col-md-6">
+
+
+                  <table class="table table-bordered">
+                    <tr>
+                      <td>Planter Share</td>
+                      <td><span id="v_planter_share"></span></td>
+                    </tr>
+                    <tr>
+                      <td>Mill Share</td>
+                      <td><span id="v_mill_share"></span></td>
+                    </tr>
+                    <tr>
+                      <td>Other Share</td>
+                      <td><span id="v_other_share"></span></td>
+                    </tr>
+                    <tr>
+                      <td>Mill Rated Capacity</td>
+                      <td><span id="v_rated_capacity"></span> Tc/day</td>
+                    </tr>
+                    <tr>
+                      <td>Molasses Tank 1</td>
+                      <td><span id="v_molasses_tank_first"></span> MT</td>
+                    </tr>
+                    <tr>
+                      <td>Molasses Tank 2</td>
+                      <td><span id="v_molasses_tank_second"></span> MT</td>
+                    </tr>
+                    <tr>
+                      <td>Molasses Tank 3</td>
+                      <td><span id="v_molasses_tank_third"></span> MT</td>
+                    </tr>
+                    <tr>
+                      <td>Est. Start of Milling</td>
+                      <td><span id="v_est_start_milling"></span></td>
+                    </tr>
+                    <tr>
+                      <td>Est. End of Milling</td>
+                      <td><span id="v_est_end_milling"></span></td>
+                    </tr>
+                  </table>
+                </div>
+                
+
+                <div class="col-md-6">
+                  <table class="table table-bordered">
+                    <tr>
+                      <td>Actual Start of Milling</td>
+                      <td><span id="v_start_milling"></span></td>
+                    </tr>
+                    <tr>
+                      <td>Actual End of Milling</td>
+                      <td><span id="v_end_milling"></span></td>
+                    </tr>
+                    <tr>
+                      <td>GTCM MT</td>
+                      <td><span id="v_gtcm_mt"></span></td>
+                    </tr>
+                    <tr>
+                      <td>Raw MT</td>
+                      <td><span id="v_raw_mt"></span></td>
+                    </tr>
+                    <tr>
+                      <td>Raw LKG</td>
+                      <td><span id="v_raw_lkg"></span></td>
+                    </tr>
+                    <tr>
+                      <td>Area Harvested Plant Cane</td>
+                      <td><span id="v_ah_plant_cane"></span> HAS.</td>
+                    </tr>
+                    <tr>
+                      <td>Area Harvested Ratoon Cane</td>
+                      <td><span id="v_ah_ratoon_cane"></span> HAS.</td>
+                    </tr>
+                    <tr>
+                      <td>Area Planted Plant Cane</td>
+                      <td><span id="v_ap_plant_cane"></span> HAS.</td>
+                    </tr>
+                    <tr>
+                      <td>Area Planted Ratoon Cane</td>
+                      <td><span id="v_ap_ratoon_cane"></span> HAS.</td>
+                    </tr>
+                  </table>
+                </div>
+
+              </div>
+              
+
+            </div>
+
+
+
+            {{-- Form --}}
+            <div class="row" id="mdl_form">
 
               <input type="hidden" name="ft" value="ml">
 
@@ -244,15 +352,15 @@
                 <div class="col-md-12">
 
                   {!! __form::textbox_numeric(
-                    '6', 'planter_share', 'text', 'Planter Share (%)', 'Planter (%)', old('planter_share') , $errors->has('planter_share'), $errors->first('planter_share'), ''
+                    '6', 'planter_share', 'text', 'Planter Share (%)', 'Planter', old('planter_share') , $errors->has('planter_share'), $errors->first('planter_share'), ''
                   ) !!}
 
                   {!! __form::textbox_numeric(
-                    '6', 'mill_share', 'text', 'Mill Share (%)', 'Mill (%)', old('mill_share') , $errors->has('mill_share'), $errors->first('mill_share'), ''
+                    '6', 'mill_share', 'text', 'Mill Share (%)', 'Mill', old('mill_share') , $errors->has('mill_share'), $errors->first('mill_share'), ''
                   ) !!}
 
                   {!! __form::textbox(
-                    '12', 'other_share', 'text', 'Other Shares (%)', 'Others (%)', old('other_share'), $errors->has('other_share'), $errors->first('other_share'), ''
+                    '12', 'other_share', 'text', 'Other Shares (%)', 'Others', old('other_share'), $errors->has('other_share'), $errors->first('other_share'), ''
                   ) !!}
 
                 </div>
@@ -261,7 +369,7 @@
 
 
               {!! __form::textbox_numeric(
-                '12', 'rated_capacity', 'text', 'Mill Rated Capacity', 'Mill Rated Capacity', old('rated_capacity') , $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
+                '12', 'rated_capacity', 'text', 'Mill Rated Capacity (Tc/day)', 'Mill Rated Capacity', old('rated_capacity') , $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
               ) !!}
 
               <div class="col-md-12"></div>
@@ -287,11 +395,15 @@
               <div class="col-md-12"></div>
 
               {!! __form::textbox_numeric(
-                '6', 'molasses_tank_first', 'text', 'Mollases Tank 1', 'Mollases Tank 1', old('molasses_tank_first') , $errors->has('molasses_tank_first'), $errors->first('molasses_tank_first'), ''
+                '4', 'molasses_tank_first', 'text', 'Molases Tank 1 (MT)', 'Molases Tank 1', old('molasses_tank_first') , $errors->has('molasses_tank_first'), $errors->first('molasses_tank_first'), ''
               ) !!}
 
               {!! __form::textbox_numeric(
-                '6', 'molasses_tank_second', 'text', 'Mollases Tank 2', 'Mollases Tank 2', old('molasses_tank_second') , $errors->has('molasses_tank_second'), $errors->first('molasses_tank_second'), ''
+                '4', 'molasses_tank_second', 'text', 'Molases Tank 2 (MT)', 'Molases Tank 2', old('molasses_tank_second') , $errors->has('molasses_tank_second'), $errors->first('molasses_tank_second'), ''
+              ) !!}
+
+              {!! __form::textbox_numeric(
+                '4', 'molasses_tank_third', 'text', 'Molases Tank 3 (MT)', 'Molases Tank 3', old('molasses_tank_third') , $errors->has('molasses_tank_third'), $errors->first('molasses_tank_third'), ''
               ) !!}
 
 
@@ -372,7 +484,7 @@
 
           <div class="modal-footer">
             <button class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-success">Save <i class="fa fa-fw fa-save"></i></button>
+            <button type="submit" class="btn btn-success" id="mdl_update_button">Save <i class="fa fa-fw fa-save"></i></button>
           </form>
 
         </div>

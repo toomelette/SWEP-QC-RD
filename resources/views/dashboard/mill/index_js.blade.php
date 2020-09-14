@@ -31,6 +31,7 @@
 
     // ON CLICK BILLING STATEMENT
     $(document).on("click", "#bs_button", function () {
+      
       if($(this).data("action") == "bs"){
 
         $('.select2').select2();
@@ -41,13 +42,6 @@
                 dateFormat: "mm/dd/yy",
                 orientation: "bottom"
             });
-        });
-        
-        $(".priceformat").priceFormat({
-            prefix: "",
-            thousandsSeparator: ",",
-            clearOnEmpty: true,
-            allowNegative: true
         });
 
         $("#mill_bs").modal("show");
@@ -62,22 +56,7 @@
         $("#bs_form #under_payment").val($(this).data("under_payment"));
         $("#bs_form #excess_payment").val($(this).data("excess_payment"));
         $("#bs_form #balance_fee").val($(this).data("balance_fee"));
-
-      }
-    });
-
-
-    // ON CLICK CROP ESTIMATE
-    $(document).on("click", "#ml_button", function () {
-      if($(this).data("action") == "ml"){
-        $('.select2').select2();
-        $('.datepicker').each(function(){
-            $(this).datepicker({
-                autoclose: true,
-                dateFormat: "mm/dd/yy",
-                orientation: "bottom"
-            });
-        });
+        
         $(".priceformat").priceFormat({
             prefix: "",
             thousandsSeparator: ",",
@@ -85,10 +64,57 @@
             allowNegative: true
         });
 
+      }
+
+    });
+
+
+
+    // ON CLICK CROP ESTIMATE
+    $(document).on("click", "#ml_button", function () {
+
+      $('#mdl_form').hide();
+      $('#mdl_update_button').hide();
+      $('#mdl_view_button').hide();
+
+      if($(this).data("action") == "ml"){
+
+        $('.select2').select2();
+
+        $('.datepicker').each(function(){
+            $(this).datepicker({
+                autoclose: true,
+                dateFormat: "mm/dd/yy",
+                orientation: "bottom"
+            });
+        });
+
         $("#mill_ml").modal("show");
-        $(".mill_name").text($(this).data("name"));
         $("#ml_body #ml_form").attr("action", $(this).data("url"));
 
+        {{-- View --}}
+        $(".mill_name").text($(this).data("name"));
+        $("#v_crop_year").text($(this).data("crop_year_name"));
+        $("#v_planter_share").text($(this).data("planter_share"));
+        $("#v_mill_share").text($(this).data("mill_share"));
+        $("#v_other_share").text($(this).data("other_share"));
+        $("#v_rated_capacity").text($(this).data("rated_capacity"));
+        $("#v_molasses_tank_first").text($(this).data("molasses_tank_first"));
+        $("#v_molasses_tank_second").text($(this).data("molasses_tank_second"));
+        $("#v_molasses_tank_third").text($(this).data("molasses_tank_third"));
+        $("#v_est_start_milling").text($(this).data("est_start_milling"));
+        $("#v_est_end_milling").text($(this).data("est_end_milling"));
+        $("#v_start_milling").text($(this).data("start_milling"));
+        $("#v_end_milling").text($(this).data("end_milling"));
+        $("#v_gtcm_mt").text($(this).data("gtcm_mt"));
+        $("#v_raw_mt").text($(this).data("raw_mt"));
+        $("#v_raw_lkg").text($(this).data("raw_lkg"));
+        $("#v_ah_plant_cane").text($(this).data("ah_plant_cane"));
+        $("#v_ah_ratoon_cane").text($(this).data("ah_ratoon_cane"));
+        $("#v_ap_plant_cane").text($(this).data("ap_plant_cane"));
+        $("#v_ap_ratoon_cane").text($(this).data("ap_ratoon_cane"));
+
+        {{-- Form --}}
         $("#ml_form #crop_year_id").val($(this).data("crop_year_id")).change();
         $("#ml_form #mill_share").val($(this).data("mill_share"));
         $("#ml_form #planter_share").val($(this).data("planter_share"));
@@ -100,6 +126,7 @@
         $("#ml_form #end_milling").val($(this).data("end_milling"));
         $("#ml_form #molasses_tank_first").val($(this).data("molasses_tank_first"));
         $("#ml_form #molasses_tank_second").val($(this).data("molasses_tank_second"));
+        $("#ml_form #molasses_tank_third").val($(this).data("molasses_tank_third"));
         $("#ml_form #gtcm_mt").val($(this).data("gtcm_mt"));
         $("#ml_form #raw_mt").val($(this).data("raw_mt"));
         $("#ml_form #raw_lkg").val($(this).data("raw_lkg"));
@@ -108,8 +135,45 @@
         $("#ml_form #ap_plant_cane").val($(this).data("ap_plant_cane"));
         $("#ml_form #ap_ratoon_cane").val($(this).data("ap_ratoon_cane"));
 
+        $(".priceformat").priceFormat({
+            prefix: "",
+            thousandsSeparator: ",",
+            clearOnEmpty: true,
+            allowNegative: true
+        });
+
       }
+
     });
+
+
+
+    // ON CLICK MDL EDIT
+    $(document).on("click", "#mdl_edit_button", function () {
+
+      $('#mdl_form').show();
+      $('#mdl_update_button').show();
+      $('#mdl_view_button').show();
+      
+      $('#mdl_view').hide();
+      $('#mdl_edit_button').hide();
+
+    });
+
+
+
+    // ON CLICK MDL VIEW (BACK)
+    $(document).on("click", "#mdl_view_button", function () {
+
+      $('#mdl_form').hide();
+      $('#mdl_update_button').hide();
+      $('#mdl_view_button').hide();
+      
+      $('#mdl_view').show();
+      $('#mdl_edit_button').show();
+
+    });
+
 
 
     // ONCLICK SELECT DISABLE

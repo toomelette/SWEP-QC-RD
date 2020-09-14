@@ -45,6 +45,7 @@ class MillRegistration extends Model{
 
         'molasses_tank_first' => 0.00,
         'molasses_tank_second' => 0.00,
+        'molasses_tank_third' => 0.00,
         'est_start_milling' => null,
         'est_end_milling' => null,
         'gtcm_mt' => 0.00,

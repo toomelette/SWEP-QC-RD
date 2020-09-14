@@ -42,7 +42,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
                     $mill_reg->where('license_no', 'LIKE', '%'. $request->q .'%');
                 }
 
-                return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'est_start_milling', 'est_end_milling', 'start_milling', 'end_milling', 'planter_share', 'mill_share', 'other_share', 'molasses_tank_first', 'molasses_tank_second', 'gtcm_mt', 'raw_mt', 'raw_lkg', 'ah_plant_cane', 'ah_ratoon_cane', 'ap_plant_cane', 'ap_ratoon_cane', 'slug')
+                return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'est_start_milling', 'est_end_milling', 'start_milling', 'end_milling', 'planter_share', 'mill_share', 'other_share', 'molasses_tank_first', 'molasses_tank_second', 'molasses_tank_third', 'gtcm_mt', 'raw_mt', 'raw_lkg', 'ah_plant_cane', 'ah_ratoon_cane', 'ap_plant_cane', 'ap_ratoon_cane', 'slug')
                                   ->with('mill', 'cropYear')
                                   ->where('mill_id', $mill_id)
                                   ->sortable()
@@ -94,6 +94,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
             $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
             $mill_reg->molasses_tank_first = $this->__dataType->string_to_num($request->molasses_tank_first);
             $mill_reg->molasses_tank_second = $this->__dataType->string_to_num($request->molasses_tank_second);
+            $mill_reg->molasses_tank_third = $this->__dataType->string_to_num($request->molasses_tank_third);
             $mill_reg->gtcm_mt = $this->__dataType->string_to_num($request->gtcm_mt); 
             $mill_reg->raw_mt = $this->__dataType->string_to_num($request->raw_mt); 
             $mill_reg->raw_lkg = $this->__dataType->string_to_num($request->raw_lkg); 
@@ -156,6 +157,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
             $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
             $mill_reg->molasses_tank_first = $this->__dataType->string_to_num($request->molasses_tank_first);
             $mill_reg->molasses_tank_second = $this->__dataType->string_to_num($request->molasses_tank_second);
+            $mill_reg->molasses_tank_third = $this->__dataType->string_to_num($request->molasses_tank_third);
             $mill_reg->gtcm_mt = $this->__dataType->string_to_num($request->gtcm_mt); 
             $mill_reg->raw_mt = $this->__dataType->string_to_num($request->raw_mt); 
             $mill_reg->raw_lkg = $this->__dataType->string_to_num($request->raw_lkg); 
@@ -203,6 +205,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
         $mill_reg->end_milling = $this->__dataType->date_parse($request->end_milling);
         $mill_reg->molasses_tank_first = $this->__dataType->string_to_num($request->molasses_tank_first);
         $mill_reg->molasses_tank_second = $this->__dataType->string_to_num($request->molasses_tank_second);
+        $mill_reg->molasses_tank_third = $this->__dataType->string_to_num($request->molasses_tank_third);
         $mill_reg->gtcm_mt = $this->__dataType->string_to_num($request->gtcm_mt); 
         $mill_reg->raw_mt = $this->__dataType->string_to_num($request->raw_mt); 
         $mill_reg->raw_lkg = $this->__dataType->string_to_num($request->raw_lkg); 
@@ -302,9 +305,12 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
             $mill_reg->where('crop_year_id', $cy_id);
         }
 
-        return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling', 'planter_share', 'mill_share', 'other_share', 'molasses_tank_first', 'molasses_tank_second', 'est_start_milling', 'est_end_milling', 'gtcm_mt', 'raw_mt', 'raw_lkg', 'ah_plant_cane', 'ah_ratoon_cane', 'ap_plant_cane', 'ap_ratoon_cane')
+        return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling', 'planter_share', 'mill_share', 'other_share', 'molasses_tank_first', 'molasses_tank_second', 'molasses_tank_third', 'est_start_milling', 'est_end_milling', 'gtcm_mt', 'raw_mt', 'raw_lkg', 'ah_plant_cane', 'ah_ratoon_cane', 'ap_plant_cane', 'ap_ratoon_cane')
                         ->with('mill', 'cropYear')
-                        ->get();
+                        ->get()
+                        ->sortBy(function($mill_reg) {
+                        return $mill_reg->mill->name;
+                        });;
                           
     }
 

@@ -221,7 +221,7 @@
               ) !!}
 
               {!! __form::textbox_numeric(
-                '12', 'rated_capacity', 'text', 'Rated Capacity', 'Rated Capacity', '', $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
+                '12', 'rated_capacity', 'text', 'Rated Capacity (Lkg/day)', 'Rated Capacity', '', $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
               ) !!}
 
             </div>

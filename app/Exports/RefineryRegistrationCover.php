@@ -19,8 +19,8 @@ class RefineryRegistrationCover{
         $section = $phpWord->addSection([
             'paperSize' => 'A4', 
             'marginTop' => 3000, 
-            'marginLeft' => 2200, 
-            'marginRight' => 2200 
+            'marginLeft' => 1500, 
+            'marginRight' => 1500 
         ]);
 
         $textrun = $section->addTextRun();

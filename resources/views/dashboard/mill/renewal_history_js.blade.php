@@ -47,6 +47,7 @@
         $("#mill_rl_form #end_milling").val($(this).data("end_milling"));
         $("#mill_rl_form #molasses_tank_first").val($(this).data("molasses_tank_first"));
         $("#mill_rl_form #molasses_tank_second").val($(this).data("molasses_tank_second"));
+        $("#mill_rl_form #molasses_tank_third").val($(this).data("molasses_tank_third"));
         $("#mill_rl_form #gtcm_mt").val($(this).data("gtcm_mt"));
         $("#mill_rl_form #raw_mt").val($(this).data("raw_mt"));
         $("#mill_rl_form #raw_lkg").val($(this).data("raw_lkg"));

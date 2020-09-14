@@ -9,6 +9,7 @@
     // '5' => 'Refinery Rated Capacity',
     '6' => 'Molasses Tank 1',
     '7' => 'Molasses Tank 2',
+    '13' => 'Molasses Tank 3',
     '8' => 'Estimated Start of Milling',
     '9' => 'Estimated End of Milling',
     '10' => 'Crop Estimates',

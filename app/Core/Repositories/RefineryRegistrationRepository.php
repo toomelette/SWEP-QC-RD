@@ -269,7 +269,10 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
 
         return $refinery_reg->select('refinery_id', 'crop_year_id', 'license_no', 'reg_date', 'rated_capacity')
                             ->with('refinery', 'cropYear')
-                            ->get();
+                            ->get()
+                            ->sortBy(function($refinery_reg) {
+                                return $refinery_reg->refinery->name;
+                            });;
                           
     }
 

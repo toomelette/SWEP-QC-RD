@@ -72,6 +72,10 @@
               <th colspan="1" rowspan="2">Molasses Tank 2</th>
             @endif
             
+            @if (in_array('13', $fields))
+              <th colspan="1" rowspan="2">Molasses Tank 3</th>
+            @endif
+            
             @if (in_array('8', $fields))
               <th colspan="1" rowspan="2">Est. Start of Milling</th>
             @endif
@@ -147,12 +151,12 @@
                     @endif
 
                     @if (in_array('3', $fields))
-                      <td>{{ number_format($data->planter_share, 2) }}</td>
-                      <td>{{ number_format($data->mill_share, 2) }}</td>
+                      <td>{{ number_format($data->planter_share, 2) }}%</td>
+                      <td>{{ number_format($data->mill_share, 2) }}%</td>
                     @endif
 
                     @if (in_array('4', $fields))
-                      <td>{{ number_format($data->rated_capacity, 2) }}</td>
+                      <td>{{ number_format($data->rated_capacity, 2) }} Tc/day</td>
                     @endif
 
                     @if (in_array('5', $fields))
@@ -160,11 +164,15 @@
                     @endif
 
                     @if (in_array('6', $fields))
-                      <td>{{ number_format($data->molasses_tank_first, 2) }}</td>
+                      <td>{{ number_format($data->molasses_tank_first, 2) }} MT</td>
                     @endif
 
                     @if (in_array('7', $fields))
-                      <td>{{ number_format($data->molasses_tank_second, 2) }}</td>
+                      <td>{{ number_format($data->molasses_tank_second, 2) }} MT</td>
+                    @endif
+
+                    @if (in_array('13', $fields))
+                      <td>{{ number_format($data->molasses_tank_third, 2) }} MT</td>
                     @endif
 
                     @if (in_array('8', $fields))
@@ -186,7 +194,7 @@
                       <td>{{ number_format($data->ah_ratoon_cane, 2) }}</td>
                     @endif
 
-                    @if (in_array('11', $fields))
+                    @if (in_array('12', $fields))
                       <td>{{ number_format($data->ap_plant_cane, 2) }}</td>
                       <td>{{ number_format($data->ap_ratoon_cane, 2) }}</td>
                     @endif

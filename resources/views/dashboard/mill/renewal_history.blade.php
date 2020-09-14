@@ -89,6 +89,7 @@
                        data-end_milling="{{ __dataType::date_parse($data->end_milling, 'm/d/Y') }}"
                        data-molasses_tank_first="{{ $data->molasses_tank_first }}"
                        data-molasses_tank_second="{{ $data->molasses_tank_second }}"
+                       data-molasses_tank_third="{{ $data->molasses_tank_third }}"
                        data-gtcm_mt="{{ $data->gtcm_mt }}"
                        data-raw_mt="{{ $data->raw_mt }}"
                        data-raw_lkg="{{ $data->raw_lkg }}"

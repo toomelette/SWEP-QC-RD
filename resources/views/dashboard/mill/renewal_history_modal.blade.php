@@ -186,15 +186,15 @@
                 <div class="col-md-12">
 
                   {!! __form::textbox_numeric(
-                    '6', 'planter_share', 'text', 'Planter Share (%)', 'Planter (%)', old('planter_share') , $errors->has('planter_share'), $errors->first('planter_share'), ''
+                    '6', 'planter_share', 'text', 'Planter Share (%)', 'Planter', old('planter_share') , $errors->has('planter_share'), $errors->first('planter_share'), ''
                   ) !!}
 
                   {!! __form::textbox_numeric(
-                    '6', 'mill_share', 'text', 'Mill Share (%)', 'Mill (%)', old('mill_share') , $errors->has('mill_share'), $errors->first('mill_share'), ''
+                    '6', 'mill_share', 'text', 'Mill Share (%)', 'Mill', old('mill_share') , $errors->has('mill_share'), $errors->first('mill_share'), ''
                   ) !!}
 
                   {!! __form::textbox(
-                    '12', 'other_share', 'text', 'Other Shares (%)', 'Others (%)', old('other_share'), $errors->has('other_share'), $errors->first('other_share'), ''
+                    '12', 'other_share', 'text', 'Other Shares (%)', 'Others', old('other_share'), $errors->has('other_share'), $errors->first('other_share'), ''
                   ) !!}
 
                 </div>
@@ -203,7 +203,7 @@
 
 
               {!! __form::textbox_numeric(
-                '12', 'rated_capacity', 'text', 'Mill Rated Capacity', 'Mill Rated Capacity', old('rated_capacity') , $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
+                '12', 'rated_capacity', 'text', 'Mill Rated Capacity (Tc/day)', 'Mill Rated Capacity', old('rated_capacity') , $errors->has('rated_capacity'), $errors->first('rated_capacity'), ''
               ) !!}
 
               <div class="col-md-12"></div>
@@ -229,11 +229,15 @@
               <div class="col-md-12"></div>
 
               {!! __form::textbox_numeric(
-                '6', 'molasses_tank_first', 'text', 'Mollases Tank 1', 'Mollases Tank 1', old('molasses_tank_first') , $errors->has('molasses_tank_first'), $errors->first('molasses_tank_first'), ''
+                '4', 'molasses_tank_first', 'text', 'Mollases Tank 1 (MT)', 'Mollases Tank 1', old('molasses_tank_first') , $errors->has('molasses_tank_first'), $errors->first('molasses_tank_first'), ''
               ) !!}
 
               {!! __form::textbox_numeric(
-                '6', 'molasses_tank_second', 'text', 'Mollases Tank 2', 'Mollases Tank 2', old('molasses_tank_second') , $errors->has('molasses_tank_second'), $errors->first('molasses_tank_second'), ''
+                '4', 'molasses_tank_second', 'text', 'Mollases Tank 2 (MT)', 'Mollases Tank 2', old('molasses_tank_second') , $errors->has('molasses_tank_second'), $errors->first('molasses_tank_second'), ''
+              ) !!}
+
+              {!! __form::textbox_numeric(
+                '4', 'molasses_tank_third', 'text', 'Mollases Tank 3 (MT)', 'Mollases Tank 3', old('molasses_tank_third') , $errors->has('molasses_tank_third'), $errors->first('molasses_tank_third'), ''
               ) !!}
 
 

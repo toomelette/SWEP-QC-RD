@@ -73,7 +73,7 @@
                       {{ optional($data->refinery)->name }}
                     </td>
                     <td style="padding-top:5px;">
-                      {{ number_format($data->rated_capacity, 2) }}<br>
+                      {{ number_format($data->rated_capacity, 2) }} Lkg/day<br>
                     </td>
                   </tr>
                 @endif

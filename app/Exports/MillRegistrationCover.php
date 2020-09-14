@@ -19,8 +19,8 @@ class MillRegistrationCover{
         $section = $phpWord->addSection([
             'paperSize' => 'A4', 
             'marginTop' => 3000, 
-            'marginLeft' => 2200, 
-            'marginRight' => 2200 
+            'marginLeft' => 1500, 
+            'marginRight' => 1500 
         ]);
 
 
