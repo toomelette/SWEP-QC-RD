@@ -32,7 +32,7 @@
       <table style="border-top:1px solid; border-bottom:1px solid;">
         <tbody>
           <tr>
-            <th style="width:200px;">SUGAR MILLS</th>
+            <th style="width:200px;">SUGAR REFINERIES</th>
             <th style="width:100px; text-align:center;">RATED CAPACITY</th>
             <th style="width:200px;">METRO MANILA ADDRESS</th>
             <th style="width:200px;">MILL SITE ADDRESS</th>

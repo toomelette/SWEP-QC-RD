@@ -87,7 +87,7 @@
           <input type="hidden" id="ft" name="ft" value="ml">
           
           {!! __form::select_dynamic(
-            '3', 'cbcy_cy', 'Crop Year *', old('cbcy_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('cbcy_cy'), $errors->first('cbcy_cy'), 'select2', ''
+            '3', 'ml_cy', 'Crop Year *', old('ml_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('ml_cy'), $errors->first('ml_cy'), 'select2', ''
           ) !!}
 
 
@@ -225,7 +225,7 @@
     </div>
     
     <form method="GET" 
-          id="form_bd" 
+          id="form_bcy" 
           action="{{ route('dashboard.mill_registration.reports_output') }}"
           target="_blank">
 

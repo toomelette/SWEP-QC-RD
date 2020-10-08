@@ -142,8 +142,8 @@ class MillRegistrationController extends Controller{
             
         }elseif ($request->ft == 'ml') {
 
-            $mill_registrations = $this->mill_reg_repo->getByCropYearId($request->bcy_cy);
-            $crop_year = $this->cy_repo->findByCropYearId($request->cbcy_cy);
+            $mill_registrations = $this->mill_reg_repo->getByCropYearId($request->ml_cy);
+            $crop_year = $this->cy_repo->findByCropYearId($request->ml_cy);
 
             return view('printables.mill_registration.mill_library')->with([
                 'mill_registrations' => $mill_registrations,

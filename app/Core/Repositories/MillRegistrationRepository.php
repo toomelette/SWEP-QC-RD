@@ -301,16 +301,13 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
 
         $mill_reg = $this->mill_reg->newQuery();
 
-        if (isset($cy_id)) {
-            $mill_reg->where('crop_year_id', $cy_id);
-        }
-
         return $mill_reg->select('mill_id', 'crop_year_id', 'license_no', 'reg_date', 'mt', 'lkg', 'milling_fee', 'payment_status', 'under_payment', 'excess_payment', 'balance_fee', 'rated_capacity', 'start_milling', 'end_milling', 'planter_share', 'mill_share', 'other_share', 'molasses_tank_first', 'molasses_tank_second', 'molasses_tank_third', 'est_start_milling', 'est_end_milling', 'gtcm_mt', 'raw_mt', 'raw_lkg', 'ah_plant_cane', 'ah_ratoon_cane', 'ap_plant_cane', 'ap_ratoon_cane')
                         ->with('mill', 'cropYear')
+                        ->where('crop_year_id', $cy_id)
                         ->get()
                         ->sortBy(function($mill_reg) {
-                        return $mill_reg->mill->name;
-                        });;
+                            return $mill_reg->mill->name;
+                        });
                           
     }
 

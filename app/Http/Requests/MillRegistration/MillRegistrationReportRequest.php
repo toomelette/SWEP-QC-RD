@@ -34,6 +34,7 @@ class MillRegistrationReportRequest extends FormRequest{
 
             // Mill Library
             'ml_field'=>'sometimes|nullable|array|max:12',
+            'ml_cy'=>'sometimes|required|string|max:11',
 
             // List of Registered Mills by Date
             'bd_df'=>'sometimes|required|date_format:"m/d/Y"',
