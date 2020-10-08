@@ -83,10 +83,21 @@ class MillRegistrationBilling{
         $textrun->addText($salutation, ['name' => 'Cambria', 'size' => 12]);
 
         // Paragraph 1
+        $last_cropyear = "";
+
+        if (isset($mill_reg->cropYear->name)) {
+
+            $last_cropyear_pre = substr($mill_reg->cropYear->name, 0, 4) - 1;
+            $last_cropyear_post = substr($mill_reg->cropYear->name, -4) - 1;
+            $last_cropyear = $last_cropyear_pre .' - '. $last_cropyear_post;
+            
+        }
+        
+
         $textrun = $section->addTextRun();
         $status = $mill_reg->payment_status == "UP" ? "underpayment" : "excess payment";
         $payment_amount = $mill_reg->payment_status == "UP" ? $mill_reg->under_payment : $mill_reg->excess_payment;
-        $txt = "Please be informed that based on your submitted production estimate of ". number_format($mill_reg->mt, 2) ." Metric Tons or ". number_format($mill_reg->lkg, 2) ." Lkg., your Milling License Fee for Crop Year ". optional($mill_reg->cropYear)->name ." is ". __dataType::num_to_words($mill_reg->milling_fee) ." (PHP ". number_format($mill_reg->milling_fee, 2) .") PESOS.  However, you have an ". $status ." in your Milling License Fee for CY ". optional($mill_reg->cropYear)->name ." in the amount of ". __dataType::num_to_words($payment_amount) ." PESOS (PHP ". number_format($payment_amount, 2) .").";
+        $txt = "Please be informed that based on your submitted production estimate of ". number_format($mill_reg->mt, 2) ." Metric Tons or ". number_format($mill_reg->lkg, 2) ." Lkg., your Milling License Fee for Crop Year ". optional($mill_reg->cropYear)->name ." is ". __dataType::num_to_words($mill_reg->milling_fee) ." (PHP ". number_format($mill_reg->milling_fee, 2) .") PESOS.  However, you have an ". $status ." in your Milling License Fee for CY ". $last_cropyear ." in the amount of ". __dataType::num_to_words($payment_amount) ." PESOS (PHP ". number_format($payment_amount, 2) .").";
         $textrun->addText($txt, ['name' => 'Cambria', 'size' => 12]);
         $textrun->setParagraphStyle(array('align' => 'both'));
 
