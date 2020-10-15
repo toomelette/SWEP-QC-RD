@@ -28,7 +28,8 @@ class TraderRegistrationBCYC implements FromView{
 
             return view('exports.trader.bcyc_alpha', [
                 'trader_registrations' =>  $this->trader_registrations,
-                'crop_year' => $this->crop_year
+                'crop_year' => $this->crop_year,
+                'request' => $this->request,
             ]);
             
         }elseif ($this->request->bcyc_rt == 'BR') {

@@ -33,10 +33,10 @@
       </tr>
 
       <tr>
-        <th style="text-align: center; font-weight: bold;">#</th>
-        <th style="font-weight: bold;">NAME &amp; ADDRESS</th>
-        <th style="text-align: center; font-weight: bold;">TIN</th>
-        <th style="text-align: center; font-weight: bold;">TEL. NO. / FAX NO.</th>
+        <th style="width:3px; text-align: center; font-weight: bold; border-top: 1px solid black; border-bottom: 1px solid black;">#</th>
+        <th style="width:45px; font-weight: bold; border-top: 1px solid black; border-bottom: 1px solid black;">NAME &amp; ADDRESS</th>
+        <th style="width:20px; text-align: center; font-weight: bold; border-top: 1px solid black; border-bottom: 1px solid black;">TIN</th>
+        <th style="width:20px; text-align: center; font-weight: bold; border-top: 1px solid black; border-bottom: 1px solid black;">TEL. NO. / FAX NO.</th>
       </tr>
 
     </thead>
@@ -48,6 +48,10 @@
         <?php $i = 0; ?>
 
         @if (in_array($region_data->region_id, $trader_registrations_array))
+
+          <tr>
+            <td colspan="4"></td>
+          </tr>
 
           <tr>
             <td colspan="4" style="text-align: center; font-size: 15px;">
