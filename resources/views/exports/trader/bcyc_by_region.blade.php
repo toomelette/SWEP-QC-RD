@@ -67,7 +67,7 @@
 
             <tr>
               <td style="width:3px; text-align: center; vertical-align: top; font-size: 11px;">
-                {{ $key + 1 }}
+                {{ $i += 1 }}
               </td>
               <td style="width:45px; font-size: 11px;">
                 {{ optional($tr_data->trader)->name }}<br>
