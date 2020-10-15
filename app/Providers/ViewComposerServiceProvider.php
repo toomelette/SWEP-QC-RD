@@ -33,12 +33,13 @@ class ViewComposerServiceProvider extends ServiceProvider{
         
 
         // REGION
-        View::composer(['dashboard.trader.create', 
+        View::composer(['dashboard.trader.create',
                         'dashboard.trader.edit',
                         'dashboard.trader_registration.create',
                         'dashboard.trader_registration.edit',
                         'printables.trader_registration.list_bcyc_br',
                         'printables.trader_registration.count_by_cropyear',
+                        'exports.trader.bcyc_by_region',
                         'dashboard.mill.create', 
                         'dashboard.mill.edit',
                         'dashboard.refinery.create', 

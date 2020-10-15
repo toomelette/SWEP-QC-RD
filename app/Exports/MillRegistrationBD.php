@@ -4,8 +4,9 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class MillRegistrationBD implements FromArray, WithHeadings{
+class MillRegistrationBD implements ShouldAutoSize, FromArray, WithHeadings{
     
 
     private $mill_registrations;

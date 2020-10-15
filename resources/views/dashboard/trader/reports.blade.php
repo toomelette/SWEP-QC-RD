@@ -25,6 +25,8 @@
         <div class="col-md-12">
 
           <input type="hidden" id="ft" name="ft" value="bcyc">
+
+          <input type="hidden" id="bcyc_t" name="bcyc_t">
           
           {!! __form::select_dynamic(
             '3', 'bcyc_cy', 'Crop Year *', old('bcyc_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('bcyc_cy'), $errors->first('bcyc_cy'), 'select2', ''
@@ -42,8 +44,11 @@
       </div>
 
       <div class="box-footer">
-        <button class="btn btn-default">
+        <button class="btn btn-default submit_button_bcyc" data-type="p">
           Print <i class="fa fa-fw fa-print"></i>
+        </button>
+        <button class="btn btn-success submit_button_bcyc" data-type="e">
+          Excel <i class="fa fa-fw fa-file-text-o"></i>
         </button>
       </div>
 
@@ -130,11 +135,11 @@
       </div>
 
       <div class="box-footer">
-        <button class="btn btn-default submit_button" data-type="p">
+        <button class="btn btn-default submit_button_bdc" data-type="p">
           Print <i class="fa fa-fw fa-print"></i>
         </button>&nbsp;
-        <button class="btn btn-success submit_button" data-type="e">
-          Export in Excel <i class="fa fa-fw fa-file-text-o"></i>
+        <button class="btn btn-success submit_button_bdc" data-type="e">
+          Excel <i class="fa fa-fw fa-file-text-o"></i>
         </button>
       </div>
 
@@ -155,7 +160,7 @@
 
   <script type="text/javascript">
 
-    $(document).on("click", ".submit_button", function (e) {
+    $(document).on("click", ".submit_button_bdc", function (e) {
       
       e.preventDefault();
       $("#bdc_t").val($(this).data("type"));
@@ -164,6 +169,21 @@
         $("#form_bdc").submit();
       }else if($(this).data("type") == 'p'){
         $("#form_bdc").attr("target", "_blank").submit();
+      }
+
+    });
+
+
+
+    $(document).on("click", ".submit_button_bcyc", function (e) {
+      
+      e.preventDefault();
+      $("#bcyc_t").val($(this).data("type"));
+      
+      if($(this).data("type") == 'e'){
+        $("#form_bcyc").submit();
+      }else if($(this).data("type") == 'p'){
+        $("#form_bcyc").attr("target", "_blank").submit();
       }
 
     });

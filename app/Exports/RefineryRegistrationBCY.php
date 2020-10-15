@@ -4,8 +4,9 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class RefineryRegistrationBCY implements FromArray, WithHeadings{
+class RefineryRegistrationBCY implements ShouldAutoSize, FromArray, WithHeadings{
     
 
     private $refinery_registrations;

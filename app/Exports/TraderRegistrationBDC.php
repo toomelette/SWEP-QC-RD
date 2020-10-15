@@ -4,8 +4,9 @@ namespace App\Exports;
 
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 
-class TraderRegistrationBDC implements FromArray, WithHeadings{
+class TraderRegistrationBDC implements ShouldAutoSize, FromArray, WithHeadings{
     
 
     private $trader_registrations;

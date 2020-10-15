@@ -7,6 +7,7 @@ use App\Core\Interfaces\TraderRegistrationInterface;
 use App\Http\Requests\Trader\TraderRenewLicenseFormRequest;
 use App\Http\Requests\TraderRegistration\TraderRegistrationReportRequest;
 use App\Exports\TraderRegistrationBDC;
+use App\Exports\TraderRegistrationBCYC;
 use App\Exports\TraderRegistrationCert;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -108,26 +109,33 @@ class TraderRegistrationController extends Controller{
 
         }elseif ($request->ft == 'bcyc') {
 
-            if ($request->bcyc_rt == 'A') {
+            $trader_registrations = $this->trader_reg_repo->getByCropYearId_Category($request->bcyc_cy, $request->bcyc_tc);
+            $crop_year = $this->cy_repo->findByCropYearId($request->bcyc_cy);
 
-                $trader_registrations = $this->trader_reg_repo->getByCropYearId_Category($request->bcyc_cy, $request->bcyc_tc);
-                $crop_year = $this->cy_repo->findByCropYearId($request->bcyc_cy);
+            if ($request->bcyc_t == "p") {
 
-                return view('printables.trader_registration.list_bcyc_a')->with([
-                    'trader_registrations' => $trader_registrations,
-                    'crop_year' => $crop_year
-                ]);
+                if ($request->bcyc_rt == 'A') {
+
+                    return view('printables.trader_registration.list_bcyc_a')->with([
+                        'trader_registrations' => $trader_registrations,
+                        'crop_year' => $crop_year
+                    ]);
+                    
+                }elseif ($request->bcyc_rt == 'BR') {
+
+                    return view('printables.trader_registration.list_bcyc_br')->with([
+                        'trader_registrations' => $trader_registrations,
+                        'crop_year' => $crop_year
+                    ]);
+                    
+                }
                 
-            }elseif ($request->bcyc_rt == 'BR') {
-
-                $trader_registrations = $this->trader_reg_repo->getByCropYearId_Category($request->bcyc_cy, $request->bcyc_tc);
-                $crop_year = $this->cy_repo->findByCropYearId($request->bcyc_cy);
-
-                return view('printables.trader_registration.list_bcyc_br')->with([
-                    'trader_registrations' => $trader_registrations,
-                    'crop_year' => $crop_year
-                ]);
+            }elseif ($request->bcyc_t == "e") {
                 
+                return Excel::download(
+                    new TraderRegistrationBCYC($trader_registrations, $crop_year, $request), 'list_by_date_category.xlsx'
+                );
+
             }
             
         }elseif ($request->ft == 'cbcy') {
