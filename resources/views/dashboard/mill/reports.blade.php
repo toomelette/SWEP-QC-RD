@@ -77,7 +77,7 @@
     </div>
     
     <form method="GET" 
-          id="form_bd" 
+          id="form_ml" 
           action="{{ route('dashboard.mill_registration.reports_output') }}"
           target="_blank">
 
@@ -85,6 +85,8 @@
         <div class="col-md-12">
 
           <input type="hidden" id="ft" name="ft" value="ml">
+
+          <input type="hidden" id="ml_t" name="ml_t">
           
           {!! __form::select_dynamic(
             '3', 'ml_cy', 'Crop Year *', old('ml_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('ml_cy'), $errors->first('ml_cy'), 'select2', ''
@@ -121,8 +123,11 @@
       </div>
 
       <div class="box-footer">
-        <button type="submit" class="btn btn-default">
+        <button class="btn btn-default submit_button_ml" data-type="p">
           Print <i class="fa fa-fw fa-print"></i>
+        </button>&nbsp;
+        <button class="btn btn-success submit_button_ml" data-type="e">
+          Excel <i class="fa fa-fw fa-file-text-o"></i>
         </button>
       </div>
 
@@ -258,7 +263,27 @@
 @endsection
 
 
-@section('modals')
 
 
+@section('scripts')
+
+  <script type="text/javascript">
+
+
+    $(document).on("click", ".submit_button_ml", function (e) {
+      
+      e.preventDefault();
+      $("#ml_t").val($(this).data("type"));
+      
+      if($(this).data("type") == 'e'){
+        $("#form_ml").submit();
+      }else if($(this).data("type") == 'p'){
+        $("#form_ml").attr("target", "_blank").submit();
+      }
+
+    });
+
+
+  </script>
+    
 @endsection

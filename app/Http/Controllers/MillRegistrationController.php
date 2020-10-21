@@ -13,6 +13,7 @@ use App\Exports\MillRegistrationLicense;
 
 use App\Exports\MillRegistrationBD;
 use App\Exports\MillRegistrationBCY;
+use App\Exports\MillRegistrationML;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -145,11 +146,19 @@ class MillRegistrationController extends Controller{
             $mill_registrations = $this->mill_reg_repo->getByCropYearId($request->ml_cy);
             $crop_year = $this->cy_repo->findByCropYearId($request->ml_cy);
 
-            return view('printables.mill_registration.mill_library')->with([
-                'mill_registrations' => $mill_registrations,
-                'crop_year' => $crop_year,
-                'fields' => $request->ml_field
-            ]);
+            if ($request->ml_t == 'p') {
+
+                return view('printables.mill_registration.mill_library')->with([
+                    'mill_registrations' => $mill_registrations,
+                    'crop_year' => $crop_year,
+                    'fields' => $request->ml_field
+                ]);
+                
+            }elseif ($request->ml_t == 'e') {
+                return Excel::download(
+                    new MillRegistrationML($mill_registrations, $crop_year, $request), 'mills_by_crop_year.xlsx'
+                );
+            }
             
         }elseif ($request->ft == 'bd') {
 

@@ -33,6 +33,7 @@ class MillRegistrationReportRequest extends FormRequest{
             'cbcy_cy'=>'sometimes|required|string|max:11',
 
             // Mill Library
+            'ml_t'=>'sometimes|required|string|max:2',
             'ml_field'=>'sometimes|nullable|array|max:12',
             'ml_cy'=>'sometimes|required|string|max:11',
 
