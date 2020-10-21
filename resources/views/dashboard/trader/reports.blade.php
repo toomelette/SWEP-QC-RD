@@ -10,7 +10,7 @@
   <div class="box box-solid">
       
     <div class="box-header with-border">
-      <h2 class="box-title">List of Registered Traders</h2>
+      <h2 class="box-title">List of Registered Traders by Crop Year</h2>
       <div class="pull-right">
           <code>Fields with asterisks(*) are required</code>
       </div> 
@@ -48,6 +48,61 @@
           Print <i class="fa fa-fw fa-print"></i>
         </button>
         <button class="btn btn-success submit_button_bcyc" data-type="e">
+          Excel <i class="fa fa-fw fa-file-text-o"></i>
+        </button>
+      </div>
+
+    </form>
+
+  </div>
+       
+
+
+  {{-- List of Registered Traders by Date --}}
+  <div class="box box-solid">
+      
+    <div class="box-header with-border">
+      <h2 class="box-title">List of Registered Traders by Specific Date</h2>
+      <div class="pull-right">
+          <code>Fields with asterisks(*) are required</code>
+      </div> 
+    </div>
+    
+    <form method="GET" 
+          id="form_bdc" 
+          action="{{ route('dashboard.trader_registration.reports_output') }}">
+
+      <div class="box-body">
+        <div class="col-md-12">
+
+          <input type="hidden" id="ft" name="ft" value="bdc">
+
+          <input type="hidden" id="bdc_t" name="bdc_t">
+
+          {!! __form::datepicker(
+            '3', 'bdc_df',  'Date from *', old('bdc_df'), $errors->has('bdc_df'), $errors->first('bdc_df')
+          ) !!}
+
+          {!! __form::datepicker(
+            '3', 'bdc_dt',  'Date to *', old('bdc_dt'), $errors->has('bdc_dt'), $errors->first('bdc_dt')
+          ) !!}
+
+          {!! __form::select_dynamic(
+            '3', 'bdc_tc', 'Trader Category *', old('bdc_tc'), $global_trader_categories_all, 'trader_cat_id', 'name', $errors->has('bdc_tc'), $errors->first('bdc_tc'), 'select2', ''
+          ) !!}
+
+          {!! __form::select_static(
+            '3', 'bdc_rt', 'Type *', old('bdc_rt'), ['By Region' => 'BR', 'Alphabetical' => 'A'], $errors->has('bdc_rt'), $errors->first('bdc_rt'), '', ''
+          ) !!}
+
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button class="btn btn-default submit_button_bdc" data-type="p">
+          Print <i class="fa fa-fw fa-print"></i>
+        </button>&nbsp;
+        <button class="btn btn-success submit_button_bdc" data-type="e">
           Excel <i class="fa fa-fw fa-file-text-o"></i>
         </button>
       </div>
@@ -99,7 +154,7 @@
 
 
   {{-- List by Date and Category --}}
-  <div class="box box-solid">
+  {{-- <div class="box box-solid">
       
     <div class="box-header with-border">
       <h2 class="box-title">List of Registered Traders by Date and Category</h2>
@@ -145,7 +200,7 @@
 
     </form>
 
-  </div>
+  </div> --}}
 
 
 
@@ -159,6 +214,7 @@
 @section('scripts')
 
   <script type="text/javascript">
+
 
     $(document).on("click", ".submit_button_bdc", function (e) {
       
@@ -174,7 +230,6 @@
     });
 
 
-
     $(document).on("click", ".submit_button_bcyc", function (e) {
       
       e.preventDefault();
@@ -187,6 +242,7 @@
       }
 
     });
+
 
   </script>
     

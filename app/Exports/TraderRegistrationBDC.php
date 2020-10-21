@@ -2,73 +2,42 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\FromArray;
-use Maatwebsite\Excel\Concerns\WithHeadings;
-use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class TraderRegistrationBDC implements ShouldAutoSize, FromArray, WithHeadings{
+class TraderRegistrationBDC implements FromView{
     
 
     private $trader_registrations;
+    private $request;
 
 
-    public function __construct($trader_registrations){
+    public function __construct($trader_registrations, $request){
 
     	$this->trader_registrations = $trader_registrations;
+        $this->request = $request;
 
     }
 
 
-    public function array(): array{
+    public function view(): View{
 
-        $list = [];
+        if ($this->request->bdc_rt == 'A') {
 
-        foreach ($this->trader_registrations as $data) {
+            return view('exports.trader.bdc_alpha', [ 
+                'trader_registrations' =>  $this->trader_registrations,
+                'request' => $this->request,
+            ]);
+            
+        }elseif ($this->request->bdc_rt == 'BR') {
 
-            $list[] = [
-
-                'Crop Year' => optional($data->cropYear)->name,
-                'Category' => optional($data->traderCategory)->name,
-                'Control No' => $data->control_no,
-                'Registration Date' => optional($data->reg_date)->format('m/d/Y'),
-                'Trader Name' => optional($data->trader)->name,
-                'Trader Address' => optional($data->trader)->address,
-                'Trader Second Address' => optional($data->trader)->address_second,
-                'Trader Third Address' => optional($data->trader)->address_third,
-                'Region' => optional(optional($data->trader)->region)->name,
-                'TIN' => optional($data->trader)->tin,
-                'Tel No' => optional($data->trader)->tel_no,
-                'Officer' => $data->trader_officer,
-                'Email' => $data->trader_email,
-
-            ];
-
+            return view('exports.trader.bdc_by_region', [
+                'trader_registrations' =>  $this->trader_registrations,
+                'request' => $this->request,
+            ]);
+            
         }
 
-    	return $list;
-
-    }
-
-
-
-    public function headings(): array{
-
-        return [
-            'Crop Year', 
-            'Category', 
-            'Control No', 
-            'Registration Date', 
-            'Trader Name', 
-            'Trader Address', 
-            'Trader Second Address',
-            'Trader Third Address',
-            'Region', 
-            'TIN', 
-            'Tel No', 
-            'Officer', 
-            'Email'
-        ];
-        
     }
 
 

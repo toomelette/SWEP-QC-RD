@@ -93,21 +93,7 @@ class TraderRegistrationController extends Controller{
 
     public function reportsOutput(TraderRegistrationReportRequest $request){
 
-        if ($request->ft == 'bdc') {
-            
-            $trader_registrations = $this->trader_reg_repo->getByRegDate_Category($request->bdc_df, $request->bdc_dt, $request->bdc_tc);
-            
-            if ($request->bdc_t == 'p') {
-                return view('printables.trader_registration.list_bdc')->with(
-                    'trader_registrations', $trader_registrations
-                );
-            }elseif ($request->bdc_t == 'e') {
-                return Excel::download(
-                    new TraderRegistrationBDC($trader_registrations), 'list_by_date_category.xlsx'
-                );
-            }
-
-        }elseif ($request->ft == 'bcyc') {
+        if ($request->ft == 'bcyc') {
 
             $trader_registrations = $this->trader_reg_repo->getByCropYearId_Category($request->bcyc_cy, $request->bcyc_tc);
             $crop_year = $this->cy_repo->findByCropYearId($request->bcyc_cy);
@@ -133,7 +119,31 @@ class TraderRegistrationController extends Controller{
             }elseif ($request->bcyc_t == "e") {
                 
                 return Excel::download(
-                    new TraderRegistrationBCYC($trader_registrations, $crop_year, $request), 'list_by_date_category.xlsx'
+                    new TraderRegistrationBCYC($trader_registrations, $crop_year, $request), 'trader_list_by_crop_year.xlsx'
+                );
+
+            }
+
+        }elseif ($request->ft == 'bdc') {
+            
+            $trader_registrations = $this->trader_reg_repo->getByRegDate_Category($request->bdc_df, $request->bdc_dt, $request->bdc_tc);
+            
+            if ($request->bdc_t == 'p') {
+
+                if ($request->bdc_rt == 'A') {
+                    return view('printables.trader_registration.list_bdc_a')->with(
+                        'trader_registrations', $trader_registrations
+                    );
+                }elseif ($request->bdc_rt == 'BR') {
+                    return view('printables.trader_registration.list_bdc_br')->with(
+                        'trader_registrations', $trader_registrations
+                    );
+                }
+
+            }elseif ($request->bdc_t == 'e') {
+
+                return Excel::download(
+                    new TraderRegistrationBDC($trader_registrations, $request), 'trader_list_by_date.xlsx'
                 );
 
             }

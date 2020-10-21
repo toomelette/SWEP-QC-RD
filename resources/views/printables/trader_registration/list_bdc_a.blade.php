@@ -17,7 +17,7 @@
 <html>
 
 <head>
-  <title>List of Trader By Crop Year / Category</title>
+  <title>List of Trader By Date / Category</title>
   <link rel="stylesheet" href="{{ asset('template/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('template/bower_components/font-awesome/css/font-awesome.min.css') }}">
   <link rel="stylesheet" href="{{ asset('template/dist/css/AdminLTE.min.css') }}">
