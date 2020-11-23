@@ -16,7 +16,7 @@
     </div>
     
     <form method="GET" 
-          id="form_bd" 
+          id="form_rd" 
           action="{{ route('dashboard.refinery_registration.reports_output') }}"
           target="_blank">
 
@@ -24,6 +24,8 @@
         <div class="col-md-12">
 
           <input type="hidden" id="ft" name="ft" value="rd">
+
+          <input type="hidden" id="rd_t" name="rd_t">
 
           {!! __form::select_dynamic(
             '3', 'rd_cy', 'Crop Year *', old('rd_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('rd_cy'), $errors->first('rd_cy'), 'select2', ''
@@ -33,8 +35,11 @@
       </div>
 
       <div class="box-footer">
-        <button type="submit" class="btn btn-default">
+        <button class="btn btn-default submit_button_rd"  data-type="p">
           Print <i class="fa fa-fw fa-print"></i>
+        </button>&nbsp;
+        <button class="btn btn-success submit_button_rd" data-type="e">
+          Excel <i class="fa fa-fw fa-file-text-o"></i>
         </button>
       </div>
 
@@ -55,7 +60,7 @@
     </div>
     
     <form method="GET" 
-          id="form_bd" 
+          id="form_rc" 
           action="{{ route('dashboard.refinery_registration.reports_output') }}"
           target="_blank">
 
@@ -63,6 +68,8 @@
         <div class="col-md-12">
 
           <input type="hidden" id="ft" name="ft" value="rc">
+
+          <input type="hidden" id="rc_t" name="rc_t">
 
           {!! __form::select_dynamic(
             '3', 'rc_cy', 'Crop Year *', old('rc_cy'), $global_crop_years_all, 'crop_year_id', 'name', $errors->has('rc_cy'), $errors->first('rc_cy'), 'select2', ''
@@ -72,8 +79,11 @@
       </div>
 
       <div class="box-footer">
-        <button type="submit" class="btn btn-default">
+        <button class="btn btn-default submit_button_rc" data-type="p">
           Print <i class="fa fa-fw fa-print"></i>
+        </button>&nbsp;
+        <button class="btn btn-success submit_button_rc" data-type="e">
+          Excel <i class="fa fa-fw fa-file-text-o"></i>
         </button>
       </div>
 
@@ -206,4 +216,44 @@
 
 </section>
 
+@endsection
+
+
+
+
+@section('scripts')
+
+  <script type="text/javascript">
+
+
+    $(document).on("click", ".submit_button_rd", function (e) {
+      
+      e.preventDefault();
+      $("#rd_t").val($(this).data("type"));
+      
+      if($(this).data("type") == 'e'){
+        $("#form_rd").submit();
+      }else if($(this).data("type") == 'p'){
+        $("#form_rd").attr("target", "_blank").submit();
+      }
+
+    });
+
+
+    $(document).on("click", ".submit_button_rc", function (e) {
+      
+      e.preventDefault();
+      $("#rc_t").val($(this).data("type"));
+      
+      if($(this).data("type") == 'e'){
+        $("#form_rc").submit();
+      }else if($(this).data("type") == 'p'){
+        $("#form_rc").attr("target", "_blank").submit();
+      }
+
+    });
+
+
+  </script>
+    
 @endsection

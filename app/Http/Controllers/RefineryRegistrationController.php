@@ -12,6 +12,8 @@ use App\Exports\RefineryRegistrationLicense;
 
 use App\Exports\RefineryRegistrationBD;
 use App\Exports\RefineryRegistrationBCY;
+use App\Exports\RefineryRegistrationDirectory;
+use App\Exports\RefineryRegistrationRatedCapacity;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -94,20 +96,40 @@ class RefineryRegistrationController extends Controller{
             $refinery_registrations = $this->refinery_reg_repo->getByCropYearId($request->rd_cy);
             $crop_year = $this->cy_repo->findByCropYearId($request->rd_cy);
 
-            return view('printables.refinery_registration.refinery_directory')->with([
-                'refinery_registrations' => $refinery_registrations,
-                'crop_year' => $crop_year 
-            ]);
+            if ($request->rd_t == 'p') {
+    
+                return view('printables.refinery_registration.refinery_directory')->with([
+                    'refinery_registrations' => $refinery_registrations,
+                    'crop_year' => $crop_year 
+                ]);
+                
+            }elseif($request->rd_t == 'e'){
+
+                return Excel::download(
+                    new RefineryRegistrationDirectory($refinery_registrations, $crop_year), 'refinery_directory_'.$crop_year->name.'.xlsx'
+                );
+
+            }
 
         }elseif ($request->ft == 'rc') {
 
             $refinery_registrations = $this->refinery_reg_repo->getByCropYearId($request->rc_cy);
             $crop_year = $this->cy_repo->findByCropYearId($request->rc_cy);
 
-            return view('printables.refinery_registration.refinery_rated_capacity')->with([
-                'refinery_registrations' => $refinery_registrations,
-                'crop_year' => $crop_year 
-            ]);
+            if ($request->rc_t == "p") {
+
+                return view('printables.refinery_registration.refinery_rated_capacity')->with([
+                    'refinery_registrations' => $refinery_registrations,
+                    'crop_year' => $crop_year 
+                ]);
+
+            }elseif($request->rc_t == "e"){
+
+                return Excel::download(
+                    new RefineryRegistrationRatedCapacity($refinery_registrations, $crop_year), 'refinery_rated_capacity_'.$crop_year->name.'.xlsx'
+                );
+
+            }
             
         }elseif ($request->ft == 'cbcy') {
 

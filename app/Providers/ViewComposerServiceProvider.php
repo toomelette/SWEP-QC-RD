@@ -44,6 +44,7 @@ class ViewComposerServiceProvider extends ServiceProvider{
                         'exports.trader.bdc_by_region',
                         'dashboard.mill.create', 
                         'dashboard.mill.edit',
+                        'exports.mill.mill_directory',
                         'dashboard.refinery.create', 
                         'dashboard.refinery.edit',], 'App\Core\ViewComposers\RegionComposer');
         

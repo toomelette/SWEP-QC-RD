@@ -1,3 +1,23 @@
+<?php
+
+  function countMillRegPerRegion($mill_registrations, $region){
+
+    $count = 0;
+
+    foreach($mill_registrations as $data){
+      if (!empty($data->mill)){
+        if ($data->mill->report_region == $region){
+          $count =+ 1;
+        }
+      }
+    }
+
+    return $count;
+
+  }
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -44,55 +64,61 @@
 
   <div class="row" id="content">
 
-    <div class="col-xs-12 table-responsive">
+    <div class="col-xs-12">
 
       @foreach (__static::report_regions() as $rr_name => $rr_key)
 
-        <?php $i = 0; ?>
+        @if (countMillRegPerRegion($mill_registrations, $rr_key) > 0)
+          
+          <?php $i = 0; ?>
 
-        <table class="table table-bordered">
+          <table class="table table-bordered" style="word-break:break-all; page-break-inside:avoid;">
 
             <thead style="display: table-header-group;">
               <tr>
                 <th colspan="4" style="font-size:11px;">
-                  {{ $rr_name }}
+                    {{ $rr_name }}
                 </th>
               </tr>
             </thead>
 
-          <tbody>
+            <tbody>
 
-            @foreach($mill_registrations as $data)
-              @if (!empty($data->mill))
-                @if ($data->mill->report_region == $rr_key)
-                  <tr>
-                    <td style="vertical-align: text-top; padding-top:5px; width:200px;">
-                      {{ $i += 1 }}. {{ optional($data->mill)->name }}<br>
-                      {{ optional(optional($data->mill)->region)->name }}
-                    </td>
-                    <td style="padding-top:5px; width:200px;">
-                      {{ optional($data->mill)->address }}<br>
-                      {{ optional($data->mill)->tel_no }}<br>
-                      {{ optional($data->mill)->fax_no }}<br>
-                    </td>
-                    <td style="vertical-align: text-top; padding-top:5px; width:200px;">
-                      {{ optional($data->mill)->address_second }}<br>
-                      {{ optional($data->mill)->tel_no_second }}<br>
-                      {{ optional($data->mill)->fax_no_second }}<br>
-                    </td>
-                    <td style="vertical-align: text-top; padding-top:5px; width:200px;">
-                      {{ optional($data->mill)->officer }} - {{ optional($data->mill)->position }}<br>
-                      {{ optional($data->mill)->email }}
-                    </td>
-                  </tr>
+              @foreach($mill_registrations as $data)
+                @if (!empty($data->mill))
+                  @if ($data->mill->report_region == $rr_key)
+                    <tr>
+                      <td style="vertical-align: text-top; padding-top:5px; width:200px; overflow: hidden;">
+                        {{ $i += 1 }}. {{ optional($data->mill)->name }}<br>
+                        {{ optional(optional($data->mill)->region)->name }}
+                      </td>
+                      <td style="padding-top:5px; width:200px; overflow: hidden;">
+                        {{ optional($data->mill)->address }}<br>
+                        {{ optional($data->mill)->tel_no }}<br>
+                        {{ optional($data->mill)->fax_no }}<br>
+                      </td>
+                      <td style="vertical-align: text-top; padding-top:5px; width:200px; overflow: hidden;">
+                        {{ optional($data->mill)->address_second }}<br>
+                        {{ optional($data->mill)->tel_no_second }}<br>
+                        {{ optional($data->mill)->fax_no_second }}<br>
+                      </td>
+                      <td style="vertical-align: text-top; padding-top:5px; width:200px; overflow: hidden;">
+                        {{ optional($data->mill)->officer }} - {{ optional($data->mill)->position }}<br>
+                        {{ optional($data->mill)->email }}
+                      </td>
+                    </tr>
+                  @endif
                 @endif
-              @endif
-            @endforeach
+              @endforeach
 
-          </tbody>
+            </tbody>
 
-        </table>
-        
+          </table>
+
+          
+      
+        @endif
+          
       @endforeach
 
     </div>

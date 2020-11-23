@@ -1,3 +1,23 @@
+<?php
+
+  function countRefineryRegPerRegion($ref_registrations, $region){
+
+    $count = 0;
+
+    foreach($ref_registrations as $data){
+      if (!empty($data->refinery)){
+        if ($data->refinery->report_region == $region){
+          $count =+ 1;
+        }
+      }
+    }
+
+    return $count;
+
+  }
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -49,57 +69,61 @@
 
       @foreach (__static::report_regions() as $rr_name => $rr_key)
 
-        <?php $i = 0; ?>
+        @if(countRefineryRegPerRegion($refinery_registrations, $rr_key))
 
-        <table class="table table-bordered">
+          <?php $i = 0; ?>
 
-          <thead style="display: table-header-group;">
-            <tr>
-              <th colspan="5" style="font-size:11px;">
-                {{ $rr_name }}
-              </th>
-            </tr>
-          </thead>
+          <table class="table table-bordered" style="word-break:break-all; page-break-after:avoid;">
 
-          <tbody>
+            <thead style="display: table-header-group;">
+              <tr>
+                <th colspan="5" style="font-size:11px;">
+                  {{ $rr_name }}
+                </th>
+              </tr>
+            </thead>
 
-            <?php $i = 0; ?>
+            <tbody>
 
-            @foreach($refinery_registrations as $data)
-              @if (!empty($data->refinery))
-                @if ($data->refinery->report_region == $rr_key)
+              <?php $i = 0; ?>
 
-                <tr>
-                  <td style="vertical-align: text-top; padding-top:5px; width:200px;">
-                    {{ $i += 1 }}. {{ optional($data->refinery)->name }}<br>
-                    {{ optional(optional($data->refinery)->region)->name }}
-                  </td>
-                  <td style="vertical-align: text-top; padding-top:5px; width:100px;">
-                    {{ number_format($data->rated_capacity, 2)  }}
-                  </td>
-                  <td style="padding-top:5px; width:200px;">
-                    {{ optional($data->refinery)->address }}<br>
-                    {{ optional($data->refinery)->tel_no }}<br>
-                    {{ optional($data->refinery)->fax_no }}<br>
-                  </td>
-                  <td style="vertical-align: text-top; padding-top:5px; width:200px;">
-                    {{ optional($data->refinery)->address_second }}<br>
-                    {{ optional($data->refinery)->tel_no_second }}<br>
-                    {{ optional($data->refinery)->fax_no_second }}<br>
-                  </td>
-                  <td style="vertical-align: text-top; padding-top:5px; width:200px;">
-                    {{ optional($data->refinery)->officer }} - {{ optional($data->refinery)->position }}<br>
-                    {{ optional($data->refinery)->email }}
-                  </td>
-                </tr>
-                  
+              @foreach($refinery_registrations as $data)
+                @if (!empty($data->refinery))
+                  @if ($data->refinery->report_region == $rr_key)
+
+                  <tr>
+                    <td style="vertical-align: text-top; padding-top:5px; width:200px; overflow: hidden;">
+                      {{ $i += 1 }}. {{ optional($data->refinery)->name }}<br>
+                      {{ optional(optional($data->refinery)->region)->name }}
+                    </td>
+                    <td style="vertical-align: text-top; padding-top:5px; width:100px; overflow: hidden;">
+                      {{ number_format($data->rated_capacity, 2)  }}
+                    </td>
+                    <td style="padding-top:5px; width:200px;">
+                      {{ optional($data->refinery)->address }}<br>
+                      {{ optional($data->refinery)->tel_no }}<br>
+                      {{ optional($data->refinery)->fax_no }}<br>
+                    </td>
+                    <td style="vertical-align: text-top; padding-top:5px; width:200px; overflow: hidden;">
+                      {{ optional($data->refinery)->address_second }}<br>
+                      {{ optional($data->refinery)->tel_no_second }}<br>
+                      {{ optional($data->refinery)->fax_no_second }}<br>
+                    </td>
+                    <td style="vertical-align: text-top; padding-top:5px; width:200px; overflow: hidden;">
+                      {{ optional($data->refinery)->officer }} - {{ optional($data->refinery)->position }}<br>
+                      {{ optional($data->refinery)->email }}
+                    </td>
+                  </tr>
+                    
+                  @endif
                 @endif
-              @endif
-            @endforeach
+              @endforeach
 
-          </tbody>
+            </tbody>
 
-        </table>
+          </table>
+
+        @endif
 
       @endforeach
 

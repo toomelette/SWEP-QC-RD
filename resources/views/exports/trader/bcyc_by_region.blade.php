@@ -14,6 +14,7 @@
   $trader_registrations_array = $trader_registrations->pluck('trader.region_id')->toArray();
 
 ?>
+
 <table>
 
     <thead style="display: table-header-group;">

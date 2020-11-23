@@ -10,10 +10,11 @@ use App\Http\Requests\MillRegistration\MillRegistrationReportRequest;
 use App\Exports\MillRegistrationCover;
 use App\Exports\MillRegistrationBilling;
 use App\Exports\MillRegistrationLicense;
-
 use App\Exports\MillRegistrationBD;
 use App\Exports\MillRegistrationBCY;
 use App\Exports\MillRegistrationML;
+use App\Exports\MillRegistrationDirectory;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -106,10 +107,20 @@ class MillRegistrationController extends Controller{
             $mill_registrations = $this->mill_reg_repo->getByCropYearId($request->md_cy);
             $crop_year = $this->cy_repo->findByCropYearId($request->md_cy);
 
-            return view('printables.mill_registration.mill_directory')->with([
-                'mill_registrations' => $mill_registrations,
-                'crop_year' => $crop_year 
-            ]);
+            if ($request->md_t == 'p') {
+    
+                return view('printables.mill_registration.mill_directory')->with([
+                    'mill_registrations' => $mill_registrations,
+                    'crop_year' => $crop_year 
+                ]);
+                
+            }elseif ($request->md_t == 'e'){
+
+                return Excel::download(
+                    new MillRegistrationDirectory($mill_registrations, $crop_year), 'mill_directory_'.$crop_year->name.'.xlsx'
+                );
+
+            }
 
         }elseif ($request->ft == 'rc') {
 
