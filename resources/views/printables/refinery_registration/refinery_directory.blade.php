@@ -43,8 +43,8 @@
 
   {{-- HEADER --}}
   <div class="row" style="padding:10px; text-align: center;">
-    <span style="font-size: 14px;">DIRECTORY OF SUGAR REFINERIES</span><br>
-    <span style="font-size: 14px;">CY {{ $crop_year->name }}</span>  
+    <span style="font-size: 14px; font-weight:bold;">DIRECTORY OF SUGAR REFINERIES</span><br>
+    <span style="font-size: 14px; font-weight:bold;">CY {{ $crop_year->name }}</span>  
   </div>
 
   <div class="row" style="margin-bottom:15px;">

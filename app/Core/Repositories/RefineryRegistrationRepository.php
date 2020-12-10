@@ -271,7 +271,7 @@ class RefineryRegistrationRepository extends BaseRepository implements RefineryR
                             ->with('refinery', 'cropYear')
                             ->get()
                             ->sortBy(function($refinery_reg) {
-                                return $refinery_reg->refinery->name;
+                                return $refinery_reg->refinery->seq_no;
                             });;
                           
     }

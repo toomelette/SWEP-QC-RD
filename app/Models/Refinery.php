@@ -22,6 +22,7 @@ class Refinery extends Model{
         'refinery_id' => '',
         'region_id' => '',
         'report_region' => '',
+        'seq_no' => 0,
         'name' => '',
         'address' => '',
         'address_second' => '',

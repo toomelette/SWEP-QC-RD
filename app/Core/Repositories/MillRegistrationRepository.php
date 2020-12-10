@@ -306,7 +306,7 @@ class MillRegistrationRepository extends BaseRepository implements MillRegistrat
                         ->where('crop_year_id', $cy_id)
                         ->get()
                         ->sortBy(function($mill_reg) {
-                            return $mill_reg->mill->name;
+                            return $mill_reg->mill->seq_no;
                         });
                           
     }
