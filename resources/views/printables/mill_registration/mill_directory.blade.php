@@ -72,11 +72,11 @@
           
           <?php $i = 0; ?>
 
-          <table class="table table-bordered" style="word-break:break-all; page-break-inside:avoid;">
+          <table class="table" style="word-break:break-all; page-break-inside:avoid; border:none;">
 
             <thead style="display: table-header-group;">
               <tr>
-                <th colspan="4" style="font-size:11px;">
+                <th colspan="4" style="font-size:14px;">
                     {{ $rr_name }}
                 </th>
               </tr>
